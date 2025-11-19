@@ -1,6 +1,21 @@
+// login.js - CÓDIGO CORRECTO PARA LOGIN
 (function () {
-  const VALID_USER = "admin_ifn";
-  const VALID_PASS = "IFN2025!";
+  // Base de datos de usuarios
+  const USERS = {
+    "brigadista": {
+      password: "brigadista2025",
+      role: "brigadista",
+      name: "Mayra Navakoba",
+      redirect: "inicio-Pantalla.html"
+    },
+    "encargado": {
+      password: "encargado2025", 
+      role: "encargado",
+      name: "Justifico Validerrama",
+      redirect: "inicio-Pantalla.html"
+    }
+  };
+
   const MAX_ATTEMPTS = 5;
   const LOCK_SECONDS = 30;
 
@@ -45,6 +60,7 @@
     }, 1000);
   }
 
+  // Botón para mostrar/ocultar contraseña
   togglePwd.addEventListener("click", () => {
     if (passInput.type === "password") {
       passInput.type = "text";
@@ -55,14 +71,16 @@
     }
   });
 
+  // Manejar envío del formulario
   form.addEventListener("submit", function (e) {
     e.preventDefault();
+    
     if (locked) {
       showMessage("Bloqueado temporalmente. Espera unos segundos.", "#e74c3c");
       return;
     }
 
-    const usuario = userInput.value.trim();
+    const usuario = userInput.value.trim().toLowerCase();
     const clave = passInput.value;
 
     if (!usuario || !clave) {
@@ -70,13 +88,21 @@
       return;
     }
 
-    if (usuario === VALID_USER && clave === VALID_PASS) {
+    // Verificar credenciales
+    if (USERS[usuario] && USERS[usuario].password === clave) {
+      const userData = USERS[usuario];
+      
+      // Guardar datos en sessionStorage
       sessionStorage.setItem("loggedIn", "true");
-      sessionStorage.setItem("username", usuario);
-      showMessage("Ingreso correcto. Redirigiendo...", "#2ecc71");
+      sessionStorage.setItem("username", userData.name);
+      sessionStorage.setItem("userRole", userData.role);
+      sessionStorage.setItem("userLogin", usuario);
+      
+      showMessage(`Ingreso correcto como ${userData.name}. Redirigiendo...`, "#2ecc71");
+      
       setTimeout(() => {
-        window.location.href = "inicio-Pantalla.html";
-      }, 700);
+        window.location.href = userData.redirect;
+      }, 1000);
     } else {
       attempts++;
       const remaining = MAX_ATTEMPTS - attempts;
@@ -88,4 +114,7 @@
       }
     }
   });
+
+  // Enfocar el campo de usuario al cargar
+  userInput.focus();
 })();
