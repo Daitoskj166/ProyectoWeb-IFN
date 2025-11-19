@@ -4,18 +4,42 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gestión de Brigadas - IFN</title>
+  <!-- 
+    ENLACE AL ARCHIVO CSS ESPECÍFICO PARA GESTIÓN DE BRIGADAS
+    Propósito: Define los estilos visuales específicos para la página de gestión de brigadas
+    Ubicación: Archivo CSS en la carpeta ../CSS/
+    Contenido: Estilos para tarjetas de brigadas, formularios, botones y layouts responsivos
+  -->
   <link rel="stylesheet" href="../CSS/styles-gestionBrigadas.css">
 </head>
 <body>
-  <!-- ===== ENCABEZADO ===== -->
+  <!-- ===== ENCABEZADO PRINCIPAL ===== -->
   <header>
-    <!-- Logo institucional -->
+    <!-- 
+      LOGO INSTITUCIONAL DEL IFN
+      Propósito: Identificación visual de la institución en todas las páginas
+      Atributos:
+        - class: "Logo" para aplicar estilos específicos
+        - src: Ruta relativa a la imagen del logo
+        - alt: Texto alternativo para accesibilidad
+        - width: Ancho fijo para mantener consistencia visual
+    -->
     <img class="Logo" src="../IMG/ifn-baja-tcm30-525131.png" alt="Logo IFN" width="150">
 
-    <!-- Contenedor central con título y menú de navegación -->
+    <!-- CONTENEDOR CENTRAL CON TÍTULO Y MENÚ DE NAVEGACIÓN -->
     <div class="center-header">
+      <!-- 
+        TÍTULO PRINCIPAL DEL SISTEMA
+        Propósito: Identificar claramente la aplicación y su propósito
+      -->
       <h1>SISTEMA DE IDENTIFICACION DE ESPECIES</h1>
-      <!-- Menú de navegación tipo dashboard -->
+      
+      <!-- 
+        MENÚ DE NAVEGACIÓN TIPO DASHBOARD
+        Propósito: Permitir la navegación entre diferentes módulos del sistema
+        Estructura: Enlaces con clase "dashboard-btn" para estilos consistentes
+        Funcionalidad: Cada enlace redirige a su respectivo módulo
+      -->
       <div class="dashboard">
         <a href="inicio-Pantalla.html" class="dashboard-btn">Inicio</a>
         <a href="subirArbol.html" class="dashboard-btn">Subir Árbol</a>
@@ -26,7 +50,14 @@
       </div>
     </div>
 
-    <!-- Información del usuario con imagen y botón de cierre de sesión -->
+    <!-- 
+      INFORMACIÓN DEL USUARIO CON IMAGEN Y BOTÓN DE CIERRE DE SESIÓN
+      Propósito: Mostrar información del usuario logueado y permitir cierre de sesión
+      Componentes:
+        - texto-arriba: Muestra el nombre del usuario
+        - Login: Imagen de perfil del usuario (placeholder)
+        - texto-abajo: Botón para cerrar sesión con funcionalidad de seguridad
+    -->
     <div class="login-imagen">
       <p class="texto-arriba">User</p>
       <img class="Login" src="../IMG/login.png" alt="Login User" width="150">
@@ -34,23 +65,52 @@
     </div>
   </header>
 
-  <!-- Contenedor principal de la barra de búsqueda -->
+  <!-- 
+    CONTENEDOR PRINCIPAL DE LA BARRA DE BÚSQUEDA
+    Propósito: Proporcionar funcionalidad de búsqueda en tiempo real
+    Ubicación: Debajo del header para fácil acceso
+  -->
   <div class="search-container">
-    <!-- Caja que contiene el input de búsqueda y el icono -->
+    <!-- 
+      CAJA QUE CONTIENE EL INPUT DE BÚSQUEDA Y EL ICONO
+      Propósito: Interface de búsqueda unificada para brigadas y miembros
+      Características:
+        - Input de texto con placeholder descriptivo
+        - Icono de lupa para acción de búsqueda
+        - Diseño responsivo y accesible
+    -->
     <div class="search-box"> 
       <input type="text" placeholder="Buscar brigada o miembro...">
       <span class="search-icon">🔍</span>
     </div>
   </div>
 
-  <!-- ===== MAIN ===== -->
+  <!-- ===== CONTENIDO PRINCIPAL ===== -->
   <main>
+    <!-- 
+      TÍTULO PRINCIPAL DE LA PÁGINA
+      Propósito: Indicar claramente la funcionalidad principal de esta vista
+    -->
     <h1>GESTIÓN DE BRIGADAS</h1>
 
-    <!-- Sección de lista de brigadas -->
+    <!-- 
+      SECCIÓN DE LISTA DE BRIGADAS
+      Propósito: Mostrar todas las brigadas registradas en el sistema
+      Estructura: Grid de tarjetas con información esencial y acciones
+    -->
     <section class="brigadas-section">
       <h2>📋 BRIGADAS REGISTRADAS</h2>
       <div class="brigadas-container">
+        <!-- 
+          TARJETA INDIVIDUAL DE BRIGADA - BRIGADA NORTE
+          Propósito: Representar visualmente una brigada con sus datos clave
+          Información mostrada:
+            - Nombre de la brigada
+            - Líder asignado
+            - Número de miembros
+            - Zona de trabajo
+            - Botones de acción (Editar y Asignar Tarea)
+        -->
         <div class="brigada-card">
           <h3>Brigada Norte</h3>
           <p><strong>Líder:</strong> Carlos Rodríguez</p>
@@ -62,6 +122,7 @@
           </div>
         </div>
         
+        <!-- TARJETA DE BRIGADA SUR -->
         <div class="brigada-card">
           <h3>Brigada Sur</h3>
           <p><strong>Líder:</strong> Ana Martínez</p>
@@ -73,6 +134,7 @@
           </div>
         </div>
         
+        <!-- TARJETA DE BRIGADA ESTE -->
         <div class="brigada-card">
           <h3>Brigada Este</h3>
           <p><strong>Líder:</strong> Luis González</p>
@@ -85,13 +147,30 @@
         </div>
       </div>
       
+      <!-- 
+        BOTÓN PARA CREAR NUEVA BRIGADA
+        Propósito: Iniciar el proceso de creación de una nueva brigada
+        Característica: Diseño destacado para acción principal
+      -->
       <button class="btn-nueva-brigada">+ Nueva Brigada</button>
     </section>
 
-    <!-- Sección de gestión de miembros -->
+    <!-- 
+      SECCIÓN DE GESTIÓN DE MIEMBROS
+      Propósito: Permitir la asignación y gestión de miembros entre brigadas
+      Funcionalidad: Lista editable de miembros con selectores de brigada
+    -->
     <section class="miembros-section">
       <h2>👥 GESTIÓN DE MIEMBROS</h2>
       <div class="miembros-container">
+        <!-- 
+          ITEM DE MIEMBRO INDIVIDUAL - CARLOS RODRÍGUEZ
+          Propósito: Representar un miembro y permitir cambiar su brigada
+          Estructura:
+            - Nombre del miembro
+            - Selector desplegable para asignar brigada
+            - Estado actual preseleccionado
+        -->
         <div class="miembro-item">
           <span>Carlos Rodríguez</span>
           <select>
@@ -101,6 +180,8 @@
             <option>Sin asignar</option>
           </select>
         </div>
+        
+        <!-- ITEM DE MIEMBRO - ANA MARTÍNEZ -->
         <div class="miembro-item">
           <span>Ana Martínez</span>
           <select>
@@ -110,6 +191,8 @@
             <option>Sin asignar</option>
           </select>
         </div>
+        
+        <!-- ITEM DE MIEMBRO - LUIS GONZÁLEZ -->
         <div class="miembro-item">
           <span>Luis González</span>
           <select>
@@ -120,33 +203,74 @@
           </select>
         </div>
       </div>
+      
+      <!-- 
+        BOTÓN PARA AGREGAR NUEVO MIEMBRO
+        Propósito: Iniciar el proceso de agregar un nuevo miembro al sistema
+      -->
       <button class="btn-agregar-miembro">+ Agregar Miembro</button>
     </section>
 
-    <!-- Sección de asignación de zonas -->
+    <!-- 
+      SECCIÓN DE ASIGNACIÓN DE ZONAS
+      Propósito: Permitir la descripción y gestión de zonas de trabajo por brigada
+      Funcionalidad: Áreas de texto editables para cada brigada
+    -->
     <section class="zonas-section">
       <h2>🗺️ ASIGNACIÓN DE ZONAS</h2>
       <div class="zonas-container">
+        <!-- 
+          ITEM DE ZONA - BRIGADA NORTE
+          Propósito: Definir y describir la zona de trabajo de una brigada
+          Componentes:
+            - Título con nombre de brigada
+            - Textarea editable para descripción detallada
+            - Placeholder para guiar al usuario
+        -->
         <div class="zona-item">
           <h3>Brigada Norte</h3>
           <textarea rows="3" placeholder="Descripción de la zona...">Sector Norte del Bosque, incluye áreas de reforestación A y B</textarea>
         </div>
+        
+        <!-- ITEM DE ZONA - BRIGADA SUR -->
         <div class="zona-item">
           <h3>Brigada Sur</h3>
           <textarea rows="3" placeholder="Descripción de la zona...">Sector Sur del Bosque, zona de conservación de especies nativas</textarea>
         </div>
+        
+        <!-- ITEM DE ZONA - BRIGADA ESTE -->
         <div class="zona-item">
           <h3>Brigada Este</h3>
           <textarea rows="3" placeholder="Descripción de la zona...">Sector Este del Bosque, área de monitoreo y control</textarea>
         </div>
       </div>
+      
+      <!-- 
+        BOTÓN PARA GUARDAR CAMBIOS DE ZONAS
+        Propósito: Confirmar y guardar todas las modificaciones en las descripciones de zonas
+      -->
       <button class="btn-guardar-zonas">Guardar Cambios de Zonas</button>
     </section>
 
-    <!-- Sección de asignación de tareas -->
+    <!-- 
+      SECCIÓN DE ASIGNACIÓN DE TAREAS
+      Propósito: Permitir la creación y asignación de tareas específicas a brigadas
+      Característica: Formulario completo con validación
+    -->
     <section class="tareas-section">
       <h2>📝 ASIGNACIÓN DE TAREAS</h2>
+      
+      <!-- 
+        FORMULARIO DE ASIGNACIÓN DE TAREAS
+        Propósito: Capturar toda la información necesaria para crear una tarea
+        Validación: Todos los campos son requeridos (atributo required)
+      -->
       <form class="tarea-form">
+        <!-- 
+          GRUPO DE FORMULARIO - SELECCIÓN DE BRIGADA
+          Propósito: Seleccionar la brigada destinataria de la tarea
+          Validación: Campo obligatorio para asegurar asignación correcta
+        -->
         <div class="form-group">
           <label for="brigada-tarea">Brigada:</label>
           <select id="brigada-tarea" required>
@@ -157,11 +281,21 @@
           </select>
         </div>
         
+        <!-- 
+          GRUPO DE FORMULARIO - DESCRIPCIÓN DE LA TAREA
+          Propósito: Capturar la descripción detallada de la tarea a realizar
+          Componente: Textarea para texto multilínea
+        -->
         <div class="form-group">
           <label for="tarea-descripcion">Descripción de la tarea:</label>
           <textarea id="tarea-descripcion" rows="3" placeholder="Describa la tarea a realizar..." required></textarea>
         </div>
         
+        <!-- 
+          FILA DE FORMULARIO PARA FECHAS
+          Propósito: Agrupar campos relacionados (fechas de inicio y fin)
+          Diseño: Disposición horizontal en dos columnas para mejor uso del espacio
+        -->
         <div class="form-row">
           <div class="form-group">
             <label for="fecha-inicio">Fecha de inicio:</label>
@@ -174,22 +308,46 @@
           </div>
         </div>
         
+        <!-- 
+          GRUPO DE FORMULARIO - OBJETIVOS
+          Propósito: Especificar los objetivos concretos de la tarea
+          Componente: Textarea más pequeño para objetivos específicos
+        -->
         <div class="form-group">
           <label for="objetivos">Objetivos:</label>
           <textarea id="objetivos" rows="2" placeholder="Objetivos específicos de la tarea..." required></textarea>
         </div>
         
+        <!-- 
+          BOTÓN DE ENVÍO DEL FORMULARIO
+          Propósito: Enviar el formulario y asignar la tarea
+          Tipo: submit para envío nativo del formulario
+        -->
         <button type="submit" class="btn-asignar-tarea">Asignar Tarea</button>
       </form>
     </section>
   </main>
 
-  <!-- FOOTER -->
+  <!-- ===== PIE DE PÁGINA ===== -->
   <footer>
     <div class="footer-container">
+      <!-- 
+        INFORMACIÓN DE CONTACTO INSTITUCIONAL
+        Propósito: Proporcionar información de contacto oficial del IFN
+        Elementos:
+          - Dirección física
+          - Correo electrónico y teléfono
+          - Enlaces a redes sociales
+          - Copyright
+      -->
       <p>📍 Dirección: Calle 25 D No. 110911, Colombia</p>
       <p>📧 Correo: contacto@ideam.gov.co | ☎ Tel: +57 (601) 4442060</p>
 
+      <!-- 
+        CONTENEDOR DE REDES SOCIALES
+        Propósito: Enlaces a las redes sociales oficiales del IFN
+        Diseño: Iconos de redes sociales en disposición horizontal
+      -->
       <div class="redes-sociales">
         <a href="https://www.facebook.com/ideam.instituto/?locale=es_LA"><img src="../IMG/facebook.png" alt="Facebook"></a>
         <a href="https://x.com/IDEAMColombia?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><img src="../IMG/X.jpeg" alt="X"></a>
@@ -201,20 +359,32 @@
     </div>
   </footer>
 
+  <!-- ===== SCRIPTS DE FUNCIONALIDAD ===== -->
   <script>
-    // Funcionalidad básica para la gestión de brigadas
+    /**
+     * FUNCIONALIDAD BÁSICA PARA LA GESTIÓN DE BRIGADAS
+     * Propósito: Configurar la funcionalidad básica de la página
+     * Se ejecuta cuando el DOM está completamente cargado
+     */
     document.addEventListener('DOMContentLoaded', function() {
-      // Manejo del formulario de asignación de tareas
+      // 
+      // MANEJO DEL FORMULARIO DE ASIGNACIÓN DE TAREAS
+      // Propósito: Interceptar el envío del formulario y proporcionar feedback
+      //
       const tareaForm = document.querySelector('.tarea-form');
       if (tareaForm) {
         tareaForm.addEventListener('submit', function(e) {
-          e.preventDefault();
+          e.preventDefault(); // Prevenir envío tradicional del formulario
           alert('Tarea asignada correctamente. Los miembros de la brigada han sido notificados.');
-          tareaForm.reset();
+          tareaForm.reset(); // Limpiar el formulario después del envío
         });
       }
       
-      // Botón para nueva brigada
+      // 
+      // BOTÓN PARA NUEVA BRIGADA
+      // Propósito: Manejar el clic en el botón de nueva brigada
+      // Estado actual: Muestra alerta (placeholder para funcionalidad completa)
+      //
       const btnNuevaBrigada = document.querySelector('.btn-nueva-brigada');
       if (btnNuevaBrigada) {
         btnNuevaBrigada.addEventListener('click', function() {
@@ -222,7 +392,11 @@
         });
       }
       
-      // Botón para agregar miembro
+      // 
+      // BOTÓN PARA AGREGAR MIEMBRO
+      // Propósito: Manejar el clic en el botón de agregar miembro
+      // Estado actual: Muestra alerta (placeholder para funcionalidad completa)
+      //
       const btnAgregarMiembro = document.querySelector('.btn-agregar-miembro');
       if (btnAgregarMiembro) {
         btnAgregarMiembro.addEventListener('click', function() {
@@ -230,7 +404,11 @@
         });
       }
       
-      // Botón para guardar zonas
+      // 
+      // BOTÓN PARA GUARDAR ZONAS
+      // Propósito: Manejar el clic en el botón de guardar zonas
+      // Estado actual: Muestra confirmación de guardado
+      //
       const btnGuardarZonas = document.querySelector('.btn-guardar-zonas');
       if (btnGuardarZonas) {
         btnGuardarZonas.addEventListener('click', function() {
@@ -239,6 +417,15 @@
       }
     });
   </script>
+  
+  <!-- 
+    INCLUSIÓN DE SCRIPTS EXTERNOS
+    Propósito: Cargar funcionalidades avanzadas de la aplicación
+    Orden de carga:
+      1. gestionBrigadas.js - Lógica específica del módulo de gestión de brigadas
+      2. auth.js - Sistema de autenticación y gestión de usuarios
+      3. buscador-universal.js - Funcionalidad de búsqueda en todo el sistema
+  -->
   <script src="../JS/gestionBrigadas.js"></script>
   <script src="../JS/auth.js"></script>
   <script src="../JS/buscador-universal.js"></script>

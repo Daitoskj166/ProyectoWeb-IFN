@@ -1,7 +1,21 @@
-// estadisticas.js - Lógica para la generación de reportes del IFN
+/**
+ * SISTEMA DE GENERACIÓN DE REPORTES - INVENTARIO FORESTAL NACIONAL
+ * Archivo: estadisticas.js
+ * Propósito: Lógica para la generación de reportes estadísticos del IFN
+ * Dependencias: Chart.js para visualizaciones gráficas
+ * Autor: Equipo IFN Colombia
+ * Versión: 1.0
+ * Fecha: 2024
+ */
 
 // ===== CÓDIGO DE AUTENTICACIÓN =====
+/**
+ * MANEJADOR DE AUTENTICACIÓN Y AUTORIZACIÓN
+ * Propósito: Verificar sesión de usuario y configurar interfaz según rol
+ * Se ejecuta inmediatamente al cargar la página
+ */
 document.addEventListener("DOMContentLoaded", () => {
+  // Obtener información de sesión del sessionStorage
   const loggedIn = sessionStorage.getItem("loggedIn");
   const username = sessionStorage.getItem("username");
   const userRole = sessionStorage.getItem("userRole");
@@ -9,24 +23,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutBtn = document.querySelector(".texto-abajo");
   const dashboard = document.querySelector(".dashboard");
 
-  // Si no hay sesión activa, redirige al login
+  // Validar existencia de sesión activa
   if (!loggedIn || loggedIn !== "true") {
     alert("Debes iniciar sesión primero.");
     window.location.href = "login.html";
     return;
   }
 
-  // Muestra el nombre del usuario
+  // Actualizar interfaz con información del usuario
   if (userLabel && username) {
     userLabel.textContent = username;
   }
 
-  // Mostrar dashboard según el rol
+  // Configurar dashboard según permisos de rol
   if (dashboard) {
     mostrarDashboardSegunRol(userRole, dashboard);
   }
 
-  // Cerrar sesión
+  // Configurar evento de cierre de sesión
   if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
       sessionStorage.clear();
@@ -38,6 +52,12 @@ document.addEventListener("DOMContentLoaded", () => {
   inicializarAplicacionEstadisticas();
 });
 
+/**
+ * CONFIGURA EL DASHBOARD SEGÚN EL ROL DEL USUARIO
+ * @param {string} rol - Rol del usuario (brigadista, encargado, etc.)
+ * @param {HTMLElement} dashboardElement - Elemento del DOM que contiene el dashboard
+ * Propósito: Mostrar solo las opciones de navegación permitidas para cada rol
+ */
 function mostrarDashboardSegunRol(rol, dashboardElement) {
   if (rol === 'brigadista') {
     dashboardElement.innerHTML = `
@@ -55,12 +75,24 @@ function mostrarDashboardSegunRol(rol, dashboardElement) {
 }
 
 // ===== DECLARACIÓN DE VARIABLES GLOBALES =====
-let datosGlobales = null;
-let graficoEspeciesInstancia = null;
-let graficoRegistrosInstancia = null;
-let graficoSaludInstancia = null;
+/**
+ * VARIABLES GLOBALES DE LA APLICACIÓN
+ * Propósito: Almacenar estado de la aplicación y referencias a gráficos
+ */
+let datosGlobales = null;              // Almacena todos los datos del reporte
+let graficoEspeciesInstancia = null;   // Instancia del gráfico de especies
+let graficoRegistrosInstancia = null;  // Instancia del gráfico de registros
+let graficoSaludInstancia = null;      // Instancia del gráfico de salud forestal
 
 // ===== INICIALIZACIÓN DE LA APLICACIÓN =====
+/**
+ * INICIALIZA EL MÓDULO DE ESTADÍSTICAS
+ * Propósito: Configurar toda la funcionalidad del módulo de reportes
+ * Orden de ejecución:
+ *   1. Configurar event listeners
+ *   2. Cargar datos iniciales
+ *   3. Configurar fechas por defecto
+ */
 function inicializarAplicacionEstadisticas() {
     console.log('Inicializando módulo de reportes IFN...');
     
@@ -75,7 +107,9 @@ function inicializarAplicacionEstadisticas() {
 }
 
 /**
- * Función principal de inicialización de la aplicación
+ * FUNCIÓN PRINCIPAL DE INICIALIZACIÓN DE LA APLICACIÓN
+ * Propósito: Punto de entrada principal para la configuración del módulo
+ * Nota: Mantenida por compatibilidad con código existente
  */
 function inicializarAplicacion() {
     console.log('Inicializando módulo de reportes IFN...');
@@ -91,10 +125,15 @@ function inicializarAplicacion() {
 }
 
 /**
- * Configura todos los event listeners de la aplicación
+ * CONFIGURA TODOS LOS EVENT LISTENERS DE LA APLICACIÓN
+ * Propósito: Establecer manejadores para interacciones del usuario
+ * Eventos configurados:
+ *   - Cambios en filtros
+ *   - Clicks en botones de acción
+ *   - Validaciones en tiempo real
  */
 function configurarEventListeners() {
-    // Event listeners para filtros
+    // Referencias a elementos del DOM
     const periodoSelect = document.getElementById('periodo');
     const btnAplicarFiltros = document.getElementById('btnAplicarFiltros');
     const btnLimpiarFiltros = document.getElementById('btnLimpiarFiltros');
@@ -102,12 +141,12 @@ function configurarEventListeners() {
     const btnCompartir = document.getElementById('btnCompartir');
     const btnVerTodos = document.getElementById('btnVerTodos');
     
-    // Filtro de período
+    // Configurar evento para cambio de período
     if (periodoSelect) {
         periodoSelect.addEventListener('change', manejarCambioPeriodo);
     }
     
-    // Botones de acción
+    // Configurar eventos para botones de acción
     if (btnAplicarFiltros) {
         btnAplicarFiltros.addEventListener('click', aplicarFiltros);
     }
@@ -128,39 +167,46 @@ function configurarEventListeners() {
         btnVerTodos.addEventListener('click', mostrarTodosLosRegistros);
     }
     
-    // Event listeners para cambios en tiempo real
+    // Event listeners para cambios en tiempo real (actualización automática)
     document.getElementById('tipo-reporte')?.addEventListener('change', actualizarVistaPrevia);
     document.getElementById('ubicacion')?.addEventListener('change', actualizarVistaPrevia);
     document.getElementById('brigada')?.addEventListener('change', actualizarVistaPrevia);
     
-    // Filtros de fecha personalizada
+    // Validación de fechas personalizadas
     document.getElementById('fecha-inicio')?.addEventListener('change', validarFechas);
     document.getElementById('fecha-fin')?.addEventListener('change', validarFechas);
 }
 
 /**
- * Configura las fechas por defecto para los filtros
+ * CONFIGURA LAS FECHAS POR DEFECTO PARA LOS FILTROS
+ * Propósito: Establecer valores iniciales razonables para los filtros de fecha
+ * Configuración: Último mes como rango por defecto
  */
 function configurarFechasPorDefecto() {
     const fechaFin = new Date();
     const fechaInicio = new Date();
     fechaInicio.setMonth(fechaInicio.getMonth() - 1); // Último mes por defecto
     
+    // Establecer valores en los inputs de fecha
     document.getElementById('fecha-fin').value = formatearFecha(fechaFin);
     document.getElementById('fecha-inicio').value = formatearFecha(fechaInicio);
 }
 
 /**
- * Formatea una fecha a YYYY-MM-DD para inputs de tipo date
+ * FORMATEA UNA FECHA A YYYY-MM-DD PARA INPUTS DE TIPO DATE
+ * @param {Date} fecha - Objeto Date a formatear
+ * @returns {string} Fecha formateada en formato YYYY-MM-DD
+ * Propósito: Convertir objetos Date al formato requerido por inputs HTML5
  */
 function formatearFecha(fecha) {
     return fecha.toISOString().split('T')[0];
 }
 
 // ===== MANEJO DE FILTROS =====
-
 /**
- * Maneja el cambio en el selector de período
+ * MANEJA EL CAMBIO EN EL SELECTOR DE PERÍODO
+ * Propósito: Mostrar/ocultar filtros de fecha personalizada según selección
+ * Comportamiento: Muestra campos de fecha solo para opción "personalizado"
  */
 function manejarCambioPeriodo() {
     const periodo = this.value;
@@ -176,18 +222,24 @@ function manejarCambioPeriodo() {
 }
 
 /**
- * Aplica los filtros seleccionados y genera el reporte
+ * APLICA LOS FILTROS SELECCIONADOS Y GENERA EL REPORTE
+ * Propósito: Procesar filtros y actualizar la vista con datos filtrados
+ * Flujo:
+ *   1. Validar filtros obligatorios
+ *   2. Obtener parámetros de filtrado
+ *   3. Cargar datos filtrados
+ *   4. Actualizar interfaz
  */
 function aplicarFiltros() {
     mostrarEstadoCarga('Aplicando filtros...');
     
-    // Validar filtros obligatorios
+    // Validar filtros obligatorios antes de proceder
     if (!validarFiltrosObligatorios()) {
         ocultarEstadoCarga();
         return;
     }
     
-    // Obtener parámetros de filtrado
+    // Obtener parámetros de filtrado actuales
     const filtros = obtenerParametrosFiltros();
     
     // Simular carga de datos (en producción sería una llamada AJAX)
@@ -198,22 +250,28 @@ function aplicarFiltros() {
 }
 
 /**
- * Valida que los filtros obligatorios estén completos
+ * VALIDA QUE LOS FILTROS OBLIGATORIOS ESTÉN COMPLETOS
+ * @returns {boolean} True si los filtros obligatorios son válidos
+ * Propósito: Garantizar que se hayan seleccionado los parámetros mínimos requeridos
+ * Filtros obligatorios: Tipo de reporte y período
  */
 function validarFiltrosObligatorios() {
     const tipoReporte = document.getElementById('tipo-reporte').value;
     const periodo = document.getElementById('periodo').value;
     
+    // Validar tipo de reporte
     if (!tipoReporte) {
         mostrarError('Por favor seleccione un tipo de reporte');
         return false;
     }
     
+    // Validar período
     if (!periodo) {
         mostrarError('Por favor seleccione un período');
         return false;
     }
     
+    // Validaciones adicionales para período personalizado
     if (periodo === 'personalizado') {
         const fechaInicio = document.getElementById('fecha-inicio').value;
         const fechaFin = document.getElementById('fecha-fin').value;
@@ -233,7 +291,9 @@ function validarFiltrosObligatorios() {
 }
 
 /**
- * Obtiene todos los parámetros de filtro actuales
+ * OBTIENE TODOS LOS PARÁMETROS DE FILTRO ACTUALES
+ * @returns {Object} Objeto con todos los parámetros de filtrado
+ * Propósito: Recopilar todos los valores de filtro para procesamiento
  */
 function obtenerParametrosFiltros() {
     const periodo = document.getElementById('periodo').value;
@@ -260,16 +320,20 @@ function obtenerParametrosFiltros() {
 }
 
 /**
- * Calcula el rango de fechas según el período seleccionado
+ * CALCULA EL RANGO DE FECHAS SEGÚN EL PERÍODO SELECCIONADO
+ * @param {string} periodo - Período seleccionado (hoy, semana, mes, etc.)
+ * @returns {Object} Objeto con fechas de inicio y fin calculadas
+ * Propósito: Convertir períodos nominales a rangos de fecha concretos
  */
 function calcularRangoFechas(periodo) {
     const hoy = new Date();
     let inicio = new Date();
     let fin = new Date();
     
+    // Calcular fecha de inicio según el período
     switch (periodo) {
         case 'hoy':
-            // Mismo día
+            // Mismo día - no se modifica la fecha de inicio
             break;
         case 'semana':
             inicio.setDate(hoy.getDate() - 7);
@@ -294,10 +358,16 @@ function calcularRangoFechas(periodo) {
 }
 
 /**
- * Limpia todos los filtros y restablece la vista
+ * LIMPIA TODOS LOS FILTROS Y RESTABLECE LA VISTA
+ * Propósito: Permitir al usuario restablecer todos los filtros a valores por defecto
+ * Acciones:
+ *   - Resetear selects
+ *   - Ocultar filtros de fecha personalizada
+ *   - Restablecer fechas por defecto
+ *   - Limpiar vista previa
  */
 function limpiarFiltros() {
-    // Resetear selects
+    // Resetear todos los selects de filtros
     document.querySelectorAll('.filtros-grid select').forEach(select => {
         select.value = '';
     });
@@ -315,7 +385,9 @@ function limpiarFiltros() {
 }
 
 /**
- * Valida que las fechas seleccionadas sean coherentes
+ * VALIDA QUE LAS FECHAS SELECCIONADAS SEAN COHERENTES
+ * Propósito: Prevenir que la fecha de inicio sea mayor que la fecha fin
+ * Comportamiento: Si las fechas son inválidas, limpia el campo de fecha inicio
  */
 function validarFechas() {
     const fechaInicio = document.getElementById('fecha-inicio').value;
@@ -328,9 +400,11 @@ function validarFechas() {
 }
 
 // ===== CARGA Y MANEJO DE DATOS =====
-
 /**
- * Carga los datos iniciales de la aplicación
+ * CARGA LOS DATOS INICIALES DE LA APLICACIÓN
+ * Propósito: Obtener datos base para mostrar en la interfaz
+ * En producción: Realizaría una llamada AJAX al servidor
+ * En desarrollo: Usa datos de ejemplo simulados
  */
 function cargarDatosIniciales() {
     mostrarEstadoCarga('Cargando datos iniciales...');
@@ -345,7 +419,9 @@ function cargarDatosIniciales() {
 }
 
 /**
- * Carga datos filtrados según los parámetros
+ * CARGA DATOS FILTRADOS SEGÚN LOS PARÁMETROS
+ * @param {Object} filtros - Objeto con parámetros de filtrado
+ * Propósito: Aplicar filtros a los datos y actualizar la vista
  */
 function cargarDatosFiltrados(filtros) {
     console.log('Aplicando filtros:', filtros);
@@ -363,7 +439,12 @@ function cargarDatosFiltrados(filtros) {
 }
 
 /**
- * Filtra los datos según los parámetros especificados
+ * FILTRA LOS DATOS SEGÚN LOS PARÁMETROS ESPECIFICADOS
+ * @param {Object} datos - Datos completos a filtrar
+ * @param {Object} filtros - Parámetros de filtrado
+ * @returns {Object} Datos filtrados
+ * Propósito: Aplicar lógica de filtrado a los datos globales
+ * Nota: En implementación real, este filtrado se haría en el servidor
  */
 function filtrarDatos(datos, filtros) {
     // En una implementación real, esto se haría en el servidor
@@ -371,20 +452,21 @@ function filtrarDatos(datos, filtros) {
     
     let datosFiltrados = JSON.parse(JSON.stringify(datos)); // Copia profunda
     
-    // Aplicar filtros (simulación)
+    // Aplicar filtro por ubicación si está especificado
     if (filtros.ubicacion) {
         datosFiltrados.especies = datosFiltrados.especies.filter(especie => 
             especie.ubicacion === filtros.ubicacion
         );
     }
     
+    // Aplicar filtro por brigada si está especificado
     if (filtros.brigada) {
         datosFiltrados.especies = datosFiltrados.especies.filter(especie => 
             especie.brigada === filtros.brigada
         );
     }
     
-    // Recalcular totales
+    // Recalcular totales después del filtrado
     datosFiltrados.totalArboles = datosFiltrados.especies.reduce((sum, esp) => sum + esp.cantidad, 0);
     datosFiltrados.totalEspecies = new Set(datosFiltrados.especies.map(esp => esp.nombre)).size;
     
@@ -392,7 +474,10 @@ function filtrarDatos(datos, filtros) {
 }
 
 /**
- * Genera datos de ejemplo para demostración
+ * GENERA DATOS DE EJEMPLO PARA DEMOSTRACIÓN
+ * @returns {Object} Objeto con datos de ejemplo estructurados
+ * Propósito: Proporcionar datos de prueba para desarrollo y demostración
+ * Estructura: Incluye totales, listado de especies, registros mensuales y distribución
  */
 function generarDatosEjemplo() {
     return {
@@ -427,9 +512,10 @@ function generarDatosEjemplo() {
 }
 
 // ===== ACTUALIZACIÓN DE LA VISTA =====
-
 /**
- * Actualiza la vista previa con los datos actuales
+ * ACTUALIZA LA VISTA PREVIA CON LOS DATOS ACTUALES
+ * Propósito: Sincronizar la interfaz con el estado actual de los datos
+ * Se ejecuta automáticamente cuando cambian los filtros
  */
 function actualizarVistaPrevia() {
     if (!datosGlobales) return;
@@ -440,7 +526,9 @@ function actualizarVistaPrevia() {
 }
 
 /**
- * Actualiza todos los elementos de la vista con los datos proporcionados
+ * ACTUALIZA TODOS LOS ELEMENTOS DE LA VISTA CON LOS DATOS PROPORCIONADOS
+ * @param {Object} datos - Datos a mostrar en la interfaz
+ * Propósito: Coordinar la actualización de todos los componentes visuales
  */
 function actualizarVistaConDatos(datos) {
     // Actualizar estadísticas rápidas
@@ -457,7 +545,9 @@ function actualizarVistaConDatos(datos) {
 }
 
 /**
- * Actualiza las tarjetas de estadísticas rápidas
+ * ACTUALIZA LAS TARJETAS DE ESTADÍSTICAS RÁPIDAS
+ * @param {Object} datos - Datos con las estadísticas a mostrar
+ * Propósito: Actualizar los valores numéricos en las tarjetas de resumen
  */
 function actualizarEstadisticasRapidas(datos) {
     document.getElementById('total-arboles').textContent = datos.totalArboles.toLocaleString();
@@ -467,7 +557,9 @@ function actualizarEstadisticasRapidas(datos) {
 }
 
 /**
- * Actualiza la tabla de datos con la información de especies
+ * ACTUALIZA LA TABLA DE DATOS CON LA INFORMACIÓN DE ESPECIES
+ * @param {Array} especies - Array de objetos con datos de especies
+ * Propósito: Poblar la tabla con datos actualizados de especies forestales
  */
 function actualizarTablaDatos(especies) {
     const tablaBody = document.getElementById('tabla-datos-body');
@@ -487,10 +579,12 @@ function actualizarTablaDatos(especies) {
 }
 
 /**
- * Limpia toda la vista previa
+ * LIMPIA TODA LA VISTA PREVIA
+ * Propósito: Restablecer la interfaz a estado inicial sin datos
+ * Acciones: Restablece estadísticas, limpia tabla y destruye gráficos
  */
 function limpiarVistaPrevia() {
-    // Restablecer estadísticas
+    // Restablecer estadísticas a cero
     document.getElementById('total-arboles').textContent = '0';
     document.getElementById('total-suelos').textContent = '0';
     document.getElementById('total-especies').textContent = '0';
@@ -507,14 +601,16 @@ function limpiarVistaPrevia() {
 }
 
 /**
- * Muestra la vista cuando no hay datos
+ * MUESTRA LA VISTA CUANDO NO HAY DATOS
+ * Propósito: Mostrar estado vacío con mensaje informativo
  */
 function mostrarSinDatos() {
     limpiarVistaPrevia();
 }
 
 /**
- * Muestra todos los registros sin filtros
+ * MUESTRA TODOS LOS REGISTROS SIN FILTROS
+ * Propósito: Restablecer la vista para mostrar todos los datos disponibles
  */
 function mostrarTodosLosRegistros() {
     document.getElementById('periodo').value = '';
@@ -527,12 +623,13 @@ function mostrarTodosLosRegistros() {
 }
 
 // ===== GRÁFICOS =====
-
 /**
- * Genera todos los gráficos del reporte
+ * GENERA TODOS LOS GRÁFICOS DEL REPORTE
+ * @param {Object} datos - Datos para generar los gráficos
+ * Propósito: Crear y renderizar todas las visualizaciones gráficas
  */
 function generarGraficos(datos) {
-    // Destruir gráficos existentes
+    // Destruir gráficos existentes antes de crear nuevos
     destruirGraficos();
     
     // Generar gráfico de distribución de especies
@@ -546,7 +643,10 @@ function generarGraficos(datos) {
 }
 
 /**
- * Genera el gráfico circular de distribución de especies
+ * GENERA EL GRÁFICO CIRCULAR DE DISTRIBUCIÓN DE ESPECIES
+ * @param {Array} especies - Array de datos de especies para el gráfico
+ * Propósito: Visualizar la distribución proporcional de especies forestales
+ * Tipo de gráfico: Doughnut (anillo) para mejor estética y espacio
  */
 function generarGraficoEspecies(especies) {
     const ctx = document.getElementById('graficoEspecies').getContext('2d');
@@ -597,7 +697,10 @@ function generarGraficoEspecies(especies) {
 }
 
 /**
- * Genera el gráfico de barras de registros mensuales
+ * GENERA EL GRÁFICO DE BARRAS DE REGISTROS MENSUALES
+ * @param {Object} registrosMensuales - Datos de registros por mes
+ * Propósito: Mostrar tendencia temporal de registros de árboles y suelos
+ * Tipo de gráfico: Barras agrupadas para comparación visual
  */
 function generarGraficoRegistros(registrosMensuales) {
     const ctx = document.getElementById('graficoRegistros').getContext('2d');
@@ -653,7 +756,10 @@ function generarGraficoRegistros(registrosMensuales) {
 }
 
 /**
- * Genera el gráfico de condición de los árboles
+ * GENERA EL GRÁFICO DE CONDICIÓN DE LOS ÁRBOLES
+ * @param {Object} distribucionCondicion - Datos de distribución por condición
+ * Propósito: Visualizar el estado de salud general del bosque
+ * Nota: Este gráfico se renderiza solo si existe el canvas correspondiente
  */
 function generarGraficoCondicion(distribucionCondicion) {
     // Este gráfico se podría agregar en un tercer canvas si está disponible
@@ -687,7 +793,9 @@ function generarGraficoCondicion(distribucionCondicion) {
 }
 
 /**
- * Destruye todos los gráficos existentes
+ * DESTRUYE TODOS LOS GRÁFICOS EXISTENTES
+ * Propósito: Liberar recursos y preparar para nueva generación de gráficos
+ * Importante: Previene memory leaks en Chart.js
  */
 function destruirGraficos() {
     if (graficoEspeciesInstancia) {
@@ -707,7 +815,11 @@ function destruirGraficos() {
 }
 
 /**
- * Genera un array de colores para los gráficos
+ * GENERA UN ARRAY DE COLORES PARA LOS GRÁFICOS
+ * @param {number} cantidad - Número de colores necesarios
+ * @returns {Array} Array de colores en formato hexadecimal o HSL
+ * Propósito: Proporcionar paleta de colores consistente para visualizaciones
+ * Estrategia: Usa colores base y genera adicionales con ángulo dorado
  */
 function generarColores(cantidad) {
     const coloresBase = [
@@ -721,7 +833,7 @@ function generarColores(cantidad) {
         return coloresBase.slice(0, cantidad);
     }
     
-    // Generar colores adicionales
+    // Generar colores adicionales usando ángulo dorado para distribución uniforme
     const coloresAdicionales = [];
     for (let i = coloresBase.length; i < cantidad; i++) {
         const hue = (i * 137.508) % 360; // Usar ángulo dorado para distribución
@@ -732,9 +844,10 @@ function generarColores(cantidad) {
 }
 
 // ===== EXPORTACIÓN Y COMPARTIR =====
-
 /**
- * Maneja la exportación del reporte
+ * MANEJA LA EXPORTACIÓN DEL REPORTE
+ * Propósito: Coordinar el proceso de exportación según formato seleccionado
+ * Flujo: Validación → Generación → Descarga → Confirmación
  */
 function manejarExportacion() {
     const formato = document.querySelector('input[name="formato"]:checked').value;
@@ -754,7 +867,9 @@ function manejarExportacion() {
 }
 
 /**
- * Valida que haya datos para exportar
+ * VALIDA QUE HAYA DATOS PARA EXPORTAR
+ * @returns {boolean} True si hay datos suficientes para exportar
+ * Propósito: Prevenir exportación de reportes vacíos
  */
 function validarDatosParaExportar() {
     const totalArboles = parseInt(document.getElementById('total-arboles').textContent.replace(/,/g, ''));
@@ -762,12 +877,15 @@ function validarDatosParaExportar() {
 }
 
 /**
- * Exporta el reporte en el formato especificado
+ * EXPORTA EL REPORTE EN EL FORMATO ESPECIFICADO
+ * @param {string} formato - Formato de exportación (pdf, csv, excel)
+ * Propósito: Generar y descargar el reporte en el formato solicitado
  */
 function exportarReporte(formato) {
     const filtros = obtenerParametrosFiltros();
     const nombreArchivo = `reporte_ifn_${new Date().toISOString().split('T')[0]}.${formato}`;
     
+    // Ejecutar exportación según formato
     switch (formato) {
         case 'pdf':
             simularDescargaPDF(nombreArchivo);
@@ -790,7 +908,10 @@ function exportarReporte(formato) {
 }
 
 /**
- * Simula la descarga de un archivo PDF
+ * SIMULA LA DESCARGA DE UN ARCHIVO PDF
+ * @param {string} nombreArchivo - Nombre del archivo a descargar
+ * Propósito: Simular el proceso de descarga de reporte PDF
+ * Nota: En implementación real, generaría PDF con biblioteca como jsPDF
  */
 function simularDescargaPDF(nombreArchivo) {
     // En una implementación real, aquí se generaría el PDF
@@ -807,11 +928,14 @@ function simularDescargaPDF(nombreArchivo) {
 }
 
 /**
- * Genera y descarga un archivo CSV
+ * GENERA Y DESCARGA UN ARCHIVO CSV
+ * @param {string} nombreArchivo - Nombre del archivo CSV
+ * Propósito: Exportar datos en formato CSV para análisis externo
  */
 function generarCSV(nombreArchivo) {
     if (!datosGlobales) return;
     
+    // Construir contenido CSV
     let contenidoCSV = 'Especie,Cantidad,Altura Promedio (m),Diámetro Promedio (cm),Condición\n';
     
     datosGlobales.especies.forEach(especie => {
@@ -833,7 +957,10 @@ function generarCSV(nombreArchivo) {
 }
 
 /**
- * Simula la descarga de un archivo Excel
+ * SIMULA LA DESCARGA DE UN ARCHIVO EXCEL
+ * @param {string} nombreArchivo - Nombre del archivo Excel
+ * Propósito: Simular exportación a formato Excel
+ * Nota: En implementación real, usaría biblioteca como SheetJS
  */
 function simularDescargaExcel(nombreArchivo) {
     // En una implementación real, aquí se generaría el Excel
@@ -850,7 +977,9 @@ function simularDescargaExcel(nombreArchivo) {
 }
 
 /**
- * Maneja el compartir por correo
+ * MANEJA EL COMPARTIR POR CORREO
+ * Propósito: Permitir al usuario enviar el reporte por correo electrónico
+ * Flujo: Validación → Solicitar email → Simular envío → Confirmación
  */
 function manejarCompartir() {
     if (!validarDatosParaExportar()) {
@@ -877,7 +1006,10 @@ function manejarCompartir() {
 }
 
 /**
- * Valida formato de email
+ * VALIDA FORMATO DE EMAIL
+ * @param {string} email - Dirección de correo a validar
+ * @returns {boolean} True si el email tiene formato válido
+ * Propósito: Validar sintácticamente direcciones de correo electrónico
  */
 function validarEmail(email) {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -885,7 +1017,10 @@ function validarEmail(email) {
 }
 
 /**
- * Simula el envío de correo
+ * SIMULA EL ENVÍO DE CORREO
+ * @param {string} email - Dirección de correo destino
+ * Propósito: Simular el proceso de envío de reporte por correo
+ * Nota: En implementación real, conectaría con servicio de email
  */
 function simularEnvioCorreo(email) {
     console.log(`Enviando reporte a: ${email}`);
@@ -896,9 +1031,11 @@ function simularEnvioCorreo(email) {
 }
 
 // ===== UTILIDADES Y MANEJO DE ESTADO =====
-
 /**
- * Muestra un mensaje de estado al usuario
+ * MUESTRA UN MENSAJE DE ESTADO AL USUARIO
+ * @param {string} mensaje - Texto del mensaje a mostrar
+ * Propósito: Proporcionar feedback visual durante operaciones largas
+ * Implementación: Crea un toast notification temporal
  */
 function mostrarEstadoCarga(mensaje) {
     // En una implementación real, mostraría un spinner o barra de progreso
@@ -929,7 +1066,8 @@ function mostrarEstadoCarga(mensaje) {
 }
 
 /**
- * Oculta el mensaje de estado
+ * OCULTA EL MENSAJE DE ESTADO
+ * Propósito: Remover el indicador de carga cuando finaliza la operación
  */
 function ocultarEstadoCarga() {
     const toast = document.getElementById('loading-toast');
@@ -939,14 +1077,20 @@ function ocultarEstadoCarga() {
 }
 
 /**
- * Muestra un mensaje de error
+ * MUESTRA UN MENSAJE DE ERROR
+ * @param {string} mensaje - Texto del mensaje de error
+ * Propósito: Mostrar mensajes de error de forma estandarizada
  */
 function mostrarError(mensaje) {
     mostrarMensaje(mensaje, 'error');
 }
 
 /**
- * Muestra un mensaje al usuario
+ * MUESTRA UN MENSAJE AL USUARIO
+ * @param {string} mensaje - Texto del mensaje
+ * @param {string} tipo - Tipo de mensaje (success, error, warning, info)
+ * Propósito: Sistema unificado de notificaciones al usuario
+ * Características: Toast notification con colores semánticos
  */
 function mostrarMensaje(mensaje, tipo = 'info') {
     // Colores según el tipo de mensaje
@@ -987,7 +1131,10 @@ function mostrarMensaje(mensaje, tipo = 'info') {
 }
 
 /**
- * Registra evento de exportación (simulación de analytics)
+ * REGISTRA EVENTO DE EXPORTACIÓN (SIMULACIÓN DE ANALYTICS)
+ * @param {string} formato - Formato de exportación utilizado
+ * Propósito: Registrar métricas de uso para análisis posterior
+ * Nota: En producción, enviaría datos a Google Analytics o similar
  */
 function registrarEventoExportacion(formato) {
     console.log(`📊 Evento de exportación: ${formato}`);
@@ -995,7 +1142,9 @@ function registrarEventoExportacion(formato) {
 }
 
 /**
- * Registra evento de compartir (simulación de analytics)
+ * REGISTRA EVENTO DE COMPARTIR (SIMULACIÓN DE ANALYTICS)
+ * @param {string} email - Email al que se compartió (parcialmente ofuscado)
+ * Propósito: Registrar métricas de compartir reportes
  */
 function registrarEventoCompartir(email) {
     console.log(`📧 Evento de compartir: ${email.substring(0, 3)}...`);
@@ -1003,9 +1152,10 @@ function registrarEventoCompartir(email) {
 }
 
 // ===== ESTILOS DINÁMICOS =====
-
 /**
- * Agrega estilos CSS dinámicos para la aplicación
+ * AGREGA ESTILOS CSS DINÁMICOS PARA LA APLICACIÓN
+ * Propósito: Inyectar estilos específicos necesarios para la funcionalidad
+ * Ventaja: No requiere archivo CSS adicional para estilos específicos
  */
 function agregarEstilosDinamicos() {
     const estilos = `
@@ -1058,7 +1208,12 @@ function agregarEstilosDinamicos() {
 // Inicializar estilos dinámicos cuando se carga el script
 agregarEstilosDinamicos();
 
-// Exportar funciones principales para uso global (si es necesario)
+// ===== INTERFAZ PÚBLICA =====
+/**
+ * INTERFAZ PÚBLICA DEL MÓDULO DE REPORTES
+ * Propósito: Exponer funciones principales para uso externo si es necesario
+ * Ventaja: Permite integración con otros módulos del sistema
+ */
 window.ReportesIFN = {
     aplicarFiltros,
     limpiarFiltros,
@@ -1066,4 +1221,5 @@ window.ReportesIFN = {
     generarGraficos
 };
 
+// Mensaje de confirmación de carga
 console.log('Módulo de reportes IFN cargado correctamente');

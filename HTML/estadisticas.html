@@ -4,22 +4,47 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Generar Reporte - IFN</title>
-  <!-- Enlace al archivo CSS específico para estilos de reportes -->
+  <!-- 
+    ENLACE AL ARCHIVO CSS ESPECÍFICO PARA ESTILOS DE REPORTES
+    Propósito: Define los estilos visuales específicos para la página de reportes
+    Ubicación: Archivo CSS en la carpeta ../CSS/
+  -->
   <link rel="stylesheet" href="../CSS/styles-Estadisticas.css">
-  <!-- Importación de Chart.js para generar gráficos interactivos -->
+  
+  <!-- 
+    IMPORTACIÓN DE CHART.JS PARA GENERAR GRÁFICOS INTERACTIVOS
+    Propósito: Biblioteca externa para la creación de gráficos dinámicos y responsivos
+    Fuente: CDN de Chart.js para optimizar el tiempo de carga
+  -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <!-- ===== ENCABEZADO PRINCIPAL ===== -->
   <header>
-    <!-- Logo del Instituto de Hidrología, Meteorología y Estudios Ambientales -->
+    <!-- 
+      LOGO DEL INSTITUTO DE HIDROLOGÍA, METEOROLOGÍA Y ESTUDIOS AMBIENTALES
+      Propósito: Identificación visual de la institución
+      Atributos:
+        - class: "Logo" para estilos específicos
+        - src: Ruta de la imagen del logo
+        - alt: Texto alternativo para accesibilidad
+        - width: Ancho fijo para consistencia visual
+    -->
     <img class="Logo" src="../IMG/ifn-baja-tcm30-525131.png" alt="Logo IFN" width="150">
     
-    <!-- Contenedor central del header con título y navegación -->
+    <!-- CONTENEDOR CENTRAL DEL HEADER CON TÍTULO Y NAVEGACIÓN -->
     <div class="center-header">
+      <!-- 
+        TÍTULO PRINCIPAL DEL SISTEMA
+        Propósito: Identificar claramente la aplicación y su alcance nacional
+      -->
       <h1>INVENTARIO FORESTAL NACIONAL - COLOMBIA</h1>
       
-      <!-- Menú de navegación principal -->
+      <!-- 
+        MENÚ DE NAVEGACIÓN PRINCIPAL - DASHBOARD
+        Propósito: Permitir la navegación entre diferentes módulos del sistema
+        Estructura: Enlaces con clase "dashboard-btn" para estilos consistentes
+      -->
       <div class="dashboard">
         <a href="inicio-Pantalla.html" class="dashboard-btn">Inicio</a>
         <a href="subirArbol.html" class="dashboard-btn">Subir Arbol</a>
@@ -30,7 +55,14 @@
       </div>
     </div>
 
-    <!-- Sección de información del usuario -->
+    <!-- 
+      SECCIÓN DE INFORMACIÓN DEL USUARIO
+      Propósito: Mostrar información del usuario logueado y opción de cierre de sesión
+      Componentes:
+        - texto-arriba: Nombre del usuario
+        - Login: Imagen de perfil del usuario
+        - texto-abajo: Botón para cerrar sesión
+    -->
     <div class="login-imagen">
       <p class="texto-arriba">User</p>
       <img class="Login" src="../IMG/login.png" alt="Login User" width="150">
@@ -38,7 +70,13 @@
     </div>
   </header>
 
-  <!-- Banner que muestra el estado de conexión del sistema -->
+  <!-- 
+    BANNER QUE MUESTRA EL ESTADO DE CONEXIÓN DEL SISTEMA
+    Propósito: Informar al usuario sobre el estado de conectividad y guardado automático
+    Elementos visuales:
+      - banner-icon: Indicador visual del estado (🟢 para conectado)
+      - banner-texto: Descripción textual del estado
+  -->
   <div class="banner-conectado">
     <span class="banner-icon">🟢</span>
     <span class="banner-texto">En línea - Datos se guardan automáticamente</span>
@@ -46,15 +84,29 @@
 
   <!-- ===== CONTENIDO PRINCIPAL DE LA PÁGINA ===== -->
   <main>
+    <!-- 
+      TÍTULO PRINCIPAL DE LA PÁGINA
+      Propósito: Indicar claramente la funcionalidad principal de esta vista
+    -->
     <h1>GENERAR REPORTES</h1>
     
-    <!-- SECCIÓN DE FILTROS PARA PERSONALIZAR EL REPORTE -->
+    <!-- 
+      SECCIÓN DE FILTROS PARA PERSONALIZAR EL REPORTE
+      Propósito: Permitir al usuario definir parámetros específicos para el reporte
+    -->
     <div class="filtros-reporte">
       <h2>Personalizar Reporte</h2>
       
-      <!-- Grid responsivo para organizar los filtros -->
+      <!-- 
+        GRID RESPONSIVO PARA ORGANIZAR LOS FILTROS
+        Propósito: Diseño adaptable que se ajusta a diferentes tamaños de pantalla
+      -->
       <div class="filtros-grid">
-        <!-- Filtro por tipo de reporte (obligatorio) -->
+        <!-- 
+          FILTRO POR TIPO DE REPORTE (OBLIGATORIO)
+          Propósito: Seleccionar la categoría principal del reporte a generar
+          Validación: Campo requerido (atributo required)
+        -->
         <div class="filtro-grupo">
           <label for="tipo-reporte">Tipo de Reporte *</label>
           <select id="tipo-reporte" required>
@@ -67,7 +119,11 @@
           </select>
         </div>
         
-        <!-- Filtro por período de tiempo (obligatorio) -->
+        <!-- 
+          FILTRO POR PERÍODO DE TIEMPO (OBLIGATORIO)
+          Propósito: Definir el rango temporal para el reporte
+          Validación: Campo requerido (atributo required)
+        -->
         <div class="filtro-grupo">
           <label for="periodo">Período *</label>
           <select id="periodo" required>
@@ -81,7 +137,11 @@
           </select>
         </div>
         
-        <!-- Filtro opcional por ubicación geográfica -->
+        <!-- 
+          FILTRO OPCIONAL POR UBICACIÓN GEOGRÁFICA
+          Propósito: Filtrar datos por región geográfica específica
+          Característica: Campo opcional para refinamiento de búsqueda
+        -->
         <div class="filtro-grupo">
           <label for="ubicacion">Ubicación</label>
           <select id="ubicacion">
@@ -97,7 +157,11 @@
           </select>
         </div>
         
-        <!-- Filtro opcional por brigada de campo -->
+        <!-- 
+          FILTRO OPCIONAL POR BRIGADA DE CAMPO
+          Propósito: Filtrar datos por equipo de trabajo específico
+          Característica: Campo opcional para análisis por grupo de trabajo
+        -->
         <div class="filtro-grupo">
           <label for="brigada">Brigada</label>
           <select id="brigada">
@@ -111,7 +175,11 @@
         </div>
       </div>
       
-      <!-- Filtros de fecha personalizada (se muestran solo cuando se selecciona "Personalizado") -->
+      <!-- 
+        FILTROS DE FECHA PERSONALIZADA
+        Propósito: Mostrar campos de fecha cuando se selecciona "Personalizado"
+        Comportamiento: Se muestra/oculta dinámicamente mediante JavaScript
+      -->
       <div class="filtros-fecha" id="filtros-fecha" style="display: none;">
         <div class="filtro-grupo">
           <label for="fecha-inicio">Fecha Inicio</label>
@@ -124,18 +192,28 @@
         </div>
       </div>
       
-      <!-- Botones para gestionar los filtros -->
+      <!-- 
+        BOTONES PARA GESTIONAR LOS FILTROS
+        Propósito: Acciones para aplicar o limpiar los filtros seleccionados
+      -->
       <div class="botones-filtros">
         <button class="btn-limpiar" id="btnLimpiarFiltros">Limpiar Filtros</button>
         <button class="btn-aplicar" id="btnAplicarFiltros">Aplicar Filtros</button>
       </div>
     </div>
     
-    <!-- SECCIÓN DE VISTA PREVIA DEL REPORTE -->
+    <!-- 
+      SECCIÓN DE VISTA PREVIA DEL REPORTE
+      Propósito: Mostrar una previsualización del reporte antes de la exportación
+    -->
     <div class="vista-previa">
       <h2>Vista Previa del Reporte</h2>
       
-      <!-- Tarjetas con estadísticas rápidas del reporte -->
+      <!-- 
+        TARJETAS CON ESTADÍSTICAS RÁPIDAS DEL REPORTE
+        Propósito: Presentar métricas clave de forma visualmente atractiva
+        Diseño: Grid de 4 tarjetas con números destacados y descripciones
+      -->
       <div class="estadisticas-rapidas">
         <div class="estadistica-item">
           <span class="estadistica-numero" id="total-arboles">0</span>
@@ -155,22 +233,38 @@
         </div>
       </div>
       
-      <!-- Contenedor para los gráficos del reporte -->
+      <!-- 
+        CONTENEDOR PARA LOS GRÁFICOS DEL REPORTE
+        Propósito: Área dedicada para la visualización de datos gráficos
+        Estructura: Dos gráficos principales lado a lado en disposición responsive
+      -->
       <div class="graficos-reporte">
         <div class="grafico-container">
           <h3>Distribución de Especies</h3>
-          <!-- Canvas para el gráfico circular de distribución de especies -->
+          <!-- 
+            CANVAS PARA EL GRÁFICO CIRCULAR DE DISTRIBUCIÓN DE ESPECIES
+            Propósito: Renderizar gráfico de torta/tarta usando Chart.js
+            ID: "graficoEspecies" para referencia en JavaScript
+          -->
           <canvas id="graficoEspecies"></canvas>
         </div>
         
         <div class="grafico-container">
           <h3>Registros por Mes</h3>
-          <!-- Canvas para el gráfico de barras de registros por mes -->
+          <!-- 
+            CANVAS PARA EL GRÁFICO DE BARRAS DE REGISTROS POR MES
+            Propósito: Renderizar gráfico de barras usando Chart.js
+            ID: "graficoRegistros" para referencia en JavaScript
+          -->
           <canvas id="graficoRegistros"></canvas>
         </div>
       </div>
       
-      <!-- Tabla con resumen detallado de los datos -->
+      <!-- 
+        TABLA CON RESUMEN DETALLADO DE LOS DATOS
+        Propósito: Presentar datos tabulares detallados del reporte
+        Característica: Datos cargados dinámicamente mediante JavaScript
+      -->
       <div class="tabla-resumen">
         <h3>Resumen de Datos</h3>
         <table class="tabla-datos">
@@ -184,17 +278,28 @@
             </tr>
           </thead>
           <tbody id="tabla-datos-body">
-            <!-- Las filas de datos se insertarán dinámicamente mediante JavaScript -->
+            <!-- 
+              LAS FILAS DE DATOS SE INSERTARÁN DINÁMICAMENTE MEDIANTE JAVASCRIPT
+              Propósito: Contenedor para datos generados programáticamente
+              ID: "tabla-datos-body" para manipulación vía DOM
+            -->
           </tbody>
         </table>
       </div>
     </div>
     
-    <!-- SECCIÓN DE OPCIONES DE EXPORTACIÓN -->
+    <!-- 
+      SECCIÓN DE OPCIONES DE EXPORTACIÓN
+      Propósito: Permitir al usuario exportar el reporte en diferentes formatos
+    -->
     <div class="opciones-exportacion">
       <h2>Opciones de Exportación</h2>
       
-      <!-- Selector de formato de exportación -->
+      <!-- 
+        SELECTOR DE FORMATO DE EXPORTACIÓN
+        Propósito: Elegir el formato de archivo para la exportación
+        Diseño: Grupo de botones de radio para selección única
+      -->
       <div class="formatos-exportacion">
         <div class="formato-opcion">
           <input type="radio" id="formato-pdf" name="formato" value="pdf" checked>
@@ -212,7 +317,10 @@
         </div>
       </div>
       
-      <!-- Botones de acción para exportar y compartir -->
+      <!-- 
+        BOTONES DE ACCIÓN PARA EXPORTAR Y COMPARTIR
+        Propósito: Ejecutar las acciones principales de exportación y distribución
+      -->
       <div class="botones-exportacion">
         <button class="btn-exportar" id="btnExportar">
           <span class="btn-icon">📊</span>
@@ -226,7 +334,11 @@
       </div>
     </div>
     
-    <!-- Mensaje que se muestra cuando no hay datos para el reporte -->
+    <!-- 
+      MENSAJE QUE SE MUESTRA CUANDO NO HAY DATOS PARA EL REPORTE
+      Propósito: Comunicar al usuario la ausencia de datos y ofrecer alternativas
+      Comportamiento: Se muestra/oculta dinámicamente según disponibilidad de datos
+    -->
     <div class="sin-datos" id="sinDatos" style="display: none;">
       <div class="sin-datos-icon">📝</div>
       <h3>No hay datos para el reporte solicitado</h3>
@@ -260,7 +372,11 @@
 
   <!-- ===== SCRIPT CON LA LÓGICA DE LA APLICACIÓN ===== -->
   <script>
-    // Espera a que el DOM esté completamente cargado antes de ejecutar el código
+    /**
+     * MANEJO DEL EVENTO DOMCONTENTLOADED
+     * Propósito: Ejecutar el código cuando el DOM esté completamente cargado
+     * Garantiza que todos los elementos HTML estén disponibles para manipulación
+     */
     document.addEventListener('DOMContentLoaded', function() {
       // ===== DECLARACIÓN DE VARIABLES Y ELEMENTOS DEL DOM =====
       
@@ -280,7 +396,11 @@
       
       // ===== CONFIGURACIÓN DE EVENT LISTENERS =====
       
-      // Muestra u oculta los filtros de fecha personalizada según la selección
+      /**
+       * EVENT LISTENER PARA CAMBIO EN SELECTOR DE PERÍODO
+       * Propósito: Mostrar/ocultar filtros de fecha personalizada
+       * Lógica: Si se selecciona "personalizado", muestra los campos de fecha
+       */
       periodoSelect.addEventListener('change', function() {
         if (this.value === 'personalizado') {
           filtrosFecha.style.display = 'flex'; // Muestra los filtros de fecha
@@ -289,12 +409,18 @@
         }
       });
       
-      // Aplica los filtros seleccionados y genera la vista previa
+      /**
+       * EVENT LISTENER PARA BOTÓN APLICAR FILTROS
+       * Propósito: Ejecutar la generación de vista previa con filtros aplicados
+       */
       btnAplicarFiltros.addEventListener('click', function() {
         generarVistaPrevia(); // Función que procesa los filtros y actualiza la vista
       });
       
-      // Limpia todos los filtros y restablece la vista
+      /**
+       * EVENT LISTENER PARA BOTÓN LIMPIAR FILTROS
+       * Propósito: Restablecer todos los filtros a sus valores por defecto
+       */
       btnLimpiarFiltros.addEventListener('click', function() {
         // Resetea todos los selects de filtros
         document.querySelectorAll('.filtros-grid select').forEach(select => {
@@ -310,19 +436,28 @@
         limpiarVistaPrevia();
       });
       
-      // Exporta el reporte en el formato seleccionado
+      /**
+       * EVENT LISTENER PARA BOTÓN EXPORTAR
+       * Propósito: Iniciar el proceso de exportación del reporte
+       */
       btnExportar.addEventListener('click', function() {
         // Obtiene el formato seleccionado (PDF, CSV o Excel)
         const formato = document.querySelector('input[name="formato"]:checked').value;
         exportarReporte(formato); // Función que maneja la exportación
       });
       
-      // Comparte el reporte por correo electrónico
+      /**
+       * EVENT LISTENER PARA BOTÓN COMPARTIR
+       * Propósito: Iniciar el proceso de compartir reporte por correo
+       */
       btnCompartir.addEventListener('click', function() {
         compartirReporte(); // Función que maneja el envío por correo
       });
       
-      // Muestra todos los registros sin filtros aplicados
+      /**
+       * EVENT LISTENER PARA BOTÓN VER TODOS
+       * Propósito: Mostrar todos los registros sin aplicar filtros
+       */
       btnVerTodos.addEventListener('click', function() {
         // Limpia los filtros principales
         document.getElementById('periodo').value = '';
@@ -336,7 +471,8 @@
       // ===== FUNCIONES PRINCIPALES DE LA APLICACIÓN =====
       
       /**
-       * Genera la vista previa del reporte aplicando los filtros seleccionados
+       * GENERA LA VISTA PREVIA DEL REPORTE APLICANDO LOS FILTROS SELECCIONADOS
+       * Propósito: Procesar filtros, cargar datos y actualizar la interfaz
        * Simula una llamada a la base de datos y actualiza la interfaz
        */
       function generarVistaPrevia() {
@@ -425,7 +561,8 @@
       }
       
       /**
-       * Limpia toda la vista previa del reporte
+       * LIMPIA TODA LA VISTA PREVIA DEL REPORTE
+       * Propósito: Restablecer la interfaz a estado inicial
        * Restablece estadísticas, tabla y gráficos a valores por defecto
        */
       function limpiarVistaPrevia() {
@@ -456,7 +593,8 @@
       }
       
       /**
-       * Genera y renderiza los gráficos usando Chart.js
+       * GENERA Y RENDERIZA LOS GRÁFICOS USANDO CHART.JS
+       * Propósito: Crear visualizaciones gráficas de los datos
        * Crea un gráfico circular para especies y uno de barras para registros
        */
       function generarGraficos() {
@@ -525,8 +663,9 @@
       }
       
       /**
-       * Simula la exportación del reporte en el formato especificado
+       * SIMULA LA EXPORTACIÓN DEL REPORTE EN EL FORMATO ESPECIFICADO
        * @param {string} formato - Formato de exportación (pdf, csv, excel)
+       * Propósito: Manejar la generación y descarga del reporte
        */
       function exportarReporte(formato) {
         // Cambia el texto del botón para indicar proceso en curso
@@ -548,7 +687,8 @@
       }
       
       /**
-       * Simula el envío del reporte por correo electrónico
+       * SIMULA EL ENVÍO DEL REPORTE POR CORREO ELECTRÓNICO
+       * Propósito: Permitir al usuario compartir el reporte vía email
        * Solicita el correo destino y muestra confirmación
        */
       function compartirReporte() {
@@ -574,7 +714,8 @@
       }
       
       /**
-       * Muestra un indicador de carga (placeholder para implementación real)
+       * MUESTRA UN INDICADOR DE CARGA (PLACEHOLDER PARA IMPLEMENTACIÓN REAL)
+       * Propósito: Proporcionar feedback visual durante operaciones largas
        * En una implementación completa mostraría un spinner o barra de progreso
        */
       function mostrarCarga() {
@@ -583,7 +724,8 @@
       }
       
       /**
-       * Oculta el indicador de carga (placeholder para implementación real)
+       * OCULTA EL INDICADOR DE CARGA (PLACEHOLDER PARA IMPLEMENTACIÓN REAL)
+       * Propósito: Remover el feedback visual cuando finaliza la operación
        */
       function ocultarCarga() {
         // En una implementación real, aquí se ocultaría el spinner de carga
@@ -596,6 +738,15 @@
       limpiarVistaPrevia();
     });
   </script>
+  
+  <!-- 
+    INCLUSIÓN DE SCRIPTS EXTERNOS
+    Propósito: Cargar funcionalidades adicionales de la aplicación
+    Orden de carga: 
+      1. estadisticas.js - Lógica específica del módulo de reportes
+      2. auth.js - Sistema de autenticación y gestión de usuarios
+      3. buscador-universal.js - Funcionalidad de búsqueda en todo el sistema
+  -->
   <script src="../JS/estadisticas.js"></script>
   <script src="../JS/auth.js"></script>
   <script src="../JS/buscador-universal.js"></script>
