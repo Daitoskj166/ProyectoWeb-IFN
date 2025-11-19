@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Brigadas - IFN</title>
+  <link rel="stylesheet" href="../CSS/styles-gestionBrigadas.css">
+</head>
+<body>
+  <!-- ===== ENCABEZADO ===== -->
+  <header>
+    <!-- Logo institucional -->
+    <img class="Logo" src="../IMG/ifn-baja-tcm30-525131.png" alt="Logo IFN" width="150">
+
+    <!-- Contenedor central con título y menú de navegación -->
+    <div class="center-header">
+      <h1>SISTEMA DE IDENTIFICACION DE ESPECIES</h1>
+      <!-- Menú de navegación tipo dashboard -->
+      <div class="dashboard">
+        <a href="inicio-Pantalla.html" class="dashboard-btn">Inicio</a>
+        <a href="subirArbol.html" class="dashboard-btn">Subir Árbol</a>
+        <a href="subirSuelo.html" class="dashboard-btn">Subir Suelo</a>
+        <a href="registro.html" class="dashboard-btn">Registro</a>
+        <a href="estadisticas.html" class="dashboard-btn">Estadísticas</a>
+        <a href="supervision.html" class="dashboard-btn">Supervisión</a>
+      </div>
+    </div>
+
+    <!-- Información del usuario con imagen y botón de cierre de sesión -->
+    <div class="login-imagen">
+      <p class="texto-arriba">User</p>
+      <img class="Login" src="../IMG/login.png" alt="Login User" width="150">
+      <button class="texto-abajo">Cerrar sesión</button>
+    </div>
+  </header>
+
+  <!-- Contenedor principal de la barra de búsqueda -->
+  <div class="search-container">
+    <!-- Caja que contiene el input de búsqueda y el icono -->
+    <div class="search-box"> 
+      <input type="text" placeholder="Buscar brigada o miembro...">
+      <span class="search-icon">🔍</span>
+    </div>
+  </div>
+
+  <!-- ===== MAIN ===== -->
+  <main>
+    <h1>GESTIÓN DE BRIGADAS</h1>
+
+    <!-- Sección de lista de brigadas -->
+    <section class="brigadas-section">
+      <h2>📋 BRIGADAS REGISTRADAS</h2>
+      <div class="brigadas-container">
+        <div class="brigada-card">
+          <h3>Brigada Norte</h3>
+          <p><strong>Líder:</strong> Carlos Rodríguez</p>
+          <p><strong>Miembros:</strong> 5</p>
+          <p><strong>Zona:</strong> Sector Norte del Bosque</p>
+          <div class="brigada-actions">
+            <button class="btn-editar">Editar</button>
+            <button class="btn-asignar">Asignar Tarea</button>
+          </div>
+        </div>
+        
+        <div class="brigada-card">
+          <h3>Brigada Sur</h3>
+          <p><strong>Líder:</strong> Ana Martínez</p>
+          <p><strong>Miembros:</strong> 4</p>
+          <p><strong>Zona:</strong> Sector Sur del Bosque</p>
+          <div class="brigada-actions">
+            <button class="btn-editar">Editar</button>
+            <button class="btn-asignar">Asignar Tarea</button>
+          </div>
+        </div>
+        
+        <div class="brigada-card">
+          <h3>Brigada Este</h3>
+          <p><strong>Líder:</strong> Luis González</p>
+          <p><strong>Miembros:</strong> 6</p>
+          <p><strong>Zona:</strong> Sector Este del Bosque</p>
+          <div class="brigada-actions">
+            <button class="btn-editar">Editar</button>
+            <button class="btn-asignar">Asignar Tarea</button>
+          </div>
+        </div>
+      </div>
+      
+      <button class="btn-nueva-brigada">+ Nueva Brigada</button>
+    </section>
+
+    <!-- Sección de gestión de miembros -->
+    <section class="miembros-section">
+      <h2>👥 GESTIÓN DE MIEMBROS</h2>
+      <div class="miembros-container">
+        <div class="miembro-item">
+          <span>Carlos Rodríguez</span>
+          <select>
+            <option>Brigada Norte</option>
+            <option>Brigada Sur</option>
+            <option>Brigada Este</option>
+            <option>Sin asignar</option>
+          </select>
+        </div>
+        <div class="miembro-item">
+          <span>Ana Martínez</span>
+          <select>
+            <option>Brigada Norte</option>
+            <option selected>Brigada Sur</option>
+            <option>Brigada Este</option>
+            <option>Sin asignar</option>
+          </select>
+        </div>
+        <div class="miembro-item">
+          <span>Luis González</span>
+          <select>
+            <option>Brigada Norte</option>
+            <option>Brigada Sur</option>
+            <option selected>Brigada Este</option>
+            <option>Sin asignar</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn-agregar-miembro">+ Agregar Miembro</button>
+    </section>
+
+    <!-- Sección de asignación de zonas -->
+    <section class="zonas-section">
+      <h2>🗺️ ASIGNACIÓN DE ZONAS</h2>
+      <div class="zonas-container">
+        <div class="zona-item">
+          <h3>Brigada Norte</h3>
+          <textarea rows="3" placeholder="Descripción de la zona...">Sector Norte del Bosque, incluye áreas de reforestación A y B</textarea>
+        </div>
+        <div class="zona-item">
+          <h3>Brigada Sur</h3>
+          <textarea rows="3" placeholder="Descripción de la zona...">Sector Sur del Bosque, zona de conservación de especies nativas</textarea>
+        </div>
+        <div class="zona-item">
+          <h3>Brigada Este</h3>
+          <textarea rows="3" placeholder="Descripción de la zona...">Sector Este del Bosque, área de monitoreo y control</textarea>
+        </div>
+      </div>
+      <button class="btn-guardar-zonas">Guardar Cambios de Zonas</button>
+    </section>
+
+    <!-- Sección de asignación de tareas -->
+    <section class="tareas-section">
+      <h2>📝 ASIGNACIÓN DE TAREAS</h2>
+      <form class="tarea-form">
+        <div class="form-group">
+          <label for="brigada-tarea">Brigada:</label>
+          <select id="brigada-tarea" required>
+            <option value="">Seleccionar brigada...</option>
+            <option>Brigada Norte</option>
+            <option>Brigada Sur</option>
+            <option>Brigada Este</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="tarea-descripcion">Descripción de la tarea:</label>
+          <textarea id="tarea-descripcion" rows="3" placeholder="Describa la tarea a realizar..." required></textarea>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fecha-inicio">Fecha de inicio:</label>
+            <input type="date" id="fecha-inicio" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="fecha-fin">Fecha de finalización:</label>
+            <input type="date" id="fecha-fin" required>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="objetivos">Objetivos:</label>
+          <textarea id="objetivos" rows="2" placeholder="Objetivos específicos de la tarea..." required></textarea>
+        </div>
+        
+        <button type="submit" class="btn-asignar-tarea">Asignar Tarea</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-container">
+      <p>📍 Dirección: Calle 25 D No. 110911, Colombia</p>
+      <p>📧 Correo: contacto@ideam.gov.co | ☎ Tel: +57 (601) 4442060</p>
+
+      <div class="redes-sociales">
+        <a href="https://www.facebook.com/ideam.instituto/?locale=es_LA"><img src="../IMG/facebook.png" alt="Facebook"></a>
+        <a href="https://x.com/IDEAMColombia?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><img src="../IMG/X.jpeg" alt="X"></a>
+        <a href="https://www.instagram.com/ideamcolombia/?hl=es"><img src="../IMG/instagram.png" alt="Instagram"></a>
+        <a href="https://www.youtube.com/@InstitutoIDEAM"><img src="../IMG/youtube.png" alt="YouTube"></a>
+      </div>
+
+      <p>&copy; 2024 Proyecto Web IFN. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Funcionalidad básica para la gestión de brigadas
+    document.addEventListener('DOMContentLoaded', function() {
+      // Manejo del formulario de asignación de tareas
+      const tareaForm = document.querySelector('.tarea-form');
+      if (tareaForm) {
+        tareaForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          alert('Tarea asignada correctamente. Los miembros de la brigada han sido notificados.');
+          tareaForm.reset();
+        });
+      }
+      
+      // Botón para nueva brigada
+      const btnNuevaBrigada = document.querySelector('.btn-nueva-brigada');
+      if (btnNuevaBrigada) {
+        btnNuevaBrigada.addEventListener('click', function() {
+          alert('Funcionalidad para crear nueva brigada. Aquí se abriría un formulario.');
+        });
+      }
+      
+      // Botón para agregar miembro
+      const btnAgregarMiembro = document.querySelector('.btn-agregar-miembro');
+      if (btnAgregarMiembro) {
+        btnAgregarMiembro.addEventListener('click', function() {
+          alert('Funcionalidad para agregar nuevo miembro. Aquí se abriría un formulario.');
+        });
+      }
+      
+      // Botón para guardar zonas
+      const btnGuardarZonas = document.querySelector('.btn-guardar-zonas');
+      if (btnGuardarZonas) {
+        btnGuardarZonas.addEventListener('click', function() {
+          alert('Cambios en las zonas guardados correctamente.');
+        });
+      }
+    });
+  </script>
+  <script src="../JS/gestionBrigadas.js"></script>
+</body>
+</html>

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supervisión de Datos - IFN</title>
+  <!-- Enlace al archivo CSS específico para supervisión de datos -->
+  <link rel="stylesheet" href="../CSS/styles-supervision.css">
+</head>
+<body>
+  <!-- ===== ENCABEZADO PRINCIPAL ===== -->
+  <header>
+    <!-- Logo institucional del IFN -->
+    <img class="Logo" src="../IMG/ifn-baja-tcm30-525131.png" alt="Logo IFN" width="150">
+    
+    <!-- Contenedor central con título del sistema y menú de navegación -->
+    <div class="center-header">
+      <h1>SISTEMA DE IDENTIFICACION DE ESPECIES</h1>
+      <!-- Menú de navegación principal del sistema -->
+      <div class="dashboard">
+        <a href="inicio-Pantalla.html" class="dashboard-btn">Inicio</a>
+        <a href="subirArbol.html" class="dashboard-btn">Subir Árbol</a>
+        <a href="subirSuelo.html" class="dashboard-btn">Subir Suelo</a>
+        <a href="registro.html" class="dashboard-btn">Registro</a>
+        <a href="estadisticas.html" class="dashboard-btn">Estadísticas</a>
+        <a href="gestionBrigadas.html" class="dashboard-btn">Gestión Brigadas</a>
+      </div>
+    </div>
+
+    <!-- Sección de información del usuario y cierre de sesión -->
+    <div class="login-imagen">
+      <p class="texto-arriba">Juanito Valderrama</p>
+      <img class="Login" src="../IMG/login.png" alt="Login User" width="150">
+      <button class="texto-abajo">Cerrar sesión</button>
+    </div>
+  </header>
+
+  <!-- ===== BARRA DE BÚSQUEDA GLOBAL ===== -->
+  <div class="search-container">
+    <div class="search-box"> 
+      <!-- Campo de búsqueda para encontrar registros o incidencias específicas -->
+      <input type="text" placeholder="Buscar registros, incidencias...">
+      <span class="search-icon">🔍</span>
+    </div>
+  </div>
+
+  <!-- ===== CONTENIDO PRINCIPAL DE SUPERVISIÓN ===== -->
+  <main>
+    <!-- Título principal de la página de supervisión -->
+    <h1>SUPERVISIÓN DE DATOS</h1>
+
+    <!-- ===== SECCIÓN 1: DASHBOARD DE CALIDAD DE DATOS ===== -->
+    <!-- Muestra métricas generales de calidad de datos del sistema -->
+    <section class="dashboard-calidad">
+      <h2>📊 DASHBOARD DE CALIDAD DE DATOS</h2>
+      
+      <!-- Contenedor grid para las tarjetas de métricas -->
+      <div class="metricas-container">
+        <!-- Tarjeta de métrica: Completitud de registros -->
+        <div class="metrica-card">
+          <div class="metrica-icon">✅</div>
+          <div class="metrica-info">
+            <h3>Completitud</h3>
+            <div class="metrica-valor">87%</div>
+            <div class="metrica-desc">Registros completos</div>
+          </div>
+        </div>
+        
+        <!-- Tarjeta de métrica: Consistencia de datos -->
+        <div class="metrica-card">
+          <div class="metrica-icon">🔄</div>
+          <div class="metrica-info">
+            <h3>Consistencia</h3>
+            <div class="metrica-valor">92%</div>
+            <div class="metrica-desc">Datos consistentes</div>
+          </div>
+        </div>
+        
+        <!-- Tarjeta de métrica: Incidencias identificadas -->
+        <div class="metrica-card">
+          <div class="metrica-icon">⚠️</div>
+          <div class="metrica-info">
+            <h3>Incidencias</h3>
+            <div class="metrica-valor">45</div>
+            <div class="metrica-desc">Registros problemáticos</div>
+          </div>
+        </div>
+        
+        <!-- Tarjeta de métrica: Registros validados -->
+        <div class="metrica-card">
+          <div class="metrica-icon">📝</div>
+          <div class="metrica-info">
+            <h3>Validados</h3>
+            <div class="metrica-valor">1,248</div>
+            <div class="metrica-desc">Registros verificados</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECCIÓN 2: REGISTROS PROBLEMÁTICOS ===== -->
+    <!-- Lista de registros que requieren atención y corrección -->
+    <section class="registros-section">
+      <h2>⚠️ REGISTROS PROBLEMÁTICOS</h2>
+      
+      <!-- Filtros rápidos para categorizar los tipos de problemas -->
+      <div class="filtros-rapidos">
+        <button class="filtro-btn active">Todos</button>
+        <button class="filtro-btn">Formato incorrecto</button>
+        <button class="filtro-btn">Datos incompletos</button>
+        <button class="filtro-btn">Inconsistencias</button>
+        <button class="filtro-btn">Fuera de rango</button>
+      </div>
+      
+      <!-- Contenedor de la lista de registros problemáticos -->
+      <div class="registros-container">
+        <!-- Registro problemático individual - Nivel Crítico -->
+        <div class="registro-item">
+          <div class="registro-header">
+            <span class="registro-id">#REG-2024-001</span>
+            <span class="registro-estado critico">Crítico</span>
+          </div>
+          <div class="registro-desc">
+            <strong>Problema:</strong> Coordenadas fuera de rango válido
+          </div>
+          <div class="registro-detalle">
+            <span><strong>Fecha:</strong> 15/03/2024</span>
+            <span><strong>Brigada:</strong> Norte</span>
+            <span><strong>Tipo:</strong> Geolocalización</span>
+          </div>
+          <div class="registro-actions">
+            <button class="btn-corregir">Corregir</button>
+            <button class="btn-ignorar">Ignorar</button>
+            <button class="btn-detalles">Ver detalles</button>
+          </div>
+        </div>
+        
+        <!-- Registro problemático individual - Nivel Medio -->
+        <div class="registro-item">
+          <div class="registro-header">
+            <span class="registro-id">#REG-2024-002</span>
+            <span class="registro-estado medio">Medio</span>
+          </div>
+          <div class="registro-desc">
+            <strong>Problema:</strong> Datos de especie incompletos
+          </div>
+          <div class="registro-detalle">
+            <span><strong>Fecha:</strong> 14/03/2024</span>
+            <span><strong>Brigada:</strong> Sur</span>
+            <span><strong>Tipo:</strong> Información de especie</span>
+          </div>
+          <div class="registro-actions">
+            <button class="btn-corregir">Corregir</button>
+            <button class="btn-ignorar">Ignorar</button>
+            <button class="btn-detalles">Ver detalles</button>
+          </div>
+        </div>
+        
+        <!-- Registro problemático individual - Nivel Bajo -->
+        <div class="registro-item">
+          <div class="registro-header">
+            <span class="registro-id">#REG-2024-003</span>
+            <span class="registro-estado bajo">Bajo</span>
+          </div>
+          <div class="registro-desc">
+            <strong>Problema:</strong> Formato de fecha inconsistente
+          </div>
+          <div class="registro-detalle">
+            <span><strong>Fecha:</strong> 13/03/2024</span>
+            <span><strong>Brigada:</strong> Este</span>
+            <span><strong>Tipo:</strong> Formato</span>
+          </div>
+          <div class="registro-actions">
+            <button class="btn-corregir">Corregir</button>
+            <button class="btn-ignorar">Ignorar</button>
+            <button class="btn-detalles">Ver detalles</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECCIÓN 3: CORRECCIÓN MASIVA ===== -->
+    <!-- Permite aplicar correcciones a múltiples registros con patrones similares -->
+    <section class="correccion-section">
+      <h2>🔄 CORRECCIÓN MASIVA</h2>
+      
+      <!-- Formulario para definir y aplicar correcciones masivas -->
+      <div class="correccion-form">
+        <!-- Selección del patrón de error identificado -->
+        <div class="form-group">
+          <label for="patron-error">Patrón de error identificado:</label>
+          <select id="patron-error">
+            <option value="">Seleccionar patrón...</option>
+            <option value="formato_fecha">Formato de fecha incorrecto</option>
+            <option value="coordenadas">Coordenadas fuera de rango</option>
+            <option value="especies">Especies no válidas</option>
+            <option value="mediciones">Mediciones atípicas</option>
+          </select>
+        </div>
+        
+        <!-- Descripción de la corrección a aplicar -->
+        <div class="form-group">
+          <label for="correccion-aplicar">Corrección a aplicar:</label>
+          <textarea id="correccion-aplicar" placeholder="Describa la corrección a aplicar..." rows="3"></textarea>
+        </div>
+        
+        <!-- Información sobre el alcance de la corrección -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="registros-afectados">Registros afectados:</label>
+            <input type="number" id="registros-afectados" value="0" readonly>
+          </div>
+          
+          <div class="form-group">
+            <label for="fecha-aplicacion">Fecha de aplicación:</label>
+            <input type="date" id="fecha-aplicacion">
+          </div>
+        </div>
+        
+        <!-- Botones de acción para la corrección masiva -->
+        <div class="correccion-actions">
+          <button class="btn-previsualizar">Previsualizar cambios</button>
+          <button class="btn-aplicar-correccion">Aplicar corrección masiva</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECCIÓN 4: REPORTE DE INCIDENCIAS ===== -->
+    <!-- Generación de reportes de calidad de datos -->
+    <section class="reportes-section">
+      <h2>📋 REPORTE DE INCIDENCIAS</h2>
+      
+      <!-- Opciones de configuración del reporte -->
+      <div class="reporte-options">
+        <!-- Selección del tipo de reporte -->
+        <div class="form-group">
+          <label for="tipo-reporte">Tipo de reporte:</label>
+          <select id="tipo-reporte">
+            <option value="diario">Reporte diario</option>
+            <option value="semanal">Reporte semanal</option>
+            <option value="mensual">Reporte mensual</option>
+            <option value="personalizado">Personalizado</option>
+          </select>
+        </div>
+        
+        <!-- Rango de fechas para el reporte -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fecha-inicio">Fecha inicio:</label>
+            <input type="date" id="fecha-inicio">
+          </div>
+          
+          <div class="form-group">
+            <label for="fecha-fin">Fecha fin:</label>
+            <input type="date" id="fecha-fin">
+          </div>
+        </div>
+        
+        <!-- Selección del formato de exportación -->
+        <div class="form-group">
+          <label for="formato-reporte">Formato de exportación:</label>
+          <div class="formatos-exportacion">
+            <label class="formato-opcion">
+              <input type="radio" name="formato" value="pdf" checked> PDF
+            </label>
+            <label class="formato-opcion">
+              <input type="radio" name="formato" value="excel"> Excel
+            </label>
+            <label class="formato-opcion">
+              <input type="radio" name="formato" value="csv"> CSV
+            </label>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Botones para generar y exportar reportes -->
+      <div class="reporte-actions">
+        <button class="btn-generar-reporte">Generar Reporte</button>
+        <button class="btn-exportar">Exportar a PDF</button>
+      </div>
+    </section>
+
+    <!-- ===== SECCIÓN 5: DATOS CORRUPTOS O IRRECUPERABLES ===== -->
+    <!-- Manejo de registros que no pueden ser recuperados automáticamente -->
+    <section class="corruptos-section">
+      <h2>🗑️ DATOS CORRUPTOS O IRRECUPERABLES</h2>
+      
+      <!-- Alerta destacada para datos corruptos -->
+      <div class="alerta-corruptos">
+        <div class="alerta-icon">🚨</div>
+        <div class="alerta-content">
+          <h3>Registros irrecuperables detectados</h3>
+          <p>Se han identificado 12 registros con datos corruptos que no pueden ser recuperados automáticamente.</p>
+          <div class="alerta-actions">
+            <button class="btn-archivar">Archivar registros</button>
+            <button class="btn-eliminar">Eliminar permanentemente</button>
+            <button class="btn-reporte-auditoria">Generar reporte de auditoría</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== PIE DE PÁGINA INSTITUCIONAL ===== -->
+  <footer>
+    <div class="footer-container">
+      <p>📍 Dirección: Calle 25 D No. 110911, Colombia</p>
+      <p>📧 Correo: contacto@ideam.gov.co | ☎ Tel: +57 (601) 4442060</p>
+
+      <!-- Enlaces a redes sociales -->
+      <div class="redes-sociales">
+        <a href="https://www.facebook.com/ideam.instituto/?locale=es_LA"><img src="../IMG/facebook.png" alt="Facebook"></a>
+        <a href="https://x.com/IDEAMColombia?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><img src="../IMG/X.jpeg" alt="X"></a>
+        <a href="https://www.instagram.com/ideamcolombia/?hl=es"><img src="../IMG/instagram.png" alt="Instagram"></a>
+        <a href="https://www.youtube.com/@InstitutoIDEAM"><img src="../IMG/youtube.png" alt="YouTube"></a>
+      </div>
+
+      <p>&copy; 2024 Proyecto Web IFN. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- ===== JAVASCRIPT PARA INTERACTIVIDAD ===== -->
+  <script>
+    // Esperar a que el DOM esté completamente cargado
+    document.addEventListener('DOMContentLoaded', function() {
+      
+      // ===== FILTROS RÁPIDOS DE REGISTROS PROBLEMÁTICOS =====
+      // Permite filtrar la lista de registros por tipo de problema
+      const filtroBtns = document.querySelectorAll('.filtro-btn');
+      filtroBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          // Remover clase active de todos los botones
+          filtroBtns.forEach(b => b.classList.remove('active'));
+          // Agregar clase active al botón clickeado
+          this.classList.add('active');
+          // Aquí iría la lógica para filtrar los registros en una implementación real
+        });
+      });
+      
+      // ===== CORRECCIÓN MASIVA =====
+      // Aplicar corrección a múltiples registros simultáneamente
+      const btnAplicarCorreccion = document.querySelector('.btn-aplicar-correccion');
+      if (btnAplicarCorreccion) {
+        btnAplicarCorreccion.addEventListener('click', function() {
+          // Confirmación antes de aplicar cambios masivos
+          if (confirm('¿Está seguro de aplicar esta corrección masiva a todos los registros afectados?')) {
+            // Simular aplicación exitosa (en producción sería una petición AJAX)
+            alert('Corrección masiva aplicada correctamente. Se han actualizado 23 registros.');
+          }
+        });
+      }
+      
+      // ===== GENERACIÓN DE REPORTES =====
+      // Crear reportes de incidencias y calidad de datos
+      const btnGenerarReporte = document.querySelector('.btn-generar-reporte');
+      if (btnGenerarReporte) {
+        btnGenerarReporte.addEventListener('click', function() {
+          // Simular generación de reporte
+          alert('Reporte generado correctamente. Listo para exportar.');
+        });
+      }
+      
+      // ===== MANEJO DE DATOS CORRUPTOS =====
+      // Opciones para registros que no pueden ser recuperados
+      const btnArchivar = document.querySelector('.btn-archivar');
+      if (btnArchivar) {
+        btnArchivar.addEventListener('click', function() {
+          if (confirm('¿Archivar 12 registros corruptos? Estos se moverán al archivo de auditoría.')) {
+            alert('Registros archivados correctamente.');
+          }
+        });
+      }
+      
+      // ===== BOTONES DE ACCIÓN EN REGISTROS INDIVIDUALES =====
+      // Agregar funcionalidad a los botones de cada registro problemático
+      const btnCorregirList = document.querySelectorAll('.btn-corregir');
+      btnCorregirList.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const registroId = this.closest('.registro-item').querySelector('.registro-id').textContent;
+          alert(`Abriendo editor para corregir: ${registroId}`);
+        });
+      });
+      
+      const btnDetallesList = document.querySelectorAll('.btn-detalles');
+      btnDetallesList.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const registroId = this.closest('.registro-item').querySelector('.registro-id').textContent;
+          alert(`Mostrando detalles completos de: ${registroId}`);
+        });
+      });
+    });
+  </script>
+  <script src="../JS/supervision.js"></script>
+</body>
+</html>

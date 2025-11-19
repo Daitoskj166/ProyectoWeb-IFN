@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registros - IFN</title>
+    <link rel="stylesheet" href="../CSS/styles-Registro.css">
+</head>
+<body>
+    <!-- ENCABEZADO PRINCIPAL -->
+    <header>
+        <!-- Logo de la institución -->
+        <img class="Logo" src="../IMG/ifn-baja-tcm30-525131.png" alt="Logo IFN" width="150">
+        
+        <!-- Contenedor central con título y navegación -->
+        <div class="center-header">
+            <h1>SISTEMA DE IDENTIFICACION DE ESPECIES</h1>
+
+            <!-- Barra de navegación principal -->
+            <div class="dashboard">
+                <a href="inicio-Pantalla.html" class="dashboard-btn">Inicio</a>
+                <a href="subirArbol.html" class="dashboard-btn">Subir Árbol</a>
+                <a href="subirSuelo.html" class="dashboard-btn">Subir Suelo</a>
+                <a href="estadisticas.html" class="dashboard-btn">Estadísticas</a>
+                <a href="gestionBrigadas.html" class="dashboard-btn">Gestión Brigadas</a>
+                <a href="supervision.html" class="dashboard-btn">Supervisión</a>
+            </div>
+        </div>
+
+        <!-- Sección de usuario con información de login -->
+        <div class="login-imagen">
+            <p class="texto-arriba">User</p>
+            <img class="Login" src="../IMG/login.png" alt="Login User" width="150">
+            <button class="texto-abajo">Cerrar sesión</button>
+        </div>
+    </header>
+
+    <!-- BARRA DE BÚSQUEDA GLOBAL -->
+    <div class="search-container">
+        <div class="search-box">
+            <!-- Campo de búsqueda para filtrar registros -->
+            <input type="text" placeholder="Buscar por especie, ubicación o ID...">
+            <span class="search-icon">🔍</span>
+        </div>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL DE LA PÁGINA -->
+    <main>
+        <!-- Título principal de la sección -->
+        <h2>REGISTROS DE MUESTRAS</h2>
+
+        <!-- SECCIÓN DE FILTROS AVANZADOS -->
+        <div class="filtros-container">
+            <!-- Filtro por tipo de muestra (árbol o suelo) -->
+            <div class="filtro-grupo">
+                <label for="filtro-tipo">Tipo:</label>
+                <select id="filtro-tipo">
+                    <option value="todos">Todos los tipos</option>
+                    <option value="arbol">Árboles</option>
+                    <option value="suelo">Suelos</option>
+                </select>
+            </div>
+            
+            <!-- Filtro por fecha de registro -->
+            <div class="filtro-grupo">
+                <label for="filtro-fecha">Fecha:</label>
+                <input type="date" id="filtro-fecha">
+            </div>
+            
+            <!-- Botón para aplicar los filtros seleccionados -->
+            <button class="btn-filtrar">Aplicar Filtros</button>
+        </div>
+
+        <!-- CONTENEDOR DE LA TABLA DE REGISTROS -->
+        <div class="tabla-contenedor">
+            <table class="tabla-registros">
+                <thead>
+                    <tr>
+                        <!-- Encabezados de las columnas -->
+                        <th>ID MUESTRA</th>        <!-- Identificador único de la muestra -->
+                        <th>TIPO</th>              <!-- Tipo: Árbol o Suelo -->
+                        <th>ESPECIE / DESCRIPCIÓN</th> <!-- Nombre científico o descripción -->
+                        <th>UBICACIÓN</th>         <!-- Localización geográfica -->
+                        <th>FECHA REGISTRO</th>    <!-- Fecha de captura de datos -->
+                        <th>ESTADO</th>            <!-- Estado del registro: Completo, Pendiente, etc. -->
+                        <th>ACCIONES</th>          <!-- Botones para interactuar con el registro -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- REGISTRO 1: Ejemplo de árbol registrado -->
+                    <tr class="registro-arbol">
+                        <td>ARB-2024-001</td> <!-- ID con prefijo ARB para árboles -->
+                        <td>
+                            <span class="badge-tipo tipo-arbol">Árbol</span> <!-- Badge verde para árboles -->
+                        </td>
+                        <td>Quercus humboldtii - Roble</td> <!-- Nombre científico y común -->
+                        <td>Conglomerado N45, Parcela 12</td> <!-- Ubicación específica -->
+                        <td>15/03/2024</td> <!-- Fecha de registro -->
+                        <td>
+                            <span class="estado estado-completo">Completo</span> <!-- Estado en badge verde -->
+                        </td>
+                        <td>
+                            <!-- Botones de acción para este registro -->
+                            <button class="btn-editar">Editar</button> <!-- Editar datos del registro -->
+                            <button class="btn-ver">Ver</button> <!-- Ver detalles completos -->
+                        </td>
+                    </tr>
+
+                    <!-- REGISTRO 2: Otro árbol con estado pendiente -->
+                    <tr class="registro-arbol">
+                        <td>ARB-2024-002</td>
+                        <td><span class="badge-tipo tipo-arbol">Árbol</span></td>
+                        <td>Ceroxylon quindiuense - Palma de cera</td>
+                        <td>Conglomerado S22, Parcela 08</td>
+                        <td>18/03/2024</td>
+                        <td><span class="estado estado-pendiente">Pendiente</span></td> <!-- Estado en badge naranja -->
+                        <td>
+                            <button class="btn-editar">Editar</button>
+                            <button class="btn-ver">Ver</button>
+                        </td>
+                    </tr>
+                    
+                    <!-- REGISTRO 3: Muestra de suelo -->
+                    <tr class="registro-suelo">
+                        <td>SUE-2024-001</td> <!-- ID con prefijo SUE para suelos -->
+                        <td>
+                            <span class="badge-tipo tipo-suelo">Suelo</span> <!-- Badge azul para suelos -->
+                        </td>
+                        <td>Muestra compuesta - 4 puntos</td> <!-- Descripción del tipo de muestra -->
+                        <td>Conglomerado N45, Puntos 1-4</td>
+                        <td>16/03/2024</td>
+                        <td><span class="estado estado-completo">Completo</span></td>
+                        <td>
+                            <button class="btn-editar">Editar</button>
+                            <button class="btn-ver">Ver</button>
+                        </td>
+                    </tr>
+
+                    <!-- REGISTRO 4: Suelo en proceso de análisis -->
+                    <tr class="registro-suelo">
+                        <td>SUE-2024-002</td>
+                        <td><span class="badge-tipo tipo-suelo">Suelo</span></td>
+                        <td>Muestra superficial - Análisis pH</td>
+                        <td>Conglomerado E33, Punto central</td>
+                        <td>20/03/2024</td>
+                        <td><span class="estado estado-proceso">En proceso</span></td> <!-- Estado en badge azul -->
+                        <td>
+                            <button class="btn-editar">Editar</button>
+                            <button class="btn-ver">Ver</button>
+                        </td>
+                    </tr>
+                    
+                    <!-- REGISTRO 5: Otro árbol completo -->
+                    <tr class="registro-arbol">
+                        <td>ARB-2024-003</td>
+                        <td><span class="badge-tipo tipo-arbol">Árbol</span></td>
+                        <td>Anacardium excelsum - Caracolí</td>
+                        <td>Conglomerado W18, Parcela 15</td>
+                        <td>22/03/2024</td>
+                        <td><span class="estado estado-completo">Completo</span></td>
+                        <td>
+                            <button class="btn-editar">Editar</button>
+                            <button class="btn-ver">Ver</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECCIÓN DE ESTADÍSTICAS RÁPIDAS -->
+        <div class="estadisticas-rapidas">
+            <!-- Tarjeta de estadística: Árboles registrados -->
+            <div class="estadistica-item">
+                <span class="estadistica-numero">3</span> <!-- Número destacado -->
+                <span class="estadistica-texto">Árboles Registrados</span> <!-- Descripción -->
+            </div>
+            
+            <!-- Tarjeta de estadística: Muestras de suelo -->
+            <div class="estadistica-item">
+                <span class="estadistica-numero">2</span>
+                <span class="estadistica-texto">Muestras de Suelo</span>
+            </div>
+            
+            <!-- Tarjeta de estadística: Registros completos -->
+            <div class="estadistica-item">
+                <span class="estadistica-numero">4</span>
+                <span class="estadistica-texto">Registros Completos</span>
+            </div>
+            
+            <!-- Tarjeta de estadística: Registros en proceso -->
+            <div class="estadistica-item">
+                <span class="estadistica-numero">1</span>
+                <span class="estadistica-texto">En Proceso</span>
+            </div>
+        </div>
+
+        <!-- PAGINACIÓN DE LA TABLA -->
+        <div class="paginacion">
+            <!-- Información del rango de registros mostrados -->
+            <div class="info-paginacion">
+                <span>Mostrando 1-5 de 15 registros</span> <!-- Texto informativo -->
+            </div>
+            
+            <!-- Controles de navegación entre páginas -->
+            <div class="controles-paginacion">
+                <button class="btn-paginacion">〈 Anterior</button> <!-- Botón página anterior -->
+                
+                <!-- Números de página clickeables -->
+                <div class="numeros-paginacion">
+                    <span class="pagina-activa">1</span> <!-- Página actual activa -->
+                    <span>2</span> <!-- Otras páginas disponibles -->
+                    <span>3</span>
+                </div>
+                
+                <button class="btn-paginacion">Siguiente 〉</button> <!-- Botón página siguiente -->
+            </div>
+        </div>
+    </main>
+
+    <!-- PIE DE PÁGINA -->
+    <footer>
+        <div class="footer-container">
+            <!-- Información de contacto -->
+            <p>📍 Dirección: Calle 25 D No. 110911, Colombia</p>
+            <p>📧 Correo: contacto@ideam.gov.co | ☎ Tel: +57 (601) 4442060</p>
+            
+            <!-- Enlaces a redes sociales -->
+            <div class="redes-sociales">
+                <a href="https://www.facebook.com/ideam.instituto/?locale=es_LA"><img src="../IMG/facebook.png" alt="Facebook"></a>
+                <a href="https://x.com/IDEAMColombia?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><img src="../IMG/X.jpeg" alt="X"></a>
+                <a href="https://www.youtube.com/@InstitutoIDEAM"><img src="../IMG/youtube.png" alt="YouTube"></a>
+            </div>
+            
+            <!-- Derechos de autor -->
+            <p>&copy; 2024 Proyecto Web IFN. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    <script src="../JS/registro.js"></script>
+</body>
+</html>

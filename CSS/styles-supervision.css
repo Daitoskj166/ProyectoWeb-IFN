@@ -1,0 +1,819 @@
+/* =============================================
+   ESTILOS ESPECÍFICOS PARA PÁGINA DE SUPERVISIÓN DE DATOS
+   Diseño coherente con el sistema IFN - Especificaciones de calidad de datos
+   ============================================= */
+
+/* 
+   ESTILOS BASE PARA SECCIONES DE SUPERVISIÓN
+   Aplican a las 5 secciones principales de la página
+   Proporcionan consistencia visual y espaciado
+*/
+.dashboard-calidad, .registros-section, .correccion-section, 
+.reportes-section, .corruptos-section {
+  margin-bottom: 40px;          /* Separación vertical entre secciones */
+  padding: 20px;                /* Espaciado interno para contenido */
+  border: 1px solid #ddd;       /* Borde sutil gris claro para definición */
+  border-radius: 10px;          /* Esquinas redondeadas para diseño moderno */
+  background: #f9f9f9;          /* Fondo gris muy claro para diferenciar del main */
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1); /* Sombra suave para efecto de profundidad */
+  
+  /* Animación de entrada al cargar la página */
+  opacity: 0;                   /* Inicia invisible para efecto de aparición */
+  transform: translateY(20px);  /* Inicia desplazado 20px hacia abajo */
+  animation: fadeInUp 1s forwards; /* Aplica animación de desvanecimiento hacia arriba */
+}
+
+/* 
+   ESTILOS PARA TÍTULOS DE SECCIÓN (h2)
+   Proporcionan jerarquía visual consistente en todas las secciones
+*/
+.dashboard-calidad h2, .registros-section h2, .correccion-section h2,
+.reportes-section h2, .corruptos-section h2 {
+  margin-bottom: 15px;          /* Espacio debajo del título para separar contenido */
+  font-size: 1.4em;             /* Tamaño de fuente aumentado para importancia */
+  color: #2E7D32;               /* Color verde institucional del IFN */
+  border-bottom: 2px solid #2E7D32; /* Línea decorativa inferior en verde */
+  padding-bottom: 5px;          /* Espacio entre texto y línea divisoria */
+}
+
+/* =============================================
+   SECCIÓN 1: DASHBOARD DE CALIDAD DE DATOS
+   Muestra métricas clave de calidad en formato de tarjetas
+   ============================================= */
+
+/* Contenedor grid para organizar las tarjetas de métricas de forma responsiva */
+.metricas-container {
+  display: grid; /* Usa CSS Grid para layout flexible */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Columnas que se adaptan automáticamente */
+  gap: 20px;     /* Espacio entre tarjetas */
+  margin-bottom: 20px; /* Separación inferior */
+}
+
+/* Tarjeta individual de métrica - Cada una muestra un KPI diferente */
+.metrica-card {
+  background: white;            /* Fondo blanco para contraste con la sección */
+  padding: 20px;                /* Espaciado interno generoso */
+  border-radius: 8px;           /* Esquinas redondeadas */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra sutil para efecto elevado */
+  display: flex;                /* Flexbox para alinear icono e información */
+  align-items: center;          /* Centrado vertical de los elementos */
+  gap: 15px;                    /* Espacio entre icono y texto */
+  border-left: 4px solid #2E7D32; /* Borde izquierdo acentuado en verde */
+}
+
+/* Icono de la métrica - Emoji representativo del tipo de métrica */
+.metrica-icon {
+  font-size: 2em; /* Tamaño grande para visibilidad */
+}
+
+/* Contenedor de la información textual de la métrica */
+.metrica-info h3 {
+  margin: 0 0 5px 0; /* Sin margen superior, pequeño margen inferior */
+  color: #212121;    /* Color de texto gris oscuro */
+  font-size: 1em;    /* Tamaño estándar */
+}
+
+/* Valor numérico de la métrica - Elemento más destacado */
+.metrica-valor {
+  font-size: 1.8em;  /* Tamaño muy grande para énfasis */
+  font-weight: bold;  /* Negrita para mayor impacto visual */
+  color: #2E7D32;     /* Color verde institucional */
+}
+
+/* Descripción textual de la métrica */
+.metrica-desc {
+  font-size: 0.8em; /* Texto pequeño para información secundaria */
+  color: #666;      /* Color gris para texto menos importante */
+}
+
+/* =============================================
+   SECCIÓN 2: REGISTROS PROBLEMÁTICOS
+   Lista de registros que requieren atención del supervisor
+   ============================================= */
+
+/* Contenedor de filtros rápidos - Permite categorizar problemas */
+.filtros-rapidos {
+  display: flex;      /* Botones en fila horizontal */
+  gap: 10px;          /* Espacio entre botones */
+  margin-bottom: 20px; /* Separación antes de la lista */
+  flex-wrap: wrap;    /* Permite que los botones se envuelvan en múltiples líneas */
+}
+
+/* Botones individuales de filtro */
+.filtro-btn {
+  padding: 8px 16px;           /* Espaciado interno compacto */
+  border: 1px solid #ccc;      /* Borde gris claro */
+  background: white;           /* Fondo blanco por defecto */
+  border-radius: 20px;         /* Bordes muy redondeados (forma de píldora) */
+  cursor: pointer;             /* Cursor de mano al pasar */
+  transition: 0.3s;            /* Transición suave para efectos hover */
+  font-size: 0.9em;            /* Texto ligeramente reducido */
+}
+
+/* Estados de los botones de filtro */
+.filtro-btn.active,           /* Filtro activamente seleccionado */
+.filtro-btn:hover {           /* Efecto hover */
+  background-color: #2E7D32;  /* Fondo verde institucional */
+  color: white;               /* Texto blanco para contraste */
+  border-color: #2E7D32;      /* Borde verde para coincidir */
+}
+
+/* Contenedor principal de la lista de registros problemáticos */
+.registros-container {
+  display: flex;              /* Flexbox para organización vertical */
+  flex-direction: column;     /* Elementos apilados verticalmente */
+  gap: 15px;                  /* Espacio entre elementos de registro */
+}
+
+/* Item individual de registro problemático */
+.registro-item {
+  background: white;          /* Fondo blanco para contraste */
+  padding: 15px;              /* Espaciado interno */
+  border-radius: 8px;         /* Esquinas redondeadas */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra sutil */
+  border-left: 4px solid #FFC107; /* Borde izquierdo amarillo por defecto */
+}
+
+/* Variantes de color para diferentes niveles de gravedad */
+.registro-item .critico { border-left-color: #F44336; } /* Rojo para crítico */
+.registro-item .medio { border-left-color: #FF9800; }   /* Naranja para medio */
+.registro-item .bajo { border-left-color: #4CAF50; }    /* Verde para bajo */
+
+/* Encabezado del registro - ID y estado */
+.registro-header {
+  display: flex;                   /* Flexbox para alinear elementos */
+  justify-content: space-between;  /* ID a la izquierda, estado a la derecha */
+  align-items: center;            /* Centrado vertical */
+  margin-bottom: 10px;            /* Separación del contenido */
+}
+
+/* Identificador único del registro */
+.registro-id {
+  font-weight: bold; /* Negrita para destacar */
+  color: #212121;    /* Color gris oscuro */
+}
+
+/* Badge de estado del registro (Crítico, Medio, Bajo) */
+.registro-estado {
+  padding: 4px 12px;       /* Espaciado interno compacto */
+  border-radius: 12px;     /* Forma de píldora redondeada */
+  font-size: 0.8em;        /* Texto pequeño */
+  font-weight: bold;       /* Negrita para énfasis */
+  color: white;            /* Texto blanco para contraste */
+}
+
+/* Colores de fondo para diferentes estados de gravedad */
+.registro-estado.critico { background: #F44336; } /* Rojo para crítico */
+.registro-estado.medio { background: #FF9800; }   /* Naranja para medio */
+.registro-estado.bajo { background: #4CAF50; }    /* Verde para bajo */
+
+/* Descripción del problema en el registro */
+.registro-desc {
+  margin-bottom: 10px; /* Separación inferior */
+  color: #333;         /* Color de texto gris medio */
+}
+
+/* Detalles adicionales del registro (fecha, brigada, tipo) */
+.registro-detalle {
+  display: flex;       /* Elementos en fila horizontal */
+  gap: 20px;           /* Espacio entre elementos de detalle */
+  margin-bottom: 15px; /* Separación antes de los botones de acción */
+  font-size: 0.9em;    /* Texto ligeramente reducido */
+  color: #666;         /* Color gris para texto secundario */
+}
+
+/* Contenedor de botones de acción para cada registro */
+.registro-actions {
+  display: flex; /* Botones en fila horizontal */
+  gap: 10px;     /* Espacio entre botones */
+}
+
+/* Estilos base para botones de acción en registros */
+.btn-corregir, .btn-ignorar, .btn-detalles {
+  padding: 6px 12px;    /* Espaciado interno compacto */
+  border: none;         /* Sin borde por defecto */
+  border-radius: 5px;   /* Esquinas ligeramente redondeadas */
+  cursor: pointer;      /* Cursor de mano al pasar */
+  font-weight: bold;    /* Texto en negrita */
+  transition: 0.3s;     /* Transición suave para hover */
+  font-size: 0.9em;     /* Texto ligeramente reducido */
+}
+
+/* Botón para corregir el registro */
+.btn-corregir {
+  background-color: #2E7D32; /* Verde institucional */
+  color: white;              /* Texto blanco */
+}
+
+/* Botón para ignorar temporalmente el registro */
+.btn-ignorar {
+  background-color: #757575; /* Gris medio */
+  color: white;              /* Texto blanco */
+}
+
+/* Botón para ver detalles completos del registro */
+.btn-detalles {
+  background-color: #2196F3; /* Azul corporativo */
+  color: white;              /* Texto blanco */
+}
+
+/* Efectos hover para botones de acción */
+.btn-corregir:hover { background-color: #1B5E20; }   /* Verde más oscuro */
+.btn-ignorar:hover { background-color: #616161; }    /* Gris más oscuro */
+.btn-detalles:hover { background-color: #1976D2; }   /* Azul más oscuro */
+
+/* =============================================
+   SECCIÓN 3: CORRECCIÓN MASIVA
+   Formulario para aplicar correcciones a múltiples registros
+   ============================================= */
+
+/* Contenedor del formulario de corrección masiva */
+.correccion-form {
+  display: flex;              /* Flexbox para organización */
+  flex-direction: column;     /* Elementos en columna */
+  gap: 15px;                  /* Espacio entre campos del formulario */
+}
+
+/* Grupos de campos del formulario */
+.form-group {
+  display: flex;              /* Flexbox */
+  flex-direction: column;     /* Label arriba, campo abajo */
+}
+
+/* Fila para agrupar campos horizontalmente (ej: fechas) */
+.form-row {
+  display: flex;    /* Flexbox para alineación horizontal */
+  gap: 15px;        /* Espacio entre campos */
+}
+
+/* Cada grupo de formulario dentro de una fila ocupa espacio igual */
+.form-row .form-group {
+  flex: 1; /* Distribuye el espacio disponible equitativamente */
+}
+
+/* Etiquetas de los campos del formulario */
+.correccion-form label {
+  font-weight: bold;    /* Negrita para destacar */
+  margin-bottom: 5px;   /* Espacio debajo de la etiqueta */
+  color: #333;          /* Color de texto gris oscuro */
+}
+
+/* Campos de formulario (inputs, selects, textareas) */
+.correccion-form input,
+.correccion-form select,
+.correccion-form textarea {
+  padding: 10px;              /* Espaciado interno */
+  border: 1px solid #ccc;     /* Borde gris claro */
+  border-radius: 5px;         /* Esquinas redondeadas */
+  font-family: inherit;       /* Hereda fuente del documento */
+}
+
+/* Efecto cuando un campo del formulario está enfocado */
+.correccion-form input:focus,
+.correccion-form select:focus,
+.correccion-form textarea:focus {
+  border-color: #2E7D32;      /* Borde verde al estar enfocado */
+  outline: none;              /* Elimina el outline por defecto del navegador */
+  box-shadow: 0 0 5px rgba(46,125,50,0.5); /* Sombra verde suave alrededor */
+}
+
+/* Contenedor de botones de acción para corrección masiva */
+.correccion-actions {
+  display: flex;      /* Botones en fila horizontal */
+  gap: 15px;          /* Espacio entre botones */
+  margin-top: 10px;   /* Separación superior */
+}
+
+/* Botones de acción para corrección masiva */
+.btn-previsualizar, .btn-aplicar-correccion {
+  padding: 12px 20px;    /* Espaciado interno generoso */
+  border: none;          /* Sin borde */
+  border-radius: 8px;    /* Esquinas redondeadas */
+  font-weight: bold;     /* Texto en negrita */
+  cursor: pointer;       /* Cursor de mano */
+  transition: 0.3s;      /* Transición suave */
+}
+
+/* Botón para previsualizar cambios antes de aplicar */
+.btn-previsualizar {
+  background-color: #2196F3; /* Azul corporativo */
+  color: white;              /* Texto blanco */
+}
+
+/* Botón para aplicar la corrección masiva */
+.btn-aplicar-correccion {
+  background-color: #2E7D32; /* Verde institucional */
+  color: white;              /* Texto blanco */
+}
+
+/* Efectos hover para botones de corrección masiva */
+.btn-previsualizar:hover { background-color: #1976D2; }     /* Azul más oscuro */
+.btn-aplicar-correccion:hover { background-color: #1B5E20; } /* Verde más oscuro */
+
+/* =============================================
+   SECCIÓN 4: REPORTES DE INCIDENCIAS
+   Generación y exportación de reportes de calidad
+   ============================================= */
+
+/* Contenedor de opciones de configuración del reporte */
+.reporte-options {
+  display: flex;              /* Flexbox para organización */
+  flex-direction: column;     /* Elementos en columna */
+  gap: 15px;                  /* Espacio entre opciones */
+  margin-bottom: 20px;        /* Separación antes de los botones */
+}
+
+/* Contenedor de opciones de formato de exportación */
+.formatos-exportacion {
+  display: flex; /* Opciones en fila horizontal */
+  gap: 20px;     /* Espacio entre opciones */
+}
+
+/* Opción individual de formato (radio button + label) */
+.formato-opcion {
+  display: flex;      /* Radio y label en fila */
+  align-items: center; /* Centrado vertical */
+  gap: 5px;           /* Espacio entre radio y texto */
+}
+
+/* Contenedor de botones de acción para reportes */
+.reporte-actions {
+  display: flex; /* Botones en fila horizontal */
+  gap: 15px;     /* Espacio entre botones */
+}
+
+/* Botones de acción para reportes */
+.btn-generar-reporte, .btn-exportar {
+  padding: 12px 20px;    /* Espaciado interno generoso */
+  border: none;          /* Sin borde */
+  border-radius: 8px;    /* Esquinas redondeadas */
+  font-weight: bold;     /* Texto en negrita */
+  cursor: pointer;       /* Cursor de mano */
+  transition: 0.3s;      /* Transición suave */
+}
+
+/* Botón para generar el reporte */
+.btn-generar-reporte {
+  background-color: #9C27B0; /* Morado corporativo */
+  color: white;              /* Texto blanco */
+}
+
+/* Botón para exportar el reporte */
+.btn-exportar {
+  background-color: #2196F3; /* Azul corporativo */
+  color: white;              /* Texto blanco */
+}
+
+/* Efectos hover para botones de reportes */
+.btn-generar-reporte:hover { background-color: #7B1FA2; } /* Morado más oscuro */
+.btn-exportar:hover { background-color: #1976D2; }        /* Azul más oscuro */
+
+/* =============================================
+   SECCIÓN 5: DATOS CORRUPTOS O IRRECUPERABLES
+   Manejo especial para registros que no pueden ser recuperados
+   ============================================= */
+
+/* Alerta destacada para datos corruptos */
+.alerta-corruptos {
+  display: flex;                /* Flexbox para alinear icono y contenido */
+  align-items: center;          /* Centrado vertical */
+  gap: 20px;                    /* Espacio entre icono y texto */
+  background: #FFF3E0;          /* Fondo naranja muy claro para alerta */
+  padding: 20px;                /* Espaciado interno generoso */
+  border-radius: 8px;           /* Esquinas redondeadas */
+  border: 1px solid #FFB74D;    /* Borde naranja para destacar */
+}
+
+/* Icono de alerta para datos corruptos */
+.alerta-icon {
+  font-size: 3em; /* Tamaño muy grande para visibilidad */
+}
+
+/* Contenido textual de la alerta */
+.alerta-content h3 {
+  margin: 0 0 10px 0; /* Sin margen superior, margen inferior moderado */
+  color: #E65100;      /* Color naranja oscuro para el título */
+}
+
+.alerta-content p {
+  margin: 0 0 15px 0; /* Sin margen superior, margen inferior para separar botones */
+  color: #666;         /* Color gris para el texto descriptivo */
+}
+
+/* Contenedor de botones de acción para datos corruptos */
+.alerta-actions {
+  display: flex;      /* Botones en fila horizontal */
+  gap: 10px;          /* Espacio entre botones */
+  flex-wrap: wrap;    /* Permite que los botones se envuelvan en múltiples líneas */
+}
+
+/* Botones de acción para manejo de datos corruptos */
+.btn-archivar, .btn-eliminar, .btn-reporte-auditoria {
+  padding: 8px 16px;    /* Espaciado interno */
+  border: none;         /* Sin borde */
+  border-radius: 5px;   /* Esquinas redondeadas */
+  cursor: pointer;      /* Cursor de mano */
+  font-weight: bold;    /* Texto en negrita */
+  transition: 0.3s;     /* Transición suave */
+}
+
+/* Botón para archivar registros corruptos */
+.btn-archivar {
+  background-color: #FF9800; /* Naranja corporativo */
+  color: white;              /* Texto blanco */
+}
+
+/* Botón para eliminar permanentemente registros corruptos */
+.btn-eliminar {
+  background-color: #F44336; /* Rojo para acción destructiva */
+  color: white;              /* Texto blanco */
+}
+
+/* Botón para generar reporte de auditoría */
+.btn-reporte-auditoria {
+  background-color: #607D8B; /* Gris azulado */
+  color: white;              /* Texto blanco */
+}
+
+/* Efectos hover para botones de datos corruptos */
+.btn-archivar:hover { background-color: #F57C00; }       /* Naranja más oscuro */
+.btn-eliminar:hover { background-color: #D32F2F; }       /* Rojo más oscuro */
+.btn-reporte-auditoria:hover { background-color: #455A64; } /* Gris más oscuro */
+
+/* =============================================
+   ESTILOS GENERALES REUTILIZABLES
+   Componentes base compartidos con otras páginas del sistema
+   ============================================= */
+
+/* Configuración base del body */
+body {
+  margin: 0; /* Elimina márgenes por defecto del navegador */
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Fuente principal del sistema */
+  background-color: #F2F2F2; /* Color de fondo gris claro para toda la página */
+  display: flex; /* Usa flexbox para layout general */
+  flex-direction: column; /* Organiza elementos en columna: header, main, footer */
+  min-height: 100vh; /* Asegura que el body ocupe al menos toda la altura de la ventana */
+}
+
+/* Encabezado principal - Coherente con todo el sistema */
+header {
+  display: flex; /* Flexbox para organizar elementos del header */
+  align-items: center; /* Centra verticalmente los elementos */
+  justify-content: space-between; /* Distribuye espacio: logo izquierda, título centro, usuario derecha */
+  padding: 20px 30px; /* Espaciado interno: 20px arriba/abajo, 30px izquierda/derecha */
+  background: linear-gradient(90deg, #212121, #424242); /* Degradado horizontal de gris oscuro */
+  color: white; /* Texto en color blanco para contraste */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3); /* Sombra para efecto de profundidad */
+  border-bottom-left-radius: 12px; /* Esquinas inferiores redondeadas */
+  border-bottom-right-radius: 12px;
+}
+
+/* Logo del IFN en el header */
+header .Logo {
+  width: 90px; /* Ancho fijo para el logo */
+}
+
+/* Contenedor central del header para título y navegación */
+.center-header {
+  text-align: center; /* Centra el contenido horizontalmente */
+  flex-grow: 1; /* Ocupa el espacio disponible entre logo y sección de usuario */
+}
+
+/* Título principal del sistema en el header */
+.center-header h1 {
+  margin: 0 0 20px 0; /* Sin margen superior, 20px de margen inferior */
+  font-size: 1.8em; /* Tamaño de fuente grande */
+  font-weight: 700; /* Texto en negrita */
+  letter-spacing: 1px; /* Espaciado entre letras para mejor legibilidad */
+  color: #FFFFFF; /* Color blanco */
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5); /* Sombra de texto para resaltar sobre fondo oscuro */
+}
+
+/* Botones del dashboard en el header - Navegación principal */
+header .dashboard {
+  display: flex; /* Coloca los botones en fila */
+  justify-content: center; /* Centra horizontalmente los botones */
+  gap: 15px; /* Espacio entre botones */
+  flex-wrap: wrap; /* Permite que los botones se envuelvan en múltiples líneas si es necesario */
+}
+
+/* Estilo base para botones de navegación del dashboard */
+header .dashboard-btn {
+  padding: 10px 20px; /* Espaciado interno del botón */
+  font-size: 0.9em; /* Tamaño de fuente ligeramente reducido */
+  font-weight: bold; /* Texto en negrita */
+  border: none; /* Elimina borde por defecto */
+  border-radius: 8px; /* Esquinas redondeadas */
+  background-color: #1E88E5; /* Color azul institucional */
+  color: white; /* Texto blanco */
+  cursor: pointer; /* Cambia cursor a mano al pasar por encima */
+  box-shadow: 0 3px 5px rgba(0,0,0,0.3); /* Sombra para efecto elevado */
+  transition: all 0.3s ease; /* Transición suave para efectos hover */
+  text-decoration: none; /* Elimina subrayado de enlaces */
+  display: inline-block; /* Se comporta como botón */
+  text-align: center; /* Texto centrado */
+  min-width: 100px; /* Ancho mínimo para consistencia visual */
+}
+
+/* Efecto hover para botones de navegación */
+header .dashboard-btn:hover {
+  background-color: #FFC107; /* Cambia a color amarillo/dorado */
+  color: #212121; /* Texto oscuro para contraste */
+  transform: translateY(-2px); /* Efecto de elevación al pasar el mouse */
+}
+
+/* Sección de usuario en el header - Información y cierre de sesión */
+.login-imagen {
+  display: flex; /* Activa flexbox */
+  flex-direction: column; /* Organiza elementos en columna: texto, imagen, botón */
+  align-items: center; /* Centra horizontalmente los elementos */
+}
+
+/* Texto del nombre de usuario */
+.login-imagen p {
+  margin: 0 0 5px 0; /* Sin margen superior, 5px de margen inferior */
+  font-weight: bold; /* Texto en negrita */
+  color: #FFFFFF; /* Texto blanco */
+}
+
+/* Imagen de perfil del usuario */
+.login-imagen img {
+  width: 70px; /* Tamaño de la imagen */
+  border-radius: 50%; /* Forma circular */
+  border: 2px solid #FFFFFF; /* Borde blanco alrededor de la imagen */
+}
+
+/* Botón de cerrar sesión */
+.login-imagen button {
+  margin-top: 8px; /* Espacio superior */
+  padding: 6px 12px; /* Espaciado interno reducido */
+  border: none; /* Sin borde */
+  background-color: #FFC107; /* Fondo amarillo/dorado */
+  color: #212121; /* Texto oscuro */
+  border-radius: 6px; /* Esquinas redondeadas */
+  font-weight: bold; /* Texto en negrita */
+  cursor: pointer; /* Cursor de mano al pasar */
+  font-size: 0.8em; /* Tamaño de fuente pequeño */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3); /* Sombra sutil */
+  transition: 0.3s; /* Transición suave para hover */
+}
+
+/* Efecto hover en botón de cerrar sesión */
+.login-imagen button:hover {
+  background-color: #FFA000; /* Amarillo más oscuro al pasar el mouse */
+}
+
+/* Contenido principal de la página */
+main {
+  background-color: #FFFFFF; /* Fondo blanco para el área de contenido */
+  max-width: 1200px; /* Ancho máximo para pantallas grandes */
+  margin: 30px auto; /* Centrado horizontal con margen superior/inferior */
+  padding: 25px; /* Espaciado interno */
+  border-radius: 12px; /* Esquinas redondeadas */
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2); /* Sombra para efecto elevado */
+}
+
+/* Título principal dentro del main (h1) */
+main h1 {
+  font-size: 1.8em; /* Tamaño grande */
+  margin-bottom: 25px; /* Espacio inferior */
+  color: #2E7D32; /* Color verde institucional del IFN */
+  text-transform: uppercase; /* Texto en mayúsculas */
+  border-bottom: 3px solid #2E7D32; /* Línea decorativa inferior en verde */
+  padding-bottom: 10px; /* Espacio entre texto y línea */
+  text-align: center; /* Centrado horizontal */
+}
+
+/* Barra de búsqueda global */
+.search-container {
+  display: flex; /* Flexbox para alinear contenido */
+  justify-content: flex-end; /* Alinea a la derecha del contenedor */
+  margin: 15px 30px 15px 0; /* Margen: arriba 15px, derecha 30px, abajo 15px, izquierda 0 */
+}
+
+/* Caja que contiene el input de búsqueda y el icono */
+.search-box {
+  display: flex; /* Flexbox para colocar input e icono en línea */
+  align-items: center; /* Centra verticalmente los elementos */
+  background: white; /* Fondo blanco */
+  border-radius: 25px; /* Bordes muy redondeados (forma de cápsula) */
+  padding: 5px 15px; /* Espaciado interno: arriba/abajo 5px, izquierda/derecha 15px */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra ligera para efecto de elevación */
+  width: 250px; /* Ancho fijo de la caja de búsqueda */
+  border: 1px solid #ccc; /* Borde gris claro */
+}
+
+/* Campo de entrada de búsqueda */
+.search-box input {
+  border: none; /* Elimina borde por defecto */
+  outline: none; /* Elimina el contorno al enfocar */
+  padding: 10px; /* Espaciado interno del texto */
+  font-size: 1em; /* Tamaño de fuente estándar */
+  width: 100%; /* Ocupa todo el ancho disponible dentro de la caja */
+  background: transparent; /* Fondo transparente para mostrar el fondo de la caja */
+}
+
+/* Icono de lupa de búsqueda */
+.search-icon {
+  color: #555; /* Color gris del icono */
+  cursor: pointer; /* Cambia el cursor a mano al pasar por encima */
+  font-size: 1.2em; /* Tamaño del icono ligeramente más grande que el texto */
+  margin-left: 5px; /* Separación del input hacia la izquierda */
+}
+
+/* Efecto visual cuando la caja de búsqueda está enfocada */
+.search-box:focus-within {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2); /* Sombra más marcada al enfocar */
+  border-color: #1E88E5; /* Cambia el color del borde a azul */
+}
+
+/* Pie de página institucional */
+footer {
+  background-color: #212121; /* Fondo gris oscuro */
+  color: white; /* Texto en color blanco */
+  padding: 20px; /* Espaciado interno */
+  text-align: center; /* Contenido centrado */
+  border-top-left-radius: 12px; /* Esquinas superiores redondeadas */
+  border-top-right-radius: 12px;
+  box-shadow: 0 -3px 8px rgba(0,0,0,0.2); /* Sombra superior para efecto de elevación */
+  margin-top: 30px; /* Espacio superior para separación del contenido */
+}
+
+/* Contenedor principal del footer */
+.footer-container {
+  max-width: 1000px; /* Ancho máximo para centrar el contenido */
+  margin: 0 auto; /* Centrado automático horizontal */
+  display: flex; /* Flexbox para organización */
+  flex-direction: column; /* Elementos en columna (uno debajo de otro) */
+  align-items: center; /* Centrados horizontalmente */
+  gap: 10px; /* Espacio entre elementos */
+}
+
+/* Párrafos de información en el footer */
+.footer-container p {
+  margin: 5px 0; /* Margen vertical pequeño entre párrafos */
+  font-size: 0.9em; /* Tamaño de fuente pequeño */
+}
+
+/* Contenedor de redes sociales */
+.redes-sociales {
+  display: flex; /* Íconos en fila horizontal */
+  justify-content: center; /* Centrados horizontalmente */
+  gap: 15px; /* Espacio entre íconos */
+  margin: 10px 0; /* Margen vertical */
+}
+
+/* Iconos individuales de redes sociales */
+.redes-sociales img {
+  width: 25px;  /* Tamaño de los íconos */
+  height: 25px;
+  transition: transform 0.3s ease, filter 0.3s ease; /* Animación al pasar el mouse */
+  cursor: pointer; /* Mano al pasar sobre el ícono */
+}
+
+/* Efecto hover en los íconos de redes sociales */
+.redes-sociales img:hover {
+  transform: scale(1.2); /* Aumenta el tamaño ligeramente */
+  filter: brightness(1.3); /* Aumenta el brillo */
+}
+
+/* =============================================
+   ANIMACIONES Y EFECTOS VISUALES
+   ============================================= */
+
+/* 
+   Animación de entrada fadeInUp
+   Las secciones aparecen desvaneciéndose y moviéndose hacia arriba
+   Crea una experiencia de carga progresiva y atractiva
+*/
+@keyframes fadeInUp {
+  to {
+    opacity: 1;               /* Opacidad completa al final */
+    transform: translateY(0); /* Posición final normal (sin desplazamiento) */
+  }
+}
+
+/* 
+   Retrasos escalonados para animación secuencial
+   Cada sección aparece con un pequeño retraso para crear efecto cascada
+   Mejora la percepción de carga y dirige la atención del usuario
+*/
+.dashboard-calidad { animation-delay: 0.1s; } /* Primera sección - menor retraso */
+.registros-section { animation-delay: 0.2s; } /* Segunda sección */
+.correccion-section { animation-delay: 0.3s; } /* Tercera sección */
+.reportes-section { animation-delay: 0.4s; }   /* Cuarta sección */
+.corruptos-section { animation-delay: 0.5s; }  /* Quinta sección - mayor retraso */
+
+/* =============================================
+   DISEÑO RESPONSIVE - ADAPTACIONES PARA MÓVILES
+   ============================================= */
+
+/* Media query para tablets y pantallas medianas (hasta 768px) */
+@media (max-width: 768px) {
+  /* Ajustes para el contenido principal en tablets */
+  main {
+    margin: 15px; /* Reduce márgenes laterales para aprovechar espacio */
+    padding: 15px; /* Reduce padding interno */
+  }
+  
+  /* Una sola columna para métricas en tablets */
+  .metricas-container {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Centrar filtros rápidos en tablets */
+  .filtros-rapidos {
+    justify-content: center;
+  }
+  
+  /* Detalles de registro en columna en tablets */
+  .registro-detalle {
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  /* Botones de acción en columna en tablets */
+  .registro-actions {
+    flex-direction: column;
+  }
+  
+  /* Campos de formulario en columna en tablets */
+  .form-row {
+    flex-direction: column;
+  }
+  
+  /* Botones de acción en columna en tablets */
+  .correccion-actions,
+  .reporte-actions,
+  .alerta-actions {
+    flex-direction: column;
+  }
+  
+  /* Header en columna para tablets */
+  header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px 20px;
+  }
+  
+  /* Menos espacio entre botones de navegación en tablets */
+  .dashboard {
+    gap: 10px;
+  }
+  
+  /* Botones más compactos en tablets */
+  .dashboard-btn {
+    padding: 8px 15px;
+    font-size: 0.8em;
+    min-width: 80px;
+  }
+  
+  /* Título más pequeño en tablets */
+  .center-header h1 {
+    font-size: 1.4em;
+    margin-bottom: 15px;
+  }
+  
+  /* Búsqueda centrada en tablets */
+  .search-container {
+    justify-content: center;
+    margin: 15px;
+  }
+  
+  /* Búsqueda ocupa ancho disponible en tablets */
+  .search-box {
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  /* Alerta de datos corruptos en columna en tablets */
+  .alerta-corruptos {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* Media query para móviles pequeños (hasta 480px) */
+@media (max-width: 480px) {
+  /* Imagen de usuario más pequeña en móviles */
+  .login-imagen img {
+    width: 50px;
+  }
+  
+  /* Botón de cerrar sesión más compacto en móviles */
+  .login-imagen button {
+    font-size: 0.7em;
+    padding: 4px 8px;
+  }
+  
+  /* Logo más pequeño en móviles */
+  .Logo {
+    width: 70px;
+  }
+  
+  /* Tarjetas de métricas en columna en móviles */
+  .metrica-card {
+    flex-direction: column;
+    text-align: center;
+  }
+}

@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generar Reporte - IFN</title>
+  <!-- Enlace al archivo CSS específico para estilos de reportes -->
+  <link rel="stylesheet" href="../CSS/styles-Estadisticas.css">
+  <!-- Importación de Chart.js para generar gráficos interactivos -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- ===== ENCABEZADO PRINCIPAL ===== -->
+  <header>
+    <!-- Logo del Instituto de Hidrología, Meteorología y Estudios Ambientales -->
+    <img class="Logo" src="../IMG/ifn-baja-tcm30-525131.png" alt="Logo IFN" width="150">
+    
+    <!-- Contenedor central del header con título y navegación -->
+    <div class="center-header">
+      <h1>INVENTARIO FORESTAL NACIONAL - COLOMBIA</h1>
+      
+      <!-- Menú de navegación principal -->
+      <div class="dashboard">
+        <a href="inicio-Pantalla.html" class="dashboard-btn">Inicio</a>
+        <a href="subirArbol.html" class="dashboard-btn">Subir Arbol</a>
+        <a href="subirSuelo.html" class="dashboard-btn">Subir Suelo</a>
+        <a href="registro.html" class="dashboard-btn">Registro</a>
+        <a href="gestionBrigadas.html" class="dashboard-btn">Gestión Brigadas</a>
+        <a href="supervision.html" class="dashboard-btn">Supervisión</a>
+      </div>
+    </div>
+
+    <!-- Sección de información del usuario -->
+    <div class="login-imagen">
+      <p class="texto-arriba">User</p>
+      <img class="Login" src="../IMG/login.png" alt="Login User" width="150">
+      <button class="texto-abajo">Cerrar sesión</button>
+    </div>
+  </header>
+
+  <!-- Banner que muestra el estado de conexión del sistema -->
+  <div class="banner-conectado">
+    <span class="banner-icon">🟢</span>
+    <span class="banner-texto">En línea - Datos se guardan automáticamente</span>
+  </div>
+
+  <!-- ===== CONTENIDO PRINCIPAL DE LA PÁGINA ===== -->
+  <main>
+    <h1>GENERAR REPORTES</h1>
+    
+    <!-- SECCIÓN DE FILTROS PARA PERSONALIZAR EL REPORTE -->
+    <div class="filtros-reporte">
+      <h2>Personalizar Reporte</h2>
+      
+      <!-- Grid responsivo para organizar los filtros -->
+      <div class="filtros-grid">
+        <!-- Filtro por tipo de reporte (obligatorio) -->
+        <div class="filtro-grupo">
+          <label for="tipo-reporte">Tipo de Reporte *</label>
+          <select id="tipo-reporte" required>
+            <option value="">Seleccionar tipo</option>
+            <option value="arboles">Reporte de Árboles</option>
+            <option value="suelos">Reporte de Suelos</option>
+            <option value="especies">Distribución de Especies</option>
+            <option value="crecimiento">Análisis de Crecimiento</option>
+            <option value="salud">Estado de Salud Forestal</option>
+          </select>
+        </div>
+        
+        <!-- Filtro por período de tiempo (obligatorio) -->
+        <div class="filtro-grupo">
+          <label for="periodo">Período *</label>
+          <select id="periodo" required>
+            <option value="">Seleccionar período</option>
+            <option value="hoy">Hoy</option>
+            <option value="semana">Esta semana</option>
+            <option value="mes">Este mes</option>
+            <option value="trimestre">Este trimestre</option>
+            <option value="anio">Este año</option>
+            <option value="personalizado">Personalizado</option>
+          </select>
+        </div>
+        
+        <!-- Filtro opcional por ubicación geográfica -->
+        <div class="filtro-grupo">
+          <label for="ubicacion">Ubicación</label>
+          <select id="ubicacion">
+            <option value="">Todas las ubicaciones</option>
+            <option value="norte">Región Norte</option>
+            <option value="sur">Región Sur</option>
+            <option value="este">Región Este</option>
+            <option value="oeste">Región Oeste</option>
+            <option value="andes">Región Andina</option>
+            <option value="amazonia">Amazonía</option>
+            <option value="pacifico">Pacífico</option>
+            <option value="caribe">Caribe</option>
+          </select>
+        </div>
+        
+        <!-- Filtro opcional por brigada de campo -->
+        <div class="filtro-grupo">
+          <label for="brigada">Brigada</label>
+          <select id="brigada">
+            <option value="">Todas las brigadas</option>
+            <option value="brigada1">Brigada Norte</option>
+            <option value="brigada2">Brigada Sur</option>
+            <option value="brigada3">Brigada Este</option>
+            <option value="brigada4">Brigada Oeste</option>
+            <option value="brigada5">Brigada Andina</option>
+          </select>
+        </div>
+      </div>
+      
+      <!-- Filtros de fecha personalizada (se muestran solo cuando se selecciona "Personalizado") -->
+      <div class="filtros-fecha" id="filtros-fecha" style="display: none;">
+        <div class="filtro-grupo">
+          <label for="fecha-inicio">Fecha Inicio</label>
+          <input type="date" id="fecha-inicio">
+        </div>
+        
+        <div class="filtro-grupo">
+          <label for="fecha-fin">Fecha Fin</label>
+          <input type="date" id="fecha-fin">
+        </div>
+      </div>
+      
+      <!-- Botones para gestionar los filtros -->
+      <div class="botones-filtros">
+        <button class="btn-limpiar" id="btnLimpiarFiltros">Limpiar Filtros</button>
+        <button class="btn-aplicar" id="btnAplicarFiltros">Aplicar Filtros</button>
+      </div>
+    </div>
+    
+    <!-- SECCIÓN DE VISTA PREVIA DEL REPORTE -->
+    <div class="vista-previa">
+      <h2>Vista Previa del Reporte</h2>
+      
+      <!-- Tarjetas con estadísticas rápidas del reporte -->
+      <div class="estadisticas-rapidas">
+        <div class="estadistica-item">
+          <span class="estadistica-numero" id="total-arboles">0</span>
+          <span class="estadistica-texto">Árboles Registrados</span>
+        </div>
+        <div class="estadistica-item">
+          <span class="estadistica-numero" id="total-suelos">0</span>
+          <span class="estadistica-texto">Muestras de Suelo</span>
+        </div>
+        <div class="estadistica-item">
+          <span class="estadistica-numero" id="total-especies">0</span>
+          <span class="estadistica-texto">Especies Diferentes</span>
+        </div>
+        <div class="estadistica-item">
+          <span class="estadistica-numero" id="avance">0%</span>
+          <span class="estadistica-texto">Avance del Inventario</span>
+        </div>
+      </div>
+      
+      <!-- Contenedor para los gráficos del reporte -->
+      <div class="graficos-reporte">
+        <div class="grafico-container">
+          <h3>Distribución de Especies</h3>
+          <!-- Canvas para el gráfico circular de distribución de especies -->
+          <canvas id="graficoEspecies"></canvas>
+        </div>
+        
+        <div class="grafico-container">
+          <h3>Registros por Mes</h3>
+          <!-- Canvas para el gráfico de barras de registros por mes -->
+          <canvas id="graficoRegistros"></canvas>
+        </div>
+      </div>
+      
+      <!-- Tabla con resumen detallado de los datos -->
+      <div class="tabla-resumen">
+        <h3>Resumen de Datos</h3>
+        <table class="tabla-datos">
+          <thead>
+            <tr>
+              <th>Especie</th>
+              <th>Cantidad</th>
+              <th>Altura Promedio (m)</th>
+              <th>Diámetro Promedio (cm)</th>
+              <th>Condición</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-datos-body">
+            <!-- Las filas de datos se insertarán dinámicamente mediante JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- SECCIÓN DE OPCIONES DE EXPORTACIÓN -->
+    <div class="opciones-exportacion">
+      <h2>Opciones de Exportación</h2>
+      
+      <!-- Selector de formato de exportación -->
+      <div class="formatos-exportacion">
+        <div class="formato-opcion">
+          <input type="radio" id="formato-pdf" name="formato" value="pdf" checked>
+          <label for="formato-pdf">PDF (Formato de documento)</label>
+        </div>
+        
+        <div class="formato-opcion">
+          <input type="radio" id="formato-csv" name="formato" value="csv">
+          <label for="formato-csv">CSV (Datos en tabla)</label>
+        </div>
+        
+        <div class="formato-opcion">
+          <input type="radio" id="formato-excel" name="formato" value="excel">
+          <label for="formato-excel">Excel (Hoja de cálculo)</label>
+        </div>
+      </div>
+      
+      <!-- Botones de acción para exportar y compartir -->
+      <div class="botones-exportacion">
+        <button class="btn-exportar" id="btnExportar">
+          <span class="btn-icon">📊</span>
+          Generar y Exportar Reporte
+        </button>
+        
+        <button class="btn-compartir" id="btnCompartir">
+          <span class="btn-icon">📧</span>
+          Compartir por Correo
+        </button>
+      </div>
+    </div>
+    
+    <!-- Mensaje que se muestra cuando no hay datos para el reporte -->
+    <div class="sin-datos" id="sinDatos" style="display: none;">
+      <div class="sin-datos-icon">📝</div>
+      <h3>No hay datos para el reporte solicitado</h3>
+      <p>No se encontraron registros que coincidan con los filtros aplicados.</p>
+      <div class="sugerencias">
+        <p><strong>Sugerencias:</strong></p>
+        <ul>
+          <li>Amplíe el rango de fechas seleccionado</li>
+          <li>Seleccione una ubicación diferente</li>
+          <li>Verifique que existan datos para el período seleccionado</li>
+        </ul>
+      </div>
+      <button class="btn-alternativo" id="btnVerTodos">Ver Todos los Registros</button>
+    </div>
+  </main>
+
+  <!-- ===== PIE DE PÁGINA ===== -->
+  <footer>
+    <div class="footer-container">
+      <p>📍 Dirección: Calle 25 D No. 110911, Colombia</p>
+      <p>📧 Correo: contacto@ideam.gov.co | ☎ Tel: +57 (601) 4442060</p>
+      <div class="redes-sociales">
+        <a href="https://www.facebook.com/ideam.instituto/?locale=es_LA"><img src="../IMG/facebook.png" alt="Facebook"></a>
+        <a href="https://x.com/IDEAMColombia?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><img src="../IMG/X.jpeg" alt="X"></a>
+        <a href="https://www.instagram.com/ideamcolombia/?hl=es"><img src="../IMG/instagram.png" alt="Instagram"></a>
+        <a href="https://www.youtube.com/@InstitutoIDEAM"><img src="../IMG/youtube.png" alt="YouTube"></a>
+      </div>
+      <p>&copy; 2024 Proyecto Web IFN. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- ===== SCRIPT CON LA LÓGICA DE LA APLICACIÓN ===== -->
+  <script>
+    // Espera a que el DOM esté completamente cargado antes de ejecutar el código
+    document.addEventListener('DOMContentLoaded', function() {
+      // ===== DECLARACIÓN DE VARIABLES Y ELEMENTOS DEL DOM =====
+      
+      // Referencias a elementos de filtros
+      const periodoSelect = document.getElementById('periodo');
+      const filtrosFecha = document.getElementById('filtros-fecha');
+      
+      // Referencias a botones de acción
+      const btnAplicarFiltros = document.getElementById('btnAplicarFiltros');
+      const btnLimpiarFiltros = document.getElementById('btnLimpiarFiltros');
+      const btnExportar = document.getElementById('btnExportar');
+      const btnCompartir = document.getElementById('btnCompartir');
+      const btnVerTodos = document.getElementById('btnVerTodos');
+      
+      // Referencia al contenedor de mensaje sin datos
+      const sinDatos = document.getElementById('sinDatos');
+      
+      // ===== CONFIGURACIÓN DE EVENT LISTENERS =====
+      
+      // Muestra u oculta los filtros de fecha personalizada según la selección
+      periodoSelect.addEventListener('change', function() {
+        if (this.value === 'personalizado') {
+          filtrosFecha.style.display = 'flex'; // Muestra los filtros de fecha
+        } else {
+          filtrosFecha.style.display = 'none'; // Oculta los filtros de fecha
+        }
+      });
+      
+      // Aplica los filtros seleccionados y genera la vista previa
+      btnAplicarFiltros.addEventListener('click', function() {
+        generarVistaPrevia(); // Función que procesa los filtros y actualiza la vista
+      });
+      
+      // Limpia todos los filtros y restablece la vista
+      btnLimpiarFiltros.addEventListener('click', function() {
+        // Resetea todos los selects de filtros
+        document.querySelectorAll('.filtros-grid select').forEach(select => {
+          select.value = '';
+        });
+        
+        // Resetea los filtros principales
+        document.getElementById('tipo-reporte').value = '';
+        document.getElementById('periodo').value = '';
+        filtrosFecha.style.display = 'none'; // Oculta filtros de fecha
+        
+        // Limpia la vista previa mostrada
+        limpiarVistaPrevia();
+      });
+      
+      // Exporta el reporte en el formato seleccionado
+      btnExportar.addEventListener('click', function() {
+        // Obtiene el formato seleccionado (PDF, CSV o Excel)
+        const formato = document.querySelector('input[name="formato"]:checked').value;
+        exportarReporte(formato); // Función que maneja la exportación
+      });
+      
+      // Comparte el reporte por correo electrónico
+      btnCompartir.addEventListener('click', function() {
+        compartirReporte(); // Función que maneja el envío por correo
+      });
+      
+      // Muestra todos los registros sin filtros aplicados
+      btnVerTodos.addEventListener('click', function() {
+        // Limpia los filtros principales
+        document.getElementById('periodo').value = '';
+        document.getElementById('ubicacion').value = '';
+        document.getElementById('brigada').value = '';
+        
+        // Regenera la vista previa con todos los datos
+        generarVistaPrevia();
+      });
+      
+      // ===== FUNCIONES PRINCIPALES DE LA APLICACIÓN =====
+      
+      /**
+       * Genera la vista previa del reporte aplicando los filtros seleccionados
+       * Simula una llamada a la base de datos y actualiza la interfaz
+       */
+      function generarVistaPrevia() {
+        // Muestra indicador de carga (en implementación real)
+        mostrarCarga();
+        
+        // Simula un retardo de carga de datos (1.5 segundos)
+        setTimeout(function() {
+          // ===== DATOS DE EJEMPLO PARA DEMOSTRACIÓN =====
+          const datosEjemplo = {
+            totalArboles: 142,     // Total de árboles registrados
+            totalSuelos: 28,       // Total de muestras de suelo
+            totalEspecies: 18,     // Total de especies diferentes
+            avance: '65%',         // Porcentaje de avance del inventario
+            especies: [            // Array con datos detallados por especie
+              { 
+                nombre: 'Quercus humboldtii', 
+                cantidad: 42, 
+                altura: 18.5, 
+                diametro: 45.2, 
+                condicion: 'Excelente' 
+              },
+              { 
+                nombre: 'Ceroxylon quindiuense', 
+                cantidad: 28, 
+                altura: 22.3, 
+                diametro: 38.7, 
+                condicion: 'Buena' 
+              },
+              { 
+                nombre: 'Anacardium excelsum', 
+                cantidad: 15, 
+                altura: 15.8, 
+                diametro: 52.1, 
+                condicion: 'Regular' 
+              },
+              { 
+                nombre: 'Cedrela odorata', 
+                cantidad: 12, 
+                altura: 20.1, 
+                diametro: 41.5, 
+                condicion: 'Buena' 
+              },
+              { 
+                nombre: 'Swietenia macrophylla', 
+                cantidad: 8, 
+                altura: 17.6, 
+                diametro: 48.9, 
+                condicion: 'Excelente' 
+              }
+            ]
+          };
+          
+          // ===== ACTUALIZACIÓN DE ESTADÍSTICAS RÁPIDAS =====
+          document.getElementById('total-arboles').textContent = datosEjemplo.totalArboles;
+          document.getElementById('total-suelos').textContent = datosEjemplo.totalSuelos;
+          document.getElementById('total-especies').textContent = datosEjemplo.totalEspecies;
+          document.getElementById('avance').textContent = datosEjemplo.avance;
+          
+          // ===== ACTUALIZACIÓN DE LA TABLA DE DATOS =====
+          const tablaBody = document.getElementById('tabla-datos-body');
+          tablaBody.innerHTML = ''; // Limpia la tabla existente
+          
+          // Itera sobre cada especie y crea una fila en la tabla
+          datosEjemplo.especies.forEach(especie => {
+            const fila = document.createElement('tr'); // Crea elemento tr (table row)
+            fila.innerHTML = `
+              <td>${especie.nombre}</td>
+              <td>${especie.cantidad}</td>
+              <td>${especie.altura}</td>
+              <td>${especie.diametro}</td>
+              <td>${especie.condicion}</td>
+            `;
+            tablaBody.appendChild(fila); // Añade la fila a la tabla
+          });
+          
+          // ===== GENERACIÓN DE GRÁFICOS =====
+          generarGraficos();
+          
+          // Oculta el mensaje de "sin datos" ya que ahora hay información
+          sinDatos.style.display = 'none';
+          
+          // Oculta el indicador de carga
+          ocultarCarga();
+        }, 1500); // Fin del setTimeout (simula carga de datos)
+      }
+      
+      /**
+       * Limpia toda la vista previa del reporte
+       * Restablece estadísticas, tabla y gráficos a valores por defecto
+       */
+      function limpiarVistaPrevia() {
+        // Restablece las estadísticas a cero
+        document.getElementById('total-arboles').textContent = '0';
+        document.getElementById('total-suelos').textContent = '0';
+        document.getElementById('total-especies').textContent = '0';
+        document.getElementById('avance').textContent = '0%';
+        
+        // Limpia el contenido de la tabla
+        document.getElementById('tabla-datos-body').innerHTML = '';
+        
+        // ===== LIMPIEZA DE GRÁFICOS EXISTENTES =====
+        const graficoEspecies = document.getElementById('graficoEspecies');
+        const graficoRegistros = document.getElementById('graficoRegistros');
+        
+        // Destruye instancias anteriores de gráficos si existen
+        if (window.graficoEspeciesInstancia) {
+          window.graficoEspeciesInstancia.destroy();
+        }
+        
+        if (window.graficoRegistrosInstancia) {
+          window.graficoRegistrosInstancia.destroy();
+        }
+        
+        // Muestra el mensaje indicando que no hay datos
+        sinDatos.style.display = 'block';
+      }
+      
+      /**
+       * Genera y renderiza los gráficos usando Chart.js
+       * Crea un gráfico circular para especies y uno de barras para registros
+       */
+      function generarGraficos() {
+        // ===== GRÁFICO CIRCULAR - DISTRIBUCIÓN DE ESPECIES =====
+        const ctxEspecies = document.getElementById('graficoEspecies').getContext('2d');
+        window.graficoEspeciesInstancia = new Chart(ctxEspecies, {
+          type: 'pie', // Tipo de gráfico circular
+          data: {
+            labels: [
+              'Quercus humboldtii', 
+              'Ceroxylon quindiuense', 
+              'Anacardium excelsum', 
+              'Cedrela odorata', 
+              'Swietenia macrophylla', 
+              'Otras'
+            ],
+            datasets: [{
+              data: [42, 28, 15, 12, 8, 37], // Valores para cada categoría
+              backgroundColor: [               // Colores para cada segmento
+                '#4CAF50', '#2196F3', '#FF9800', '#9C27B0', '#F44336', '#607D8B'
+              ]
+            }]
+          },
+          options: {
+            responsive: true, // El gráfico se adapta al tamaño del contenedor
+            plugins: {
+              legend: {
+                position: 'right', // Leyenda a la derecha del gráfico
+              },
+              title: {
+                display: true,
+                text: 'Distribución por Especie' // Título del gráfico
+              }
+            }
+          }
+        });
+        
+        // ===== GRÁFICO DE BARRAS - REGISTROS POR MES =====
+        const ctxRegistros = document.getElementById('graficoRegistros').getContext('2d');
+        window.graficoRegistrosInstancia = new Chart(ctxRegistros, {
+          type: 'bar', // Tipo de gráfico de barras
+          data: {
+            labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'], // Eje X - meses
+            datasets: [
+              {
+                label: 'Árboles', // Etiqueta para la primera serie
+                data: [25, 32, 28, 41, 36, 30], // Valores para árboles
+                backgroundColor: '#4CAF50' // Color verde para árboles
+              }, 
+              {
+                label: 'Suelos', // Etiqueta para la segunda serie
+                data: [8, 10, 6, 12, 9, 7], // Valores para suelos
+                backgroundColor: '#2196F3' // Color azul para suelos
+              }
+            ]
+          },
+          options: {
+            responsive: true, // Gráfico responsivo
+            scales: {
+              y: {
+                beginAtZero: true // El eje Y comienza en 0
+              }
+            }
+          }
+        });
+      }
+      
+      /**
+       * Simula la exportación del reporte en el formato especificado
+       * @param {string} formato - Formato de exportación (pdf, csv, excel)
+       */
+      function exportarReporte(formato) {
+        // Cambia el texto del botón para indicar proceso en curso
+        btnExportar.innerHTML = '<span class="btn-icon">⏳</span> Generando...';
+        btnExportar.disabled = true; // Deshabilita el botón durante el proceso
+        
+        // Simula el tiempo de generación del reporte (2 segundos)
+        setTimeout(function() {
+          // Muestra alerta de éxito (en implementación real descargaría el archivo)
+          alert(`Reporte generado exitosamente en formato ${formato.toUpperCase()}. El archivo se descargará automáticamente.`);
+          
+          // Restablece el botón a su estado original
+          btnExportar.innerHTML = '<span class="btn-icon">📊</span> Generar y Exportar Reporte';
+          btnExportar.disabled = false;
+          
+          // En una implementación real, aquí se generaría y descargaría el archivo
+          // según el formato seleccionado
+        }, 2000);
+      }
+      
+      /**
+       * Simula el envío del reporte por correo electrónico
+       * Solicita el correo destino y muestra confirmación
+       */
+      function compartirReporte() {
+        // Solicita al usuario que ingrese un correo electrónico
+        const email = prompt('Ingrese el correo electrónico para compartir el reporte:');
+        
+        // Si el usuario ingresó un correo (no canceló)
+        if (email) {
+          // Cambia el texto del botón para indicar envío en curso
+          btnCompartir.innerHTML = '<span class="btn-icon">⏳</span> Enviando...';
+          btnCompartir.disabled = true; // Deshabilita el botón
+          
+          // Simula el tiempo de envío (1.5 segundos)
+          setTimeout(function() {
+            // Muestra confirmación de envío exitoso
+            alert(`Reporte compartido exitosamente a ${email}`);
+            
+            // Restablece el botón a su estado original
+            btnCompartir.innerHTML = '<span class="btn-icon">📧</span> Compartir por Correo';
+            btnCompartir.disabled = false;
+          }, 1500);
+        }
+      }
+      
+      /**
+       * Muestra un indicador de carga (placeholder para implementación real)
+       * En una implementación completa mostraría un spinner o barra de progreso
+       */
+      function mostrarCarga() {
+        // En una implementación real, aquí se mostraría un spinner de carga
+        console.log('Cargando datos...'); // Mensaje de consola para desarrollo
+      }
+      
+      /**
+       * Oculta el indicador de carga (placeholder para implementación real)
+       */
+      function ocultarCarga() {
+        // En una implementación real, aquí se ocultaría el spinner de carga
+        console.log('Datos cargados'); // Mensaje de consola para desarrollo
+      }
+      
+      // ===== INICIALIZACIÓN DE LA APLICACIÓN =====
+      
+      // Inicializa la vista con estado vacío (sin datos)
+      limpiarVistaPrevia();
+    });
+  </script>
+  <script src="../JS/estadisticas.js"></script>
+</body>
+</html>

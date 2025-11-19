@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<!-- Cambié el idioma a español -->
+<html lang="es">
+<head>
+    <!-- Cambié el charset a UTF-8 para mejor compatibilidad con caracteres especiales -->
+    <meta charset="UTF-8">
+    <!-- Cambié el valor de initial-scale a 1.0 para mejorar la visualización en dispositivos móviles -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Aca se definio el titulo que tendra la pestaña de la pagina web-->
+    <title>Proyecto Web IFN</title>
+    <!-- Agregue un enlace a un archivo CSS externo -->
+    <link rel="stylesheet" href="../CSS/styles-inicio.css">
+</head>
+
+<body>
+    <!-- Contenido del encabezado -->
+    <header>
+        <!-- puse el logo de IFN en el encabezado, ademas de crear una clase Logo para llamarlo en el css -->
+        <!-- Define el encabezado del sitio, donde normalmente va el logo, título y accesos de usuario. -->
+        <img class="Logo" src ="../IMG/ifn-baja-tcm30-525131.png" alt="Logo IFN" width="150">
+        
+        <!-- Contenedor centrado para título + dashboard -->
+        <div class="center-header">
+            <!-- Título principal de la página (etiqueta H1)-->
+            <h1>SISTEMA DE IDENTIFICACION DE ESPECIES</h1>
+
+            <!-- Dashboard donde se agrupan las acciones principales del encabezado -->
+            <div class="dashboard">
+                <!-- Boton de Subir Árbol movera de la pantalla de inicio a subirArbol.html y demás -->
+                <a href="subirArbol.html" class="dashboard-btn">Subir Árbol</a> 
+                <a href="subirSuelo.html" class="dashboard-btn">Subir Suelo</a> 
+                <a href="registro.html" class="dashboard-btn">Registro</a>
+                <a href="estadisticas.html" class="dashboard-btn">Estadísticas</a>
+                <a href="gestionBrigadas.html" class="dashboard-btn">Gestion Brigadas</a>
+                <a href="supervision.html" class="dashboard-btn">Supervisión</a>
+            </div>
+        </div>
+
+        <!-- Agregue un contenedor para el logo y el texto de bienvenida del usuario -->
+        <div class="login-imagen">
+            <!-- Texto de bienvenida en una clase llamada texto-arriba -->
+            <p class="texto-arriba">User</p>
+            <!-- Imagen de ícono de usuario/login -->
+            <img class="Login" src="../IMG/login.png" alt="Login User" width="150">
+            <!-- Botón para cerrar sesión en clase texto-abajo -->
+            <button class="texto-abajo">Cerrar sesión</button>
+        </div>
+    </header>
+     <!-- Contenedor principal de la barra de búsqueda -->
+    <div class="search-container">
+    <!-- Caja que contiene el input de búsqueda y el icono -->
+    <div class="search-box"> 
+        <!-- Campo de texto donde el usuario escribe su búsqueda -->
+        <input type="text" placeholder="Buscar...">
+        <!-- Icono de lupa que representa la acción de buscar -->
+        <span class="search-icon">🔍</span>
+    </div>
+</div>
+
+    <main>
+        <!-- Contenido principal aquí -->
+        <h1>Panel de Control</h1>
+        <h2>Bienvenido al Sistema de Identificación de Especies</h2>
+        
+        <!-- Descripción de la función del software -->
+        <p class="descripcion">
+            Este software permite a las brigadas del Inventario Forestal Nacional identificar y registrar especies vegetales a partir de fotografías. 
+            Facilita el trabajo en campo, reduce errores en la clasificación y centraliza la información para un análisis más rápido y seguro.
+        </p>
+        
+        <!-- Accesos directos a funciones principales del software -->
+        <div class="accesos-directos">
+            <a href="subirArbol.html" class="acceso-btn">Subir Arbol</a>
+            <a href="subirSuelo.html" class="acceso-btn">Subir Suelo</a>
+        </div>
+        <!-- Cuadros de información importantes -->
+        <div class="info-cards">
+            <div class="card">
+                <h3>Muestras</h3>
+                <p class="card-value">152 registradas</p>
+        </div>
+        <div class="card">
+            <h3>Especies</h3>
+            <p class="card-value">28 registradas</p>
+        </div>
+        <div class="card">
+            <h3>Ubicaciones</h3>
+            <p class="card-value">12 distintas</p>
+        </div>
+</div>
+    </main>
+    
+    <footer>
+        <div class="footer-container">
+            <!-- Dirección institucional -->
+            <p>📍 Dirección: Calle 25 D No. 110911, Colombia</p>
+
+            <!-- Información de contacto -->
+            <p>📧 Correo: contacto@ideam.gov.co | ☎ Tel: +57 (601) 4442060</p>
+
+            <!-- Redes sociales con iconos -->
+            <div class="redes-sociales">
+                <!-- Enlace a Facebook -->
+                <a href="https://www.facebook.com/ideam.instituto/?locale=es_LA"><img src="../IMG/facebook.png" alt="Facebook"></a>
+                <!-- Enlace a X -->
+                <a href="https://x.com/IDEAMColombia?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><img src="../IMG/twitter.png" alt="X"></a>
+                <!-- Enlace a Instagram -->
+                <a href="https://www.instagram.com/ideamcolombia/?hl=es"><img src="../IMG/instagram.png" alt="Instagram"></a>
+                <!-- Enlace a YouTube -->
+                <a href="https://www.youtube.com/@InstitutoIDEAM"><img src="../IMG/youtube.png" alt="YouTube"></a>
+            </div>
+
+            <!-- Derechos reservados -->
+            <p>&copy; 2024 Proyecto Web IFN. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    <script src="../JS/inicio.js"></script>
+</body>
+</html>

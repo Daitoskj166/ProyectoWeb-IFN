@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir Suelo - IFN</title>
+    <link rel="stylesheet" href="../CSS/styles-SubirSuelo.css">
+</head>
+
+<body>
+    <!-- ===== HEADER ===== -->
+    <header>
+        <img class="Logo" src="../IMG/ifn-baja-tcm30-525131.png" alt="Logo IFN" width="150">
+
+        <div class="center-header">
+            <h1>INVENTARIO FORESTAL NACIONAL - COLOMBIA</h1>
+
+            <div class="dashboard">
+                <a href="inicio-Pantalla.html" class="dashboard-btn">Inicio</a>
+                <a href="subirArbol.html" class="dashboard-btn">Subir Arbol</a>
+                <a href="registro.html" class="dashboard-btn">Registro</a>
+                <a href="estadisticas.html" class="dashboard-btn">Estadísticas</a>
+                <a href="gestionBrigadas.html" class="dashboard-btn">Gestión Brigadas</a>
+                <a href="supervision.html" class="dashboard-btn">Supervisión</a>
+            </div>
+        </div>
+
+        <div class="login-imagen">
+            <p class="texto-arriba">User</p>
+            <img class="Login" src="../IMG/login.png" alt="Login User" width="150">
+            <button class="texto-abajo">Cerrar sesión</button>
+        </div>
+    </header>
+
+    <!-- Barra de búsqueda -->
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" placeholder="Buscar...">
+            <span class="search-icon">🔍</span>
+        </div>
+    </div>
+
+    <!-- ===== CONTENIDO PRINCIPAL ===== -->
+    <main>
+        <h2>SUBIR SUELO - F5.1 MUESTREO DE SUELOS</h2>
+
+        <!-- Formulario de subida de suelo -->
+        <form class="formulario-suelo" id="formularioSuelo">
+            
+            <!-- Sección de información general -->
+            <div class="seccion-formulario">
+                <h3>Información General</h3>
+                
+                <div class="fila-campos">
+                    <div class="campo-formulario">
+                        <label for="conglomerado">ID Conglomerado *</label>
+                        <input type="text" id="conglomerado" name="conglomerado" required>
+                    </div>
+                    
+                    <div class="campo-formulario">
+                        <label for="diligenciadoPor">Diligenciado por *</label>
+                        <input type="text" id="diligenciadoPor" name="diligenciadoPor" required>
+                    </div>
+                </div>
+
+                <div class="fila-campos">
+                    <div class="campo-formulario">
+                        <label for="fechaMuestreo">Fecha de Muestreo *</label>
+                        <input type="date" id="fechaMuestreo" name="fechaMuestreo" required>
+                    </div>
+                    
+                    <div class="campo-formulario">
+                        <label for="brigada">Brigada Responsable</label>
+                        <select id="brigada" name="brigada">
+                            <option value="">Seleccionar brigada</option>
+                            <option value="brigada1">Brigada Norte</option>
+                            <option value="brigada2">Brigada Sur</option>
+                            <option value="brigada3">Brigada Este</option>
+                            <option value="brigada4">Brigada Oeste</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabla de muestras de suelo -->
+            <div class="seccion-formulario">
+                <h3>Muestras de Suelo</h3>
+                <p class="subtitulo-seccion">Complete la información para cada punto de muestreo</p>
+
+                <div class="tabla-muestras">
+                    <!-- Encabezado de la tabla -->
+                    <div class="fila-tabla encabezado-tabla">
+                        <div class="columna-tabla">Punto</div>
+                        <div class="columna-tabla">Azimut (°)</div>
+                        <div class="columna-tabla">Distancia (m)</div>
+                        <div class="columna-tabla">Profundidad (cm)</div>
+                        <div class="columna-tabla">Color</div>
+                        <div class="columna-tabla">Rocas</div>
+                        <div class="columna-tabla">Raíces</div>
+                        <div class="columna-tabla">Rango Fotos</div>
+                        <div class="columna-tabla">Carbono</div>
+                        <div class="columna-tabla">Densidad</div>
+                        <div class="columna-tabla">Peso Fresco (gr)</div>
+                        <div class="columna-tabla">Fertilidad</div>
+                    </div>
+
+                    <!-- Fila para Punto 1 -->
+                    <div class="fila-tabla">
+                        <div class="columna-tabla">1</div>
+                        <div class="columna-tabla">
+                            <input type="number" name="azimut1" min="0" max="360" step="0.1" placeholder="0-360">
+                        </div>
+                        <div class="columna-tabla">
+                            <input type="number" name="distancia1" min="0" step="0.1" placeholder="Distancia">
+                        </div>
+                        <div class="columna-tabla">
+                            <input type="number" name="profundidad1" min="0" step="1" placeholder="cm">
+                        </div>
+                        <div class="columna-tabla">
+                            <select name="color1">
+                                <option value="">Seleccionar</option>
+                                <option value="negro">Negro</option>
+                                <option value="cafe">Café</option>
+                                <option value="gris">Gris</option>
+                                <option value="rojo">Rojo</option>
+                                <option value="amarillo">Amarillo</option>
+                            </select>
+                        </div>
+                        <div class="columna-tabla">
+                            <select name="rocas1">
+                                <option value="">Tamaño</option>
+                                <option value="finas">Finas</option>
+                                <option value="medianas">Medianas</option>
+                                <option value="grandes">Grandes</option>
+                            </select>
+                        </div>
+                        <div class="columna-tabla">
+                            <select name="raices1">
+                                <option value="">Tamaño</option>
+                                <option value="finas">Finas</option>
+                                <option value="medianas">Medianas</option>
+                                <option value="gruesas">Gruesas</option>
+                            </select>
+                        </div>
+                        <div class="columna-tabla">
+                            <input type="text" name="rangoFotos1" placeholder="Ej: 001-005">
+                        </div>
+                        <div class="columna-tabla">
+                            <select name="carbono1">
+                                <option value="">S/N</option>
+                                <option value="si">Sí</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                        <div class="columna-tabla">
+                            <select name="densidad1">
+                                <option value="">S/N</option>
+                                <option value="si">Sí</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                        <div class="columna-tabla">
+                            <input type="number" name="pesoFresco1" min="0" step="0.1" placeholder="Gramos">
+                        </div>
+                        <div class="columna-tabla">
+                            <select name="fertilidad1">
+                                <option value="">S/N</option>
+                                <option value="si">Sí</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Fila para Punto 2 -->
+                    <div class="fila-tabla">
+                        <div class="columna-tabla">2</div>
+                        <div class="columna-tabla">
+                            <input type="number" name="azimut2" min="0" max="360" step="0.1" placeholder="0-360">
+                        </div>
+                        <div class="columna-tabla">
+                            <input type="number" name="distancia2" min="0" step="0.1" placeholder="Distancia">
+                        </div>
+                        <div class="columna-tabla">
+                            <input type="number" name="profundidad2" min="0" step="1" placeholder="cm">
+                        </div>
+                        <div class="columna-tabla">
+                            <select name="color2">
+                                <option value="">Seleccionar</option>
+                                <option value="negro">Negro</option>
+                                <option value="cafe">Café</option>
+                                <option value="gris">Gris</option>
+                                <option value="rojo">Rojo</option>
+                                <option value="amarillo">Amarillo</option>
+                            </select>
+                        </div>
+                        <div class="columna-tabla">
+                            <select name="rocas2">
+                                <option value="">Tamaño</option>
+                                <option value="finas">Finas</option>
+                                <option value="medianas">Medianas</option>
+                                <option value="grandes">Grandes</option>
+                            </select>
+                        </div>
+                        <div class="columna-tabla">
+                            <select name="raices2">
+                                <option value="">Tamaño</option>
+                                <option value="finas">Finas</option>
+                                <option value="medianas">Medianas</option>
+                                <option value="gruesas">Gruesas</option>
+                            </select>
+                        </div>
+                        <div class="columna-tabla">
+                            <input type="text" name="rangoFotos2" placeholder="Ej: 006-010">
+                        </div>
+                        <div class="columna-tabla">
+                            <select name="carbono2">
+                                <option value="">S/N</option>
+                                <option value="si">Sí</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                        <div class="columna-tabla">
+                            <select name="densidad2">
+                                <option value="">S/N</option>
+                                <option value="si">Sí</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                        <div class="columna-tabla">
+                            <input type="number" name="pesoFresco2" min="0" step="0.1" placeholder="Gramos">
+                        </div>
+                        <div class="columna-tabla">
+                            <select name="fertilidad2">
+                                <option value="">S/N</option>
+                                <option value="si">Sí</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Fila para Punto 3 -->
+                    <div class="fila-tabla">
+                        <div class="columna-tabla">3</div>
+                        <div class="columna-tabla">
+                            <input type="number" name="azimut3" min="0" max="360" step="0.1" placeholder="0-360">
+                        </div>
+                        <div class="columna-tabla">
+                            <input type="number" name="distancia3" min="0" step="0.1" placeholder="Distancia">
+                        </div>
+                        <div class="columna-tabla">
+                            <input type="number" name="profundidad3" min="0" step="1" placeholder="cm">
+                        </div>
+                        <div class="columna-tabla">
+                            <select name="color3">
+                                <option value="">Seleccionar</option>
+                                <option value="negro">Negro</option>
+                                <option value="cafe">Café</option>
+                                <option value="gris">Gris</option>
+                                <option value="rojo">Rojo</option>
+                                <option value="amarillo">Amarillo</option>
+                            </select>
+                        </div>
+                        <div class="columna-tabla">
+                            <select name="rocas3">
+                                <option value="">Tamaño</option>
+                                <option value="finas">Finas</option>
+                                <option value="medianas">Medianas</option>
+                                <option value="grandes">Grandes</option>
+                            </select>
+                        </div>
+                        <div class="columna-tabla">
+                            <select name="raices3">
+                                <option value="">Tamaño</option>
+                                <option value="finas">Finas</option>
+                                <option value="medianas">Medianas</option>
+                                <option value="gruesas">Gruesas</option>
+                            </select>
+                        </div>
+                        <div class="columna-tabla">
+                            <input type="text" name="rangoFotos3" placeholder="Ej: 011-015">
+                        </div>
+                        <div class="columna-tabla">
+                            <select name="carbono3">
+                                <option value="">S/N</option>
+                                <option value="si">Sí</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                        <div class="columna-tabla">
+                            <select name="densidad3">
+                                <option value="">S/N</option>
+                                <option value="si">Sí</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                        <div class="columna-tabla">
+                            <input type="number" name="pesoFresco3" min="0" step="0.1" placeholder="Gramos">
+                        </div>
+                        <div class="columna-tabla">
+                            <select name="fertilidad3">
+                                <option value="">S/N</option>
+                                <option value="si">Sí</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Fila para Punto 4 -->
+                    <div class="fila-tabla">
+                        <div class="columna-tabla">4</div>
+                        <div class="columna-tabla">
+                            <input type="number" name="azimut4" min="0" max="360" step="0.1" placeholder="0-360">
+                        </div>
+                        <div class="columna-tabla">
+                            <input type="number" name="distancia4" min="0" step="0.1" placeholder="Distancia">
+                        </div>
+                        <div class="columna-tabla">
+                            <input type="number" name="profundidad4" min="0" step="1" placeholder="cm">
+                        </div>
+                        <div class="columna-tabla">
+                            <select name="color4">
+                                <option value="">Seleccionar</option>
+                                <option value="negro">Negro</option>
+                                <option value="cafe">Café</option>
+                                <option value="gris">Gris</option>
+                                <option value="rojo">Rojo</option>
+                                <option value="amarillo">Amarillo</option>
+                            </select>
+                        </div>
+                        <div class="columna-tabla">
+                            <select name="rocas4">
+                                <option value="">Tamaño</option>
+                                <option value="finas">Finas</option>
+                                <option value="medianas">Medianas</option>
+                                <option value="grandes">Grandes</option>
+                            </select>
+                        </div>
+                        <div class="columna-tabla">
+                            <select name="raices4">
+                                <option value="">Tamaño</option>
+                                <option value="finas">Finas</option>
+                                <option value="medianas">Medianas</option>
+                                <option value="gruesas">Gruesas</option>
+                            </select>
+                        </div>
+                        <div class="columna-tabla">
+                            <input type="text" name="rangoFotos4" placeholder="Ej: 016-020">
+                        </div>
+                        <div class="columna-tabla">
+                            <select name="carbono4">
+                                <option value="">S/N</option>
+                                <option value="si">Sí</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                        <div class="columna-tabla">
+                            <select name="densidad4">
+                                <option value="">S/N</option>
+                                <option value="si">Sí</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                        <div class="columna-tabla">
+                            <input type="number" name="pesoFresco4" min="0" step="0.1" placeholder="Gramos">
+                        </div>
+                        <div class="columna-tabla">
+                            <select name="fertilidad4">
+                                <option value="">S/N</option>
+                                <option value="si">Sí</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección de observaciones y archivos -->
+            <div class="seccion-formulario">
+                <h3>Información Adicional</h3>
+                
+                <div class="campo-formulario">
+                    <label for="observaciones">Observaciones</label>
+                    <textarea id="observaciones" name="observaciones" rows="4" 
+                              placeholder="Ingrese observaciones relevantes sobre el muestreo..."></textarea>
+                </div>
+
+                <div class="campo-formulario">
+                    <label for="archivos">Subir Resultados de Laboratorio</label>
+                    <input type="file" id="archivos" name="archivos" multiple 
+                           accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
+                    <p class="nota-campo">Formatos aceptados: PDF, JPG, PNG, DOC (Máx. 10MB por archivo)</p>
+                </div>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="botones-accion">
+                <button type="button" class="btn-limpiar" id="btnLimpiar">Limpiar Formulario</button>
+                <button type="submit" class="btn-subir" id="btnSubir">Subir Muestras de Suelo</button>
+            </div>
+            
+            <p class="nota-subir">Al hacer clic en subir, las muestras de suelo quedarán guardadas en la base de datos del IFN</p>
+        </form>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-container">
+            <p>📍 Dirección: Calle 25 D No. 110911, Colombia</p>
+            <p>📧 Correo: contacto@ideam.gov.co | ☎ Tel: +57 (601) 4442060</p>
+            <div class="redes-sociales">
+                <a href="https://www.facebook.com/ideam.instituto/?locale=es_LA"><img src="../IMG/facebook.png" alt="Facebook"></a>
+                <a href="https://x.com/IDEAMColombia?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><img src="../IMG/X.jpeg" alt="X"></a>
+                <a href="https://www.instagram.com/ideamcolombia/?hl=es"><img src="../IMG/instagram.png" alt="Instagram"></a>
+                <a href="https://www.youtube.com/@InstitutoIDEAM"><img src="../IMG/youtube.png" alt="YouTube"></a>
+            </div>
+            <p>&copy; 2024 Proyecto Web IFN. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Script para manejar el formulario -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const formulario = document.getElementById('formularioSuelo');
+            const btnLimpiar = document.getElementById('btnLimpiar');
+            const btnSubir = document.getElementById('btnSubir');
+            
+            // Manejar envío del formulario
+            formulario.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validación básica
+                const conglomerado = document.getElementById('conglomerado').value;
+                const diligenciadoPor = document.getElementById('diligenciadoPor').value;
+                const fechaMuestreo = document.getElementById('fechaMuestreo').value;
+                
+                if (!conglomerado || !diligenciadoPor || !fechaMuestreo) {
+                    alert('Por favor, complete los campos obligatorios: ID Conglomerado, Diligenciado por y Fecha de Muestreo');
+                    return;
+                }
+                
+                // Validación de rangos de valores
+                const inputsAzimut = document.querySelectorAll('input[name^="azimut"]');
+                let azimutValido = true;
+                
+                inputsAzimut.forEach(input => {
+                    if (input.value && (input.value < 0 || input.value > 360)) {
+                        azimutValido = false;
+                        input.style.borderColor = 'red';
+                    } else {
+                        input.style.borderColor = '';
+                    }
+                });
+                
+                if (!azimutValido) {
+                    alert('Los valores de Azimut deben estar entre 0 y 360 grados');
+                    return;
+                }
+                
+                // Simular subida exitosa
+                btnSubir.innerHTML = 'Subiendo...';
+                btnSubir.disabled = true;
+                
+                setTimeout(function() {
+                    alert('Muestras de suelo subidas exitosamente. Los datos han sido guardados en la base de datos.');
+                    btnSubir.innerHTML = 'Subir Muestras de Suelo';
+                    btnSubir.disabled = false;
+                    formulario.reset();
+                }, 2000);
+            });
+            
+            // Manejar limpieza del formulario
+            btnLimpiar.addEventListener('click', function() {
+                if (confirm('¿Está seguro de que desea limpiar todos los campos del formulario?')) {
+                    formulario.reset();
+                    // Restablecer bordes de inputs
+                    const inputs = formulario.querySelectorAll('input');
+                    inputs.forEach(input => input.style.borderColor = '');
+                }
+            });
+            
+            // Validación en tiempo real para azimut
+            formulario.querySelectorAll('input[name^="azimut"]').forEach(input => {
+                input.addEventListener('blur', function() {
+                    if (this.value && (this.value < 0 || this.value > 360)) {
+                        this.style.borderColor = 'red';
+                    } else {
+                        this.style.borderColor = '';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="../JS/subirSuelo.js"></script>
+</body>
+</html>

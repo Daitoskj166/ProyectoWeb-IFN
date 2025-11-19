@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Árbol - IFN</title>
+    <link rel="stylesheet" href="../CSS/styles-SubirArbol.css">
+</head>
+
+<body>
+    <header>
+        <img class="Logo" src="../IMG/ifn-baja-tcm30-525131.png" alt="Logo IFN" width="150">
+
+        <div class="center-header">
+            <h1>INVENTARIO FORESTAL NACIONAL - COLOMBIA</h1>
+
+            <div class="dashboard">
+                <a href="inicio-Pantalla.html" class="dashboard-btn">Inicio</a>
+                <a href="subirSuelo.html" class="dashboard-btn">Subir Suelo</a>
+                <a href="registro.html" class="dashboard-btn">Registro</a>
+                <a href="estadisticas.html" class="dashboard-btn">Estadísticas</a>
+                <a href="gestionBrigadas.html" class="dashboard-btn">Gestión Brigadas</a>
+                <a href="supervision.html" class="dashboard-btn">Supervisión</a>
+            </div>
+        </div>
+
+        <div class="login-imagen">
+            <p class="texto-arriba">User</p>
+            <img class="Login" src="../IMG/login.png" alt="Login User" width="150">
+            <button class="texto-abajo">Cerrar sesión</button>
+        </div>
+    </header>
+
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" placeholder="Buscar...">
+            <span class="search-icon">🔍</span>
+        </div>
+    </div>
+
+    <main>
+        <h2>REGISTRAR ÁRBOL - F3 REGISTRO Y MEDICIÓN DE INDIVIDUOS</h2>
+
+        <form class="formulario-arbol" id="formularioArbol">
+            
+            <!-- Sección de datos generales -->
+            <div class="seccion-formulario">
+                <h3>Datos Generales</h3>
+                
+                <div class="fila-campos">
+                    <div class="campo-formulario">
+                        <label for="colector">Colector y número de colección *</label>
+                        <input type="text" id="colector" name="colector" required placeholder="Ej: Juan Pérez - COL123">
+                    </div>
+                    
+                    <div class="campo-formulario">
+                        <label for="conglomerado">ID Conglomerado</label>
+                        <input type="text" id="conglomerado" name="conglomerado" placeholder="ID del conglomerado">
+                    </div>
+                </div>
+                
+                <div class="fila-campos">
+                    <div class="campo-formulario">
+                        <label for="fecha">Fecha *</label>
+                        <input type="date" id="fecha" name="fecha" required>
+                    </div>
+                    
+                    <div class="campo-formulario">
+                        <label for="plantacion">Plantación</label>
+                        <select id="plantacion" name="plantacion">
+                            <option value="">Seleccionar tipo</option>
+                            <option value="natural">Natural</option>
+                            <option value="reforestacion">Reforestación</option>
+                            <option value="mixta">Mixta</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección de mediciones de altura -->
+            <div class="seccion-formulario">
+                <h3>Mediciones de Altura</h3>
+                
+                <div class="fila-campos">
+                    <div class="campo-formulario">
+                        <label for="alturaTotal">Altura Total (m)</label>
+                        <input type="number" id="alturaTotal" name="alturaTotal" step="0.1" min="0" placeholder="0.0">
+                    </div>
+                    
+                    <div class="campo-formulario">
+                        <label for="alturaFuste">Altura Fuste (m)</label>
+                        <input type="number" id="alturaFuste" name="alturaFuste" step="0.1" min="0" placeholder="0.0">
+                    </div>
+                </div>
+                
+                <div class="fila-campos">
+                    <div class="campo-formulario">
+                        <label for="vAlturaTotal">V + Altura Total (°)</label>
+                        <input type="number" id="vAlturaTotal" name="vAlturaTotal" step="0.1" min="0" max="90" placeholder="0-90">
+                    </div>
+                    
+                    <div class="campo-formulario">
+                        <label for="vAlturaFuste">V + Altura Fuste (°)</label>
+                        <input type="number" id="vAlturaFuste" name="vAlturaFuste" step="0.1" min="0" max="90" placeholder="0-90">
+                    </div>
+                </div>
+                
+                <div class="fila-campos">
+                    <div class="campo-formulario">
+                        <label for="vAltura">V - Altura (°)</label>
+                        <input type="number" id="vAltura" name="vAltura" step="0.1" min="0" max="90" placeholder="0-90">
+                    </div>
+                    
+                    <div class="campo-formulario">
+                        <label for="distanciaAltura">Distancia Altura (m)</label>
+                        <input type="number" id="distanciaAltura" name="distanciaAltura" step="0.1" min="0" placeholder="0.0">
+                    </div>
+                </div>
+                
+                <div class="campo-formulario">
+                    <label for="equipoAltura">Equipo Altura</label>
+                    <select id="equipoAltura" name="equipoAltura">
+                        <option value="">Seleccionar equipo</option>
+                        <option value="CL">CL - Ciliatorios</option>
+                        <option value="HI">HI - Hipódromos</option>
+                        <option value="VT">VT - Viras delencajador</option>
+                        <option value="VA">VA - Vertex</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Sección de mediciones de diámetro -->
+            <div class="seccion-formulario">
+                <h3>Mediciones de Diámetro</h3>
+                
+                <div class="fila-campos">
+                    <div class="campo-formulario">
+                        <label for="diametro1">Diámetro 1 (cm)</label>
+                        <input type="number" id="diametro1" name="diametro1" step="0.1" min="0" placeholder="0.0">
+                    </div>
+                    
+                    <div class="campo-formulario">
+                        <label for="diametro2">Diámetro 2 (cm)</label>
+                        <input type="number" id="diametro2" name="diametro2" step="0.1" min="0" placeholder="0.0">
+                    </div>
+                </div>
+                
+                <div class="campo-formulario">
+                    <label for="equipoDiametro">Equipo Diámetro</label>
+                    <select id="equipoDiametro" name="equipoDiametro">
+                        <option value="">Seleccionar equipo</option>
+                        <option value="CA">CA - Calibrador</option>
+                        <option value="CD">CD - Cinta diamétrica</option>
+                        <option value="PO">PO - Footíbula</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Sección de fuste y ubicación -->
+            <div class="seccion-formulario">
+                <h3>Fuste y Ubicación</h3>
+                
+                <div class="fila-campos">
+                    <div class="campo-formulario">
+                        <label for="numeroFuste">Número de Fuste</label>
+                        <input type="number" id="numeroFuste" name="numeroFuste" min="1" placeholder="1">
+                    </div>
+                    
+                    <div class="campo-formulario">
+                        <label for="talloMultiple">Tallo Múltiplo (x)</label>
+                        <input type="number" id="talloMultiple" name="talloMultiple" min="0" placeholder="0">
+                    </div>
+                    
+                    <div class="campo-formulario">
+                        <label for="talloUnico">Tallo Único (x)</label>
+                        <input type="number" id="talloUnico" name="talloUnico" min="0" placeholder="0">
+                    </div>
+                </div>
+                
+                <div class="fila-campos">
+                    <div class="campo-formulario">
+                        <label for="distancia">Distancia (m)</label>
+                        <input type="number" id="distancia" name="distancia" step="0.1" min="0" placeholder="0.0">
+                    </div>
+                    
+                    <div class="campo-formulario">
+                        <label for="azimut">Azimut (°)</label>
+                        <input type="number" id="azimut" name="azimut" step="0.1" min="0" max="360" placeholder="0-360">
+                    </div>
+                </div>
+                
+                <div class="campo-formulario">
+                    <label for="condicion">Condición *</label>
+                    <select id="condicion" name="condicion" required>
+                        <option value="">Seleccionar condición</option>
+                        <option value="MP">MP - Muerto en pie</option>
+                        <option value="TMI">TMI - Tocón muerto</option>
+                        <option value="TV">TV - Tocón vivo</option>
+                        <option value="VC">VC - Vivo caído</option>
+                        <option value="VP">VP - Vivo en pie</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Sección de datos del individuo -->
+            <div class="seccion-formulario">
+                <h3>Datos del Individuo</h3>
+                
+                <div class="fila-campos">
+                    <div class="campo-formulario">
+                        <label for="individuoID">Nº Individuo ID</label>
+                        <input type="text" id="individuoID" name="individuoID" placeholder="ID único del individuo">
+                    </div>
+                    
+                    <div class="campo-formulario">
+                        <label for="tamanoIndividuo">Tamaño Individuo</label>
+                        <select id="tamanoIndividuo" name="tamanoIndividuo">
+                            <option value="">Seleccionar tamaño</option>
+                            <option value="pequeno">Pequeño</option>
+                            <option value="mediano">Mediano</option>
+                            <option value="grande">Grande</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="campo-formulario">
+                    <label for="subparcela">Subparcela</label>
+                    <input type="text" id="subparcela" name="subparcela" placeholder="Identificador de subparcela">
+                </div>
+                
+                <div class="campo-formulario">
+                    <label for="observaciones">Observaciones</label>
+                    <textarea id="observaciones" name="observaciones" rows="3" placeholder="Observaciones adicionales sobre el individuo..."></textarea>
+                </div>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="botones-accion">
+                <button type="button" class="btn-limpiar" id="btnLimpiar">Limpiar Formulario</button>
+                <button type="submit" class="btn-guardar" id="btnGuardar">Registrar Árbol</button>
+            </div>
+            
+            <p class="nota-guardar">Al hacer clic en registrar, el árbol se guardará con un identificador único en la base de datos del IFN</p>
+        </form>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <p>📍 Dirección: Calle 25 D No. 110911, Colombia</p>
+            <p>📧 Correo: contacto@ideam.gov.co | ☎ Tel: +57 (601) 4442060</p>
+            <div class="redes-sociales">
+                <a href="https://www.facebook.com/ideam.instituto/?locale=es_LA"><img src="../IMG/facebook.png" alt="Facebook"></a>
+                <a href="https://x.com/IDEAMColombia?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><img src="../IMG/X.jpeg" alt="X"></a>
+                <a href="https://www.instagram.com/ideamcolombia/?hl=es"><img src="../IMG/instagram.png" alt="Instagram"></a>
+                <a href="https://www.youtube.com/@InstitutoIDEAM"><img src="../IMG/youtube.png" alt="YouTube"></a>
+            </div>
+            <p>&copy; 2024 Proyecto Web IFN. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const formulario = document.getElementById('formularioArbol');
+            const btnLimpiar = document.getElementById('btnLimpiar');
+            const btnGuardar = document.getElementById('btnGuardar');
+            
+            formulario.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const colector = document.getElementById('colector').value;
+                const fecha = document.getElementById('fecha').value;
+                const condicion = document.getElementById('condicion').value;
+                
+                if (!colector || !fecha || !condicion) {
+                    alert('Por favor, complete los campos obligatorios: Colector, Fecha y Condición');
+                    return;
+                }
+                
+                // Validación de rangos
+                const azimut = document.getElementById('azimut').value;
+                if (azimut && (azimut < 0 || azimut > 360)) {
+                    alert('El valor de Azimut debe estar entre 0 y 360 grados');
+                    document.getElementById('azimut').focus();
+                    return;
+                }
+                
+                // Simular envío exitoso
+                btnGuardar.innerHTML = 'Registrando...';
+                btnGuardar.disabled = true;
+                
+                setTimeout(function() {
+                    alert('Árbol registrado exitosamente. Se ha generado un ID único para este registro.');
+                    btnGuardar.innerHTML = 'Registrar Árbol';
+                    btnGuardar.disabled = false;
+                    formulario.reset();
+                }, 1500);
+            });
+            
+            btnLimpiar.addEventListener('click', function() {
+                if (confirm('¿Está seguro de que desea limpiar todos los campos del formulario?')) {
+                    formulario.reset();
+                }
+            });
+            
+            // Validación en tiempo real
+            formulario.querySelectorAll('input[type="number"]').forEach(input => {
+                input.addEventListener('blur', function() {
+                    const min = parseFloat(this.min);
+                    const max = parseFloat(this.max);
+                    const value = parseFloat(this.value);
+                    
+                    if (this.value && !isNaN(value)) {
+                        if (!isNaN(min) && value < min) {
+                            this.style.borderColor = 'red';
+                        } else if (!isNaN(max) && value > max) {
+                            this.style.borderColor = 'red';
+                        } else {
+                            this.style.borderColor = '';
+                        }
+                    } else {
+                        this.style.borderColor = '';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="../JS/subirArbol.js"></script>
+</body>
+</html>

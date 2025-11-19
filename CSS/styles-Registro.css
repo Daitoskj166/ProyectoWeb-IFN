@@ -1,0 +1,575 @@
+/* ===== ESTILOS GENERALES DEL BODY ===== */
+/* Configuración base de la página */
+body {
+    margin: 0; /* Elimina márgenes por defecto del navegador */
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Fuente principal */
+    background-color: #F2F2F2; /* Color de fondo gris claro */
+    display: flex; /* Usa flexbox para layout */
+    flex-direction: column; /* Organiza elementos en columna */
+    min-height: 100vh; /* Ocupa al menos toda la altura de la pantalla */
+}
+
+/* ===== ENCABEZADO ===== */
+header {
+    display: flex; /* Flexbox para alinear elementos del header */
+    align-items: center; /* Centra verticalmente los elementos */
+    justify-content: space-between; /* Distribuye espacio entre elementos */
+    padding: 20px 30px; /* Espaciado interno */
+    background: linear-gradient(90deg, #212121, #424242); /* Degradado de fondo */
+    color: white; /* Texto en blanco */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3); /* Sombra para efecto de profundidad */
+    border-bottom-left-radius: 12px; /* Esquinas redondeadas abajo */
+    border-bottom-right-radius: 12px;
+}
+
+/* Logo en el header */
+header .Logo {
+    width: 90px; /* Tamaño fijo del logo */
+}
+
+/* Contenedor central del header */
+.center-header {
+    text-align: center; /* Centra el texto */
+    flex-grow: 1; /* Ocupa el espacio disponible */
+}
+
+/* Título principal */
+.center-header h1 {
+    margin: 0 0 20px 0; /* Margen inferior */
+    font-size: 2em; /* Tamaño de fuente grande */
+    font-weight: 700; /* Negrita */
+    letter-spacing: 1px; /* Espaciado entre letras */
+    color: #FFFFFF; /* Color blanco */
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5); /* Sombra de texto para legibilidad */
+}
+
+/* ===== BOTONES DEL DASHBOARD ===== */
+header .dashboard {
+    display: flex; /* Botones en fila */
+    justify-content: center; /* Centrados horizontalmente */
+    gap: 20px; /* Espacio entre botones */
+}
+
+/* Estilo de cada botón de navegación */
+header .dashboard-btn {
+    padding: 12px 28px; /* Espaciado interno */
+    font-size: 1em; /* Tamaño de fuente normal */
+    font-weight: bold; /* Texto en negrita */
+    border: none; /* Sin borde */
+    border-radius: 10px; /* Esquinas redondeadas */
+    background-color: #1E88E5; /* Color azul de fondo */
+    color: white; /* Texto blanco */
+    cursor: pointer; /* Cursor de mano al pasar */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3); /* Sombra para efecto 3D */
+    transition: all 0.3s ease; /* Transición suave para hover */
+    text-decoration: none; /* Sin subrayado */
+    display: inline-block; /* Se comporta como botón */
+}
+
+/* Efecto hover en botones de navegación */
+header .dashboard-btn:hover {
+    background-color: #FFC107; /* Cambia a amarillo al pasar mouse */
+    color: #212121; /* Texto oscuro para contraste */
+    transform: translateY(-2px); /* Efecto de elevación */
+}
+
+/* ===== SECCIÓN DE USUARIO ===== */
+.login-imagen {
+    display: flex; /* Flexbox para organizar elementos */
+    flex-direction: column; /* En columna: texto, imagen, botón */
+    align-items: center; /* Centrados horizontalmente */
+}
+
+.login-imagen p {
+    margin: 0 0 5px 0; /* Margen inferior pequeño */
+    font-weight: bold; /* Texto en negrita */
+    color: #FFFFFF; /* Texto blanco */
+}
+
+.login-imagen img {
+    width: 80px; /* Tamaño de la imagen de usuario */
+    border-radius: 50%; /* Imagen circular */
+    border: 2px solid #FFFFFF; /* Borde blanco */
+}
+
+.login-imagen button {
+    margin-top: 8px; /* Espacio arriba del botón */
+    padding: 6px 14px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    background-color: #FFC107; /* Fondo amarillo */
+    color: #212121; /* Texto oscuro */
+    border-radius: 8px; /* Esquinas redondeadas */
+    font-weight: bold; /* Texto en negrita */
+    cursor: pointer; /* Cursor de mano */
+    box-shadow: 0 3px 5px rgba(0,0,0,0.3); /* Sombra */
+    transition: 0.3s; /* Transición suave */
+}
+
+/* Efecto hover en botón de cerrar sesión */
+.login-imagen button:hover {
+    background-color: #FFA000; /* Amarillo más oscuro al hover */
+}
+
+/* ===== CONTENIDO PRINCIPAL ===== */
+main {
+    background-color: #FFFFFF; /* Fondo blanco */
+    max-width: 1300px; /* Ancho máximo del contenido */
+    margin: 40px auto; /* Centrado con margen superior/inferior */
+    padding: 30px; /* Espaciado interno */
+    border-radius: 12px; /* Esquinas redondeadas */
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2); /* Sombra para efecto elevado */
+}
+
+/* Título principal dentro del main */
+main h2 {
+    font-size: 1.8em; /* Tamaño grande */
+    margin-bottom: 25px; /* Espacio inferior */
+    color: #2E7D32; /* Color verde institucional */
+    text-align: center; /* Centrado */
+    text-transform: uppercase; /* Texto en mayúsculas */
+    border-bottom: 3px solid #2E7D32; /* Línea decorativa inferior */
+    padding-bottom: 10px; /* Espacio entre texto y línea */
+}
+
+/* ===== FILTROS DE BÚSQUEDA ===== */
+.filtros-container {
+    display: flex; /* Elementos en fila */
+    gap: 20px; /* Espacio entre filtros */
+    align-items: end; /* Alineados al fondo */
+    margin-bottom: 25px; /* Espacio inferior */
+    padding: 20px; /* Espaciado interno */
+    background-color: #f8f9fa; /* Fondo gris muy claro */
+    border-radius: 8px; /* Esquinas redondeadas */
+    border: 1px solid #e9ecef; /* Borde sutil */
+}
+
+/* Grupo individual de filtro (label + input/select) */
+.filtro-grupo {
+    display: flex; /* Organiza label y control en columna */
+    flex-direction: column;
+    gap: 5px; /* Espacio entre label y control */
+}
+
+.filtro-grupo label {
+    font-weight: bold; /* Label en negrita */
+    color: #424242; /* Color gris oscuro */
+    font-size: 0.9em; /* Tamaño de fuente pequeño */
+}
+
+.filtro-grupo select,
+.filtro-grupo input {
+    padding: 8px 12px; /* Espaciado interno */
+    border: 1px solid #ccc; /* Borde gris */
+    border-radius: 6px; /* Esquinas redondeadas */
+    font-size: 0.9em; /* Tamaño de fuente pequeño */
+}
+
+/* Botón para aplicar filtros */
+.btn-filtrar {
+    padding: 8px 20px; /* Espaciado interno */
+    background-color: #2E7D32; /* Verde institucional */
+    color: white; /* Texto blanco */
+    border: none; /* Sin borde */
+    border-radius: 6px; /* Esquinas redondeadas */
+    cursor: pointer; /* Cursor de mano */
+    font-weight: bold; /* Texto en negrita */
+    transition: all 0.3s ease; /* Transición suave */
+}
+
+/* Efecto hover en botón de filtrar */
+.btn-filtrar:hover {
+    background-color: #1B5E20; /* Verde más oscuro */
+    transform: translateY(-1px); /* Efecto de elevación */
+}
+
+/* ===== CONTENEDOR DE TABLA ===== */
+.tabla-contenedor {
+    border: 1px solid #e0e0e0; /* Borde sutil */
+    border-radius: 8px; /* Esquinas redondeadas */
+    overflow: hidden; /* Oculta contenido que sobresalga */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Sombra suave */
+    margin-bottom: 25px; /* Espacio inferior */
+}
+
+/* ===== TABLA DE REGISTROS MEJORADA ===== */
+.tabla-registros {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    border-collapse: collapse; /* Elimina espacio entre celdas */
+    font-size: 0.9em; /* Tamaño de fuente reducido */
+}
+
+/* Encabezados de la tabla */
+.tabla-registros th {
+    background: linear-gradient(135deg, #2E7D32, #4CAF50); /* Degradado verde */
+    color: white; /* Texto blanco */
+    font-weight: bold; /* Negrita */
+    padding: 15px 12px; /* Espaciado interno */
+    text-align: left; /* Alineación a la izquierda */
+    border-bottom: 2px solid #1B5E20; /* Línea inferior más oscura */
+}
+
+/* Celdas de la tabla */
+.tabla-registros td {
+    padding: 12px; /* Espaciado interno */
+    border-bottom: 1px solid #e0e0e0; /* Línea divisoria entre filas */
+    vertical-align: middle; /* Centrado vertical del contenido */
+}
+
+/* Efecto hover en filas de la tabla */
+.tabla-registros tr:hover {
+    background-color: #f8f9fa; /* Fondo gris muy claro al pasar mouse */
+    transition: background-color 0.2s ease; /* Transición suave */
+}
+
+/* ===== BADGES DE TIPO (Árbol/Suelo) ===== */
+.badge-tipo {
+    padding: 4px 8px; /* Espaciado interno pequeño */
+    border-radius: 12px; /* Forma completamente redondeada */
+    font-size: 0.8em; /* Texto pequeño */
+    font-weight: bold; /* Negrita */
+    text-transform: uppercase; /* Texto en mayúsculas */
+}
+
+/* Badge específico para árboles */
+.tipo-arbol {
+    background-color: #E8F5E8; /* Fondo verde muy claro */
+    color: #2E7D32; /* Texto verde */
+    border: 1px solid #C8E6C9; /* Borde verde claro */
+}
+
+/* Badge específico para suelos */
+.tipo-suelo {
+    background-color: #E3F2FD; /* Fondo azul muy claro */
+    color: #1565C0; /* Texto azul */
+    border: 1px solid #BBDEFB; /* Borde azul claro */
+}
+
+/* ===== ESTADOS DE REGISTRO ===== */
+.estado {
+    padding: 4px 8px; /* Espaciado interno pequeño */
+    border-radius: 12px; /* Forma completamente redondeada */
+    font-size: 0.8em; /* Texto pequeño */
+    font-weight: bold; /* Negrita */
+}
+
+/* Estado: Completo (verde) */
+.estado-completo {
+    background-color: #E8F5E8; /* Fondo verde muy claro */
+    color: #2E7D32; /* Texto verde */
+}
+
+/* Estado: Pendiente (naranja) */
+.estado-pendiente {
+    background-color: #FFF3E0; /* Fondo naranja muy claro */
+    color: #EF6C00; /* Texto naranja */
+}
+
+/* Estado: En proceso (azul) */
+.estado-proceso {
+    background-color: #E3F2FD; /* Fondo azul muy claro */
+    color: #1565C0; /* Texto azul */
+}
+
+/* ===== BOTONES DE ACCIÓN ===== */
+.btn-editar,
+.btn-ver {
+    padding: 6px 12px; /* Espaciado interno pequeño */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Esquinas ligeramente redondeadas */
+    font-size: 0.85em; /* Texto pequeño */
+    font-weight: bold; /* Negrita */
+    cursor: pointer; /* Cursor de mano */
+    margin: 0 2px; /* Margen lateral pequeño */
+    transition: all 0.3s ease; /* Transición suave */
+}
+
+/* Botón Editar (amarillo) */
+.btn-editar {
+    background-color: #FFC107; /* Fondo amarillo */
+    color: #212121; /* Texto oscuro */
+}
+
+/* Efecto hover en botón editar */
+.btn-editar:hover {
+    background-color: #FFA000; /* Amarillo más oscuro */
+    transform: translateY(-1px); /* Efecto de elevación */
+}
+
+/* Botón Ver (azul) */
+.btn-ver {
+    background-color: #2196F3; /* Fondo azul */
+    color: white; /* Texto blanco */
+}
+
+/* Efecto hover en botón ver */
+.btn-ver:hover {
+    background-color: #1976D2; /* Azul más oscuro */
+    transform: translateY(-1px); /* Efecto de elevación */
+}
+
+/* ===== ESTADÍSTICAS RÁPIDAS ===== */
+.estadisticas-rapidas {
+    display: grid; /* Usa CSS Grid para layout */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Columnas responsivas */
+    gap: 15px; /* Espacio entre tarjetas */
+    margin-bottom: 25px; /* Espacio inferior */
+}
+
+/* Tarjeta individual de estadística */
+.estadistica-item {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef); /* Degradado sutil */
+    padding: 20px; /* Espaciado interno */
+    border-radius: 8px; /* Esquinas redondeadas */
+    text-align: center; /* Texto centrado */
+    border: 1px solid #dee2e6; /* Borde sutil */
+}
+
+/* Número destacado en estadística */
+.estadistica-numero {
+    display: block; /* Ocupa toda la línea */
+    font-size: 2em; /* Tamaño grande */
+    font-weight: bold; /* Negrita */
+    color: #2E7D32; /* Color verde institucional */
+    margin-bottom: 5px; /* Espacio inferior */
+}
+
+/* Texto descriptivo de la estadística */
+.estadistica-texto {
+    font-size: 0.9em; /* Tamaño pequeño */
+    color: #666; /* Color gris */
+}
+
+/* ===== PAGINACIÓN MEJORADA ===== */
+.paginacion {
+    display: flex; /* Elementos en fila */
+    justify-content: space-between; /* Espacio entre información y controles */
+    align-items: center; /* Centrado vertical */
+    margin-top: 25px; /* Espacio superior */
+    padding: 15px 0; /* Espaciado vertical */
+    border-top: 1px solid #e0e0e0; /* Línea divisoria superior */
+}
+
+/* Información de paginación */
+.info-paginacion {
+    color: #666; /* Texto gris */
+    font-size: 0.9em; /* Tamaño pequeño */
+}
+
+/* Controles de paginación */
+.controles-paginacion {
+    display: flex; /* Botones en fila */
+    align-items: center; /* Centrado vertical */
+    gap: 10px; /* Espacio entre elementos */
+}
+
+/* Botones de paginación */
+.btn-paginacion {
+    padding: 8px 16px; /* Espaciado interno */
+    border: 1px solid #ddd; /* Borde gris */
+    background-color: white; /* Fondo blanco */
+    color: #333; /* Texto oscuro */
+    border-radius: 4px; /* Esquinas redondeadas */
+    cursor: pointer; /* Cursor de mano */
+    transition: all 0.3s ease; /* Transición suave */
+}
+
+/* Efecto hover en botones de paginación */
+.btn-paginacion:hover {
+    background-color: #f5f5f5; /* Fondo gris claro */
+    border-color: #2E7D32; /* Borde verde */
+    color: #2E7D32; /* Texto verde */
+}
+
+/* Números de página */
+.numeros-paginacion {
+    display: flex; /* Números en fila */
+    gap: 5px; /* Espacio entre números */
+}
+
+.numeros-paginacion span {
+    padding: 8px 12px; /* Espaciado interno */
+    border: 1px solid #ddd; /* Borde gris */
+    border-radius: 4px; /* Esquinas redondeadas */
+    cursor: pointer; /* Cursor de mano */
+    transition: all 0.3s ease; /* Transición suave */
+}
+
+/* Efecto hover en números de página */
+.numeros-paginacion span:hover {
+    background-color: #f5f5f5; /* Fondo gris claro al pasar mouse */
+}
+
+/* Página actual activa */
+.pagina-activa {
+    background-color: #2E7D32; /* Fondo verde */
+    color: white; /* Texto blanco */
+    border-color: #2E7D32; /* Borde verde */
+}
+
+/* ===== BARRA DE BÚSQUEDA ===== */
+.search-container {
+    display: flex; /* Flexbox para alineación */
+    justify-content: flex-end; /* Alineada a la derecha */
+    margin: 15px 30px 15px 0; /* Margen personalizado */
+}
+
+.search-box {
+    display: flex; /* Input e icono en fila */
+    align-items: center; /* Centrado vertical */
+    background: white; /* Fondo blanco */
+    border-radius: 25px; /* Forma ovalada */
+    padding: 5px 15px; /* Espaciado interno */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra sutil */
+    width: 300px; /* Ancho fijo */
+    border: 1px solid #ccc; /* Borde gris */
+}
+
+.search-box input {
+    border: none; /* Sin borde */
+    outline: none; /* Sin contorno al focus */
+    padding: 10px; /* Espaciado interno */
+    font-size: 1em; /* Tamaño de fuente normal */
+    width: 100%; /* Ocupa todo el ancho */
+    background: transparent; /* Fondo transparente */
+}
+
+.search-icon {
+    color: #555; /* Color gris */
+    cursor: pointer; /* Cursor de mano */
+    font-size: 1.2em; /* Tamaño del icono */
+    margin-left: 5px; /* Espacio a la izquierda */
+}
+
+/* Efecto cuando la barra de búsqueda está enfocada */
+.search-box:focus-within {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2); /* Sombra más pronunciada */
+    border-color: #2E7D32; /* Borde verde */
+}
+
+/* ===== ESTILOS DEL FOOTER ===== */
+footer {
+    background-color: #212121; /* Fondo gris oscuro */
+    color: white; /* Texto blanco */
+    padding: 20px; /* Espaciado interno */
+    text-align: center; /* Texto centrado */
+    border-top-left-radius: 12px; /* Esquinas redondeadas arriba */
+    border-top-right-radius: 12px;
+    box-shadow: 0 -3px 8px rgba(0,0,0,0.2); /* Sombra superior */
+    margin-top: 30px; /* Espacio superior */
+}
+
+.footer-container {
+    max-width: 1000px; /* Ancho máximo */
+    margin: 0 auto; /* Centrado */
+    display: flex; /* Flexbox para organización */
+    flex-direction: column; /* Elementos en columna */
+    align-items: center; /* Centrados horizontalmente */
+    gap: 10px; /* Espacio entre elementos */
+}
+
+.footer-container p {
+    margin: 5px 0; /* Margen vertical pequeño */
+    font-size: 0.95em; /* Tamaño de fuente ligeramente pequeño */
+}
+
+/* Redes sociales */
+.redes-sociales {
+    display: flex; /* Iconos en fila */
+    justify-content: center; /* Centrados */
+    gap: 15px; /* Espacio entre iconos */
+    margin: 10px 0; /* Margen vertical */
+}
+
+.redes-sociales img {
+    width: 30px; /* Tamaño de iconos */
+    height: 30px;
+    transition: transform 0.3s ease, filter 0.3s ease; /* Transiciones suaves */
+    cursor: pointer; /* Cursor de mano */
+}
+
+/* Efecto hover en iconos de redes sociales */
+.redes-sociales img:hover {
+    transform: scale(1.2); /* Aumenta tamaño */
+    filter: brightness(1.3); /* Aumenta brillo */
+}
+
+/* ===== DISEÑO RESPONSIVE ===== */
+
+/* Para tablets y pantallas medianas */
+@media (max-width: 1024px) {
+    .tabla-contenedor {
+        overflow-x: auto; /* Scroll horizontal si es necesario */
+    }
+    
+    .tabla-registros {
+        min-width: 1000px; /* Ancho mínimo para mantener legibilidad */
+    }
+    
+    .filtros-container {
+        flex-wrap: wrap; /* Los filtros se envuelven en múltiples líneas */
+    }
+}
+
+/* Para tablets pequeñas y móviles grandes */
+@media (max-width: 768px) {
+    main {
+        margin: 20px; /* Reduce márgenes laterales */
+        padding: 15px; /* Reduce padding interno */
+    }
+    
+    .filtros-container {
+        flex-direction: column; /* Filtros en columna */
+        align-items: stretch; /* Ocupan todo el ancho */
+        gap: 15px; /* Más espacio entre filtros */
+    }
+    
+    .estadisticas-rapidas {
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas en lugar de 4 */
+    }
+    
+    .paginacion {
+        flex-direction: column; /* Elementos de paginación en columna */
+        gap: 15px; /* Espacio entre elementos */
+        text-align: center; /* Texto centrado */
+    }
+    
+    header {
+        flex-direction: column; /* Header en columna en móviles */
+        gap: 15px; /* Espacio entre elementos del header */
+    }
+    
+    .dashboard {
+        flex-wrap: wrap; /* Botones se envuelven en múltiples líneas */
+        gap: 10px; /* Menos espacio entre botones */
+    }
+    
+    .center-header h1 {
+        font-size: 1.4em; /* Título más pequeño */
+    }
+    
+    .search-container {
+        justify-content: center; /* Barra de búsqueda centrada */
+        margin: 10px 15px; /* Menos margen */
+    }
+    
+    .search-box {
+        width: 100%; /* Ocupa todo el ancho disponible */
+        max-width: 400px; /* Pero con máximo de 400px */
+    }
+}
+
+/* Para móviles pequeños */
+@media (max-width: 480px) {
+    .estadisticas-rapidas {
+        grid-template-columns: 1fr; /* Una sola columna */
+    }
+    
+    .login-imagen img {
+        width: 50px; /* Imagen de usuario más pequeña */
+    }
+    
+    .dashboard-btn {
+        padding: 8px 16px; /* Botones más compactos */
+        font-size: 0.9em; /* Texto más pequeño */
+    }
+}

@@ -1,0 +1,656 @@
+/* ===== ESTILOS GENERALES DEL BODY ===== */
+/* Configuración base de la página */
+body {
+  margin: 0; /* Elimina márgenes por defecto del navegador */
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Fuente principal del sistema */
+  background-color: #F2F2F2; /* Color de fondo gris claro para contraste */
+  display: flex; /* Usa flexbox para layout */
+  flex-direction: column; /* Organiza elementos en columna: header, main, footer */
+  min-height: 100vh; /* Asegura que el body ocupe al menos toda la altura de la ventana */
+}
+
+/* ===== ENCABEZADO PRINCIPAL ===== */
+header {
+  display: flex; /* Activa flexbox para organizar elementos del header */
+  align-items: center; /* Centra verticalmente los elementos del header */
+  justify-content: space-between; /* Distribuye espacio entre logo, título y usuario */
+  padding: 20px 30px; /* Espaciado interno: 20px arriba/abajo, 30px izquierda/derecha */
+  background: linear-gradient(90deg, #212121, #424242); /* Degradado horizontal de gris oscuro */
+  color: white; /* Texto en color blanco para contraste */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3); /* Sombra para efecto de profundidad */
+  border-bottom-left-radius: 12px; /* Esquinas inferiores redondeadas */
+  border-bottom-right-radius: 12px;
+}
+
+/* Logo del IFN en el header */
+header .Logo {
+  width: 90px; /* Ancho fijo para el logo */
+}
+
+/* Contenedor central del header para título y navegación */
+.center-header {
+  text-align: center; /* Centra el contenido horizontalmente */
+  flex-grow: 1; /* Ocupa el espacio disponible entre logo y sección de usuario */
+}
+
+/* Título principal del header */
+.center-header h1 {
+  margin: 0 0 20px 0; /* Sin margen superior, 20px de margen inferior */
+  font-size: 1.8em; /* Tamaño de fuente grande */
+  font-weight: 700; /* Texto en negrita */
+  letter-spacing: 1px; /* Espaciado entre letras para mejor legibilidad */
+  color: #FFFFFF; /* Color blanco */
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5); /* Sombra de texto para resaltar sobre fondo oscuro */
+}
+
+/* ===== BOTONES DEL DASHBOARD EN EL HEADER ===== */
+header .dashboard {
+  display: flex; /* Coloca los botones en fila */
+  justify-content: center; /* Centra horizontalmente los botones */
+  gap: 15px; /* Espacio entre botones */
+  flex-wrap: wrap; /* Permite que los botones se envuelvan en múltiples líneas si es necesario */
+}
+
+/* Estilo base para botones de navegación */
+header .dashboard-btn {
+  padding: 10px 20px; /* Espaciado interno del botón */
+  font-size: 0.9em; /* Tamaño de fuente ligeramente reducido */
+  font-weight: bold; /* Texto en negrita */
+  border: none; /* Elimina borde por defecto */
+  border-radius: 8px; /* Esquinas redondeadas */
+  background-color: #1E88E5; /* Color azul institucional */
+  color: white; /* Texto blanco */
+  cursor: pointer; /* Cambia cursor a mano al pasar por encima */
+  box-shadow: 0 3px 5px rgba(0,0,0,0.3); /* Sombra para efecto elevado */
+  transition: all 0.3s ease; /* Transición suave para efectos hover */
+  text-decoration: none; /* Elimina subrayado de enlaces */
+  display: inline-block; /* Se comporta como botón */
+  text-align: center; /* Texto centrado */
+  min-width: 100px; /* Ancho mínimo para consistencia */
+}
+
+/* Efecto hover para botones de navegación */
+header .dashboard-btn:hover {
+  background-color: #FFC107; /* Cambia a color amarillo/dorado */
+  color: #212121; /* Texto oscuro para contraste */
+  transform: translateY(-2px); /* Efecto de elevación al pasar el mouse */
+}
+
+/* ===== SECCIÓN DE USUARIO EN EL HEADER ===== */
+.login-imagen {
+  display: flex; /* Activa flexbox */
+  flex-direction: column; /* Organiza elementos en columna: texto, imagen, botón */
+  align-items: center; /* Centra horizontalmente los elementos */
+}
+
+/* Texto del nombre de usuario */
+.login-imagen p {
+  margin: 0 0 5px 0; /* Sin margen superior, 5px de margen inferior */
+  font-weight: bold; /* Texto en negrita */
+  color: #FFFFFF; /* Texto blanco */
+}
+
+/* Imagen de perfil del usuario */
+.login-imagen img {
+  width: 70px; /* Tamaño de la imagen */
+  border-radius: 50%; /* Forma circular */
+  border: 2px solid #FFFFFF; /* Borde blanco alrededor de la imagen */
+}
+
+/* Botón de cerrar sesión */
+.login-imagen button {
+  margin-top: 8px; /* Espacio superior */
+  padding: 6px 12px; /* Espaciado interno reducido */
+  border: none; /* Sin borde */
+  background-color: #FFC107; /* Fondo amarillo/dorado */
+  color: #212121; /* Texto oscuro */
+  border-radius: 6px; /* Esquinas redondeadas */
+  font-weight: bold; /* Texto en negrita */
+  cursor: pointer; /* Cursor de mano al pasar */
+  font-size: 0.8em; /* Tamaño de fuente pequeño */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3); /* Sombra sutil */
+  transition: 0.3s; /* Transición suave para hover */
+}
+
+/* Efecto hover en botón de cerrar sesión */
+.login-imagen button:hover {
+  background-color: #FFA000; /* Amarillo más oscuro al pasar el mouse */
+}
+
+/* ===== BANNER DE ESTADO DEL SISTEMA ===== */
+.banner-conectado {
+  background-color: #4CAF50; /* Fondo verde para indicar estado positivo */
+  color: white; /* Texto blanco */
+  padding: 10px 20px; /* Espaciado interno */
+  display: flex; /* Flexbox para alinear icono y texto */
+  align-items: center; /* Centrado vertical */
+  gap: 10px; /* Espacio entre icono y texto */
+  font-size: 0.9em; /* Tamaño de fuente pequeño */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra sutil */
+}
+
+/* Icono del banner */
+.banner-icon {
+  font-size: 1.2em; /* Tamaño del icono ligeramente mayor */
+}
+
+/* ===== CONTENIDO PRINCIPAL ===== */
+main {
+  background-color: #FFFFFF; /* Fondo blanco para el área de contenido */
+  max-width: 1200px; /* Ancho máximo para pantallas grandes */
+  margin: 30px auto; /* Centrado horizontal con margen superior/inferior */
+  padding: 25px; /* Espaciado interno */
+  border-radius: 12px; /* Esquinas redondeadas */
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2); /* Sombra para efecto elevado */
+}
+
+/* Título principal dentro del main */
+main h1 {
+  font-size: 1.8em; /* Tamaño grande */
+  margin-bottom: 25px; /* Espacio inferior */
+  color: #2E7D32; /* Color verde institucional */
+  text-transform: uppercase; /* Texto en mayúsculas */
+  border-bottom: 3px solid #2E7D32; /* Línea decorativa inferior */
+  padding-bottom: 10px; /* Espacio entre texto y línea */
+  text-align: center; /* Centrado horizontal */
+}
+
+/* ===== SECCIÓN DE FILTROS DEL REPORTE ===== */
+.filtros-reporte {
+  background-color: #f8f9fa; /* Fondo gris muy claro */
+  padding: 20px; /* Espaciado interno */
+  border-radius: 8px; /* Esquinas redondeadas */
+  margin-bottom: 25px; /* Espacio inferior */
+  border: 1px solid #e9ecef; /* Borde sutil */
+}
+
+/* Título de la sección de filtros */
+.filtros-reporte h2 {
+  margin-top: 0; /* Elimina margen superior por defecto */
+  color: #2E7D32; /* Color verde institucional */
+  font-size: 1.3em; /* Tamaño de fuente */
+  margin-bottom: 15px; /* Espacio inferior */
+}
+
+/* Grid para organizar los filtros en columnas responsivas */
+.filtros-grid {
+  display: grid; /* Usa CSS Grid para layout */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Columnas que se adaptan al ancho */
+  gap: 15px; /* Espacio entre elementos del grid */
+  margin-bottom: 15px; /* Espacio inferior */
+}
+
+/* Grupo individual de filtro (label + control) */
+.filtro-grupo {
+  display: flex; /* Flexbox para organizar label y control */
+  flex-direction: column; /* Label arriba, control abajo */
+}
+
+/* Etiqueta del filtro */
+.filtro-grupo label {
+  font-weight: bold; /* Texto en negrita */
+  margin-bottom: 5px; /* Espacio inferior */
+  color: #424242; /* Color gris oscuro */
+  font-size: 0.9em; /* Tamaño de fuente pequeño */
+}
+
+/* Estilos para selects e inputs de los filtros */
+.filtro-grupo select,
+.filtro-grupo input {
+  padding: 10px; /* Espaciado interno */
+  border: 1px solid #ccc; /* Borde gris */
+  border-radius: 6px; /* Esquinas redondeadas */
+  font-size: 0.9em; /* Tamaño de fuente pequeño */
+  transition: border-color 0.3s; /* Transición suave para focus */
+}
+
+/* Efecto focus en controles de filtro */
+.filtro-grupo select:focus,
+.filtro-grupo input:focus {
+  border-color: #2E7D32; /* Borde verde al estar enfocado */
+  outline: none; /* Elimina contorno por defecto */
+}
+
+/* Contenedor para filtros de fecha personalizada */
+.filtros-fecha {
+  display: flex; /* Flexbox para alinear inputs de fecha */
+  gap: 15px; /* Espacio entre inputs */
+  margin-top: 10px; /* Espacio superior */
+}
+
+/* Contenedor para botones de acción de filtros */
+.botones-filtros {
+  display: flex; /* Botones en fila */
+  gap: 10px; /* Espacio entre botones */
+  margin-top: 15px; /* Espacio superior */
+}
+
+/* Estilos base para botones de filtros */
+.btn-limpiar,
+.btn-aplicar {
+  padding: 10px 20px; /* Espaciado interno */
+  border: none; /* Sin borde */
+  border-radius: 6px; /* Esquinas redondeadas */
+  font-weight: bold; /* Texto en negrita */
+  cursor: pointer; /* Cursor de mano */
+  transition: all 0.3s ease; /* Transición suave para hover */
+}
+
+/* Botón para limpiar filtros */
+.btn-limpiar {
+  background-color: #757575; /* Fondo gris */
+  color: white; /* Texto blanco */
+}
+
+/* Efecto hover en botón limpiar */
+.btn-limpiar:hover {
+  background-color: #616161; /* Gris más oscuro al hover */
+}
+
+/* Botón para aplicar filtros */
+.btn-aplicar {
+  background-color: #2E7D32; /* Fondo verde */
+  color: white; /* Texto blanco */
+}
+
+/* Efecto hover en botón aplicar */
+.btn-aplicar:hover {
+  background-color: #1B5E20; /* Verde más oscuro */
+  transform: translateY(-2px); /* Efecto de elevación */
+}
+
+/* ===== SECCIÓN DE VISTA PREVIA DEL REPORTE ===== */
+.vista-previa {
+  margin-bottom: 25px; /* Espacio inferior */
+}
+
+/* Título de la vista previa */
+.vista-previa h2 {
+  color: #2E7D32; /* Color verde */
+  font-size: 1.3em; /* Tamaño de fuente */
+  margin-bottom: 15px; /* Espacio inferior */
+  border-bottom: 1px solid #e0e0e0; /* Línea divisoria inferior */
+  padding-bottom: 8px; /* Espacio entre texto y línea */
+}
+
+/* ===== ESTADÍSTICAS RÁPIDAS ===== */
+.estadisticas-rapidas {
+  display: grid; /* CSS Grid para layout responsivo */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Columnas adaptables */
+  gap: 15px; /* Espacio entre tarjetas */
+  margin-bottom: 25px; /* Espacio inferior */
+}
+
+/* Tarjeta individual de estadística */
+.estadistica-item {
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef); /* Degradado sutil */
+  padding: 20px; /* Espaciado interno */
+  border-radius: 8px; /* Esquinas redondeadas */
+  text-align: center; /* Texto centrado */
+  border: 1px solid #dee2e6; /* Borde sutil */
+  transition: transform 0.3s ease; /* Transición suave para hover */
+}
+
+/* Efecto hover en tarjetas de estadística */
+.estadistica-item:hover {
+  transform: translateY(-5px); /* Efecto de elevación al pasar mouse */
+}
+
+/* Número destacado en la estadística */
+.estadistica-numero {
+  display: block; /* Ocupa toda la línea */
+  font-size: 2em; /* Tamaño grande */
+  font-weight: bold; /* Negrita */
+  color: #2E7D32; /* Color verde institucional */
+  margin-bottom: 5px; /* Espacio inferior */
+}
+
+/* Texto descriptivo de la estadística */
+.estadistica-texto {
+  font-size: 0.9em; /* Tamaño pequeño */
+  color: #666; /* Color gris */
+}
+
+/* ===== CONTENEDOR DE GRÁFICOS DEL REPORTE ===== */
+.graficos-reporte {
+  display: grid; /* CSS Grid para layout responsivo */
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* Columnas adaptables */
+  gap: 25px; /* Espacio entre gráficos */
+  margin-bottom: 25px; /* Espacio inferior */
+}
+
+/* Contenedor individual para cada gráfico */
+.grafico-container {
+  background-color: #f8f9fa; /* Fondo gris muy claro */
+  padding: 15px; /* Espaciado interno */
+  border-radius: 8px; /* Esquinas redondeadas */
+  border: 1px solid #e9ecef; /* Borde sutil */
+}
+
+/* Título del gráfico */
+.grafico-container h3 {
+  margin-top: 0; /* Elimina margen superior por defecto */
+  color: #2E7D32; /* Color verde */
+  text-align: center; /* Centrado */
+  margin-bottom: 15px; /* Espacio inferior */
+}
+
+/* Canvas donde se renderizan los gráficos */
+.grafico-container canvas {
+  max-width: 100%; /* Se adapta al ancho del contenedor */
+  height: 300px; /* Altura fija para consistencia */
+}
+
+/* ===== TABLA DE RESUMEN DE DATOS ===== */
+.tabla-resumen {
+  margin-bottom: 25px; /* Espacio inferior */
+}
+
+/* Título de la tabla */
+.tabla-resumen h3 {
+  color: #2E7D32; /* Color verde */
+  margin-bottom: 15px; /* Espacio inferior */
+}
+
+/* Estilos de la tabla de datos */
+.tabla-datos {
+  width: 100%; /* Ocupa todo el ancho disponible */
+  border-collapse: collapse; /* Elimina espacio entre celdas */
+  font-size: 0.9em; /* Tamaño de fuente reducido */
+}
+
+/* Estilos para celdas de encabezado y datos */
+.tabla-datos th,
+.tabla-datos td {
+  padding: 12px; /* Espaciado interno */
+  text-align: left; /* Alineación a la izquierda */
+  border-bottom: 1px solid #ddd; /* Línea divisoria entre filas */
+}
+
+/* Estilos específicos para celdas de encabezado */
+.tabla-datos th {
+  background-color: #2E7D32; /* Fondo verde */
+  color: white; /* Texto blanco */
+  font-weight: bold; /* Negrita */
+}
+
+/* Efecto zebra en filas de la tabla (filas pares) */
+.tabla-datos tr:nth-child(even) {
+  background-color: #f9f9f9; /* Fondo gris muy claro */
+}
+
+/* Efecto hover en filas de la tabla */
+.tabla-datos tr:hover {
+  background-color: #f1f1f1; /* Fondo gris claro al pasar mouse */
+}
+
+/* ===== SECCIÓN DE OPCIONES DE EXPORTACIÓN ===== */
+.opciones-exportacion {
+  background-color: #f8f9fa; /* Fondo gris muy claro */
+  padding: 20px; /* Espaciado interno */
+  border-radius: 8px; /* Esquinas redondeadas */
+  border: 1px solid #e9ecef; /* Borde sutil */
+}
+
+/* Título de la sección de exportación */
+.opciones-exportacion h2 {
+  margin-top: 0; /* Elimina margen superior por defecto */
+  color: #2E7D32; /* Color verde */
+  font-size: 1.3em; /* Tamaño de fuente */
+  margin-bottom: 15px; /* Espacio inferior */
+}
+
+/* Contenedor para opciones de formato */
+.formatos-exportacion {
+  display: flex; /* Opciones en fila */
+  gap: 20px; /* Espacio entre opciones */
+  margin-bottom: 20px; /* Espacio inferior */
+  flex-wrap: wrap; /* Permite envolver en múltiples líneas */
+}
+
+/* Opción individual de formato */
+.formato-opcion {
+  display: flex; /* Radio button y label en fila */
+  align-items: center; /* Centrado vertical */
+  gap: 8px; /* Espacio entre radio y label */
+}
+
+/* ===== BOTONES DE EXPORTACIÓN ===== */
+.botones-exportacion {
+  display: flex; /* Botones en fila */
+  gap: 15px; /* Espacio entre botones */
+  flex-wrap: wrap; /* Permite envolver en múltiples líneas */
+}
+
+/* Estilos base para botones de exportación */
+.btn-exportar,
+.btn-compartir {
+  padding: 12px 25px; /* Espaciado interno */
+  border: none; /* Sin borde */
+  border-radius: 8px; /* Esquinas redondeadas */
+  font-weight: bold; /* Texto en negrita */
+  cursor: pointer; /* Cursor de mano */
+  display: flex; /* Flexbox para icono y texto */
+  align-items: center; /* Centrado vertical */
+  gap: 8px; /* Espacio entre icono y texto */
+  transition: all 0.3s ease; /* Transición suave para hover */
+}
+
+/* Botón para exportar reporte */
+.btn-exportar {
+  background-color: #9C27B0; /* Fondo morado */
+  color: white; /* Texto blanco */
+}
+
+/* Efecto hover en botón exportar */
+.btn-exportar:hover {
+  background-color: #7B1FA2; /* Morado más oscuro */
+  transform: translateY(-2px); /* Efecto de elevación */
+}
+
+/* Botón para compartir por correo */
+.btn-compartir {
+  background-color: #2196F3; /* Fondo azul */
+  color: white; /* Texto blanco */
+}
+
+/* Efecto hover en botón compartir */
+.btn-compartir:hover {
+  background-color: #1976D2; /* Azul más oscuro */
+  transform: translateY(-2px); /* Efecto de elevación */
+}
+
+/* Icono dentro de los botones */
+.btn-icon {
+  font-size: 1.2em; /* Tamaño del icono */
+}
+
+/* ===== MENSAJE CUANDO NO HAY DATOS ===== */
+.sin-datos {
+  text-align: center; /* Contenido centrado */
+  padding: 40px 20px; /* Espaciado interno generoso */
+  background-color: #f8f9fa; /* Fondo gris muy claro */
+  border-radius: 8px; /* Esquinas redondeadas */
+  border: 1px dashed #ccc; /* Borde punteado */
+}
+
+/* Icono del mensaje sin datos */
+.sin-datos-icon {
+  font-size: 3em; /* Icono grande */
+  margin-bottom: 15px; /* Espacio inferior */
+}
+
+/* Título del mensaje sin datos */
+.sin-datos h3 {
+  color: #666; /* Color gris */
+  margin-bottom: 10px; /* Espacio inferior */
+}
+
+/* Texto del mensaje sin datos */
+.sin-datos p {
+  color: #888; /* Color gris más claro */
+  margin-bottom: 20px; /* Espacio inferior */
+}
+
+/* Sección de sugerencias */
+.sugerencias {
+  text-align: left; /* Texto alineado a la izquierda */
+  max-width: 400px; /* Ancho máximo para legibilidad */
+  margin: 0 auto 20px; /* Centrado con margen inferior */
+}
+
+/* Lista de sugerencias */
+.sugerencias ul {
+  margin-top: 10px; /* Espacio superior */
+  padding-left: 20px; /* Sangría para la lista */
+}
+
+/* Elementos de la lista de sugerencias */
+.sugerencias li {
+  margin-bottom: 5px; /* Espacio entre elementos */
+  color: #666; /* Color gris */
+}
+
+/* Botón alternativo para ver todos los registros */
+.btn-alternativo {
+  padding: 10px 20px; /* Espaciado interno */
+  background-color: #1E88E5; /* Fondo azul */
+  color: white; /* Texto blanco */
+  border: none; /* Sin borde */
+  border-radius: 6px; /* Esquinas redondeadas */
+  font-weight: bold; /* Texto en negrita */
+  cursor: pointer; /* Cursor de mano */
+  transition: all 0.3s ease; /* Transición suave para hover */
+}
+
+/* Efecto hover en botón alternativo */
+.btn-alternativo:hover {
+  background-color: #1565C0; /* Azul más oscuro */
+  transform: translateY(-2px); /* Efecto de elevación */
+}
+
+/* ===== ESTILOS DEL FOOTER ===== */
+footer {
+  background-color: #212121; /* Fondo gris oscuro */
+  color: white; /* Texto blanco */
+  padding: 20px; /* Espaciado interno */
+  text-align: center; /* Contenido centrado */
+  border-top-left-radius: 12px; /* Esquinas superiores redondeadas */
+  border-top-right-radius: 12px;
+  box-shadow: 0 -3px 8px rgba(0,0,0,0.2); /* Sombra superior */
+  margin-top: 30px; /* Espacio superior */
+}
+
+/* Contenedor del footer */
+.footer-container {
+  max-width: 1000px; /* Ancho máximo */
+  margin: 0 auto; /* Centrado */
+  display: flex; /* Flexbox para organización */
+  flex-direction: column; /* Elementos en columna */
+  align-items: center; /* Centrados horizontalmente */
+  gap: 10px; /* Espacio entre elementos */
+}
+
+/* Párrafos del footer */
+.footer-container p {
+  margin: 5px 0; /* Margen vertical pequeño */
+  font-size: 0.9em; /* Tamaño de fuente pequeño */
+}
+
+/* Contenedor de redes sociales */
+.redes-sociales {
+  display: flex; /* Iconos en fila */
+  justify-content: center; /* Centrados horizontalmente */
+  gap: 15px; /* Espacio entre iconos */
+  margin: 10px 0; /* Margen vertical */
+}
+
+/* Iconos de redes sociales */
+.redes-sociales img {
+  width: 25px; /* Tamaño de iconos */
+  height: 25px;
+  transition: transform 0.3s ease, filter 0.3s ease; /* Transiciones suaves */
+  cursor: pointer; /* Cursor de mano */
+}
+
+/* Efecto hover en iconos de redes sociales */
+.redes-sociales img:hover {
+  transform: scale(1.2); /* Aumenta tamaño */
+  filter: brightness(1.3); /* Aumenta brillo */
+}
+
+/* ===== DISEÑO RESPONSIVE ===== */
+
+/* Media query para tablets y pantallas medianas */
+@media (max-width: 768px) {
+  main {
+    margin: 15px; /* Reduce márgenes laterales */
+    padding: 15px; /* Reduce padding interno */
+  }
+  
+  .filtros-grid {
+    grid-template-columns: 1fr; /* Una sola columna en móviles */
+  }
+  
+  .filtros-fecha {
+    flex-direction: column; /* Inputs de fecha en columna */
+  }
+  
+  .graficos-reporte {
+    grid-template-columns: 1fr; /* Un gráfico por fila en móviles */
+  }
+  
+  .estadisticas-rapidas {
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas en tablets */
+  }
+  
+  .botones-exportacion {
+    flex-direction: column; /* Botones en columna en móviles */
+  }
+  
+  .formatos-exportacion {
+    flex-direction: column; /* Opciones en columna en móviles */
+    gap: 10px; /* Menos espacio entre opciones */
+  }
+  
+  header {
+    flex-direction: column; /* Header en columna en móviles */
+    gap: 15px; /* Espacio entre elementos */
+    padding: 15px 20px; /* Menos padding */
+  }
+  
+  .dashboard {
+    gap: 10px; /* Menos espacio entre botones */
+  }
+  
+  .dashboard-btn {
+    padding: 8px 15px; /* Botones más compactos */
+    font-size: 0.8em; /* Texto más pequeño */
+    min-width: 80px; /* Ancho mínimo reducido */
+  }
+  
+  .center-header h1 {
+    font-size: 1.4em; /* Título más pequeño */
+    margin-bottom: 15px; /* Menos margen inferior */
+  }
+}
+
+/* Media query para móviles pequeños */
+@media (max-width: 480px) {
+  .estadisticas-rapidas {
+    grid-template-columns: 1fr; /* Una tarjeta por fila en móviles pequeños */
+  }
+  
+  .login-imagen img {
+    width: 50px; /* Imagen de usuario más pequeña */
+  }
+  
+  .login-imagen button {
+    font-size: 0.7em; /* Texto más pequeño */
+    padding: 4px 8px; /* Botón más compacto */
+  }
+  
+  .Logo {
+    width: 70px; /* Logo más pequeño */
+  }
+}

@@ -1,0 +1,641 @@
+/* =============================================
+   ESTILOS ESPECÍFICOS PARA GESTIÓN DE BRIGADAS
+   ============================================= */
+
+/* 
+   Estilos base para todas las secciones de gestión de brigadas
+   Estas clases se aplican a las cuatro secciones principales:
+   - Brigadas registradas
+   - Gestión de miembros
+   - Asignación de zonas
+   - Asignación de tareas
+*/
+.brigadas-section, .miembros-section, .zonas-section, .tareas-section {
+  margin-bottom: 40px;          /* Separación entre secciones */
+  padding: 20px;                /* Espacio interno para contenido */
+  border: 1px solid #ddd;       /* Borde sutil gris claro */
+  border-radius: 10px;          /* Esquinas redondeadas */
+  background: #f9f9f9;          /* Fondo gris muy claro para diferenciar secciones */
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1); /* Sombra suave para efecto de profundidad */
+  
+  /* Animación de entrada al cargar la página */
+  opacity: 0;                   /* Inicia invisible */
+  transform: translateY(20px);  /* Inicia 20px más abajo */
+  animation: fadeInUp 1s forwards; /* Aplica animación hacia arriba */
+}
+
+/* 
+   Estilos para los títulos de cada sección (h2)
+   Proporciona consistencia visual en todos los encabezados de sección
+*/
+.brigadas-section h2, .miembros-section h2, .zonas-section h2, .tareas-section h2 {
+  margin-bottom: 15px;          /* Espacio debajo del título */
+  font-size: 1.4em;             /* Tamaño de fuente aumentado para jerarquía */
+  color: #2E7D32;               /* Color verde institucional del IFN */
+  border-bottom: 2px solid #2E7D32; /* Línea decorativa inferior en verde */
+  padding-bottom: 5px;          /* Espacio entre texto y línea */
+}
+
+/* =============================================
+   CONTENEDOR DE BRIGADAS - Diseño de cuadrícula
+   ============================================= */
+.brigadas-container {
+  display: grid; /* Usa CSS Grid para layout responsivo */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Columnas que se adaptan automáticamente */
+  gap: 20px;     /* Espacio entre tarjetas de brigada */
+  margin-bottom: 20px; /* Separación antes del botón "Nueva Brigada" */
+}
+
+/* =============================================
+   TARJETAS INDIVIDUALES DE BRIGADAS
+   Cada tarjeta representa una brigada con su información
+   ============================================= */
+.brigada-card {
+  background: white;            /* Fondo blanco para contraste */
+  padding: 15px;                /* Espaciado interno */
+  border-radius: 8px;           /* Esquinas redondeadas */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra sutil para elevación */
+  border-left: 4px solid #2E7D32; /* Borde izquierdo acentuado en verde */
+}
+
+/* Título de la brigada dentro de la tarjeta */
+.brigada-card h3 {
+  margin-top: 0;                /* Elimina margen superior por defecto */
+  color: #212121;               /* Color de texto gris oscuro */
+}
+
+/* Párrafos de información dentro de la tarjeta */
+.brigada-card p {
+  margin: 8px 0;                /* Espacio vertical entre párrafos */
+  font-size: 0.9em;             /* Texto ligeramente más pequeño */
+}
+
+/* 
+   Contenedor para botones de acción en tarjetas
+   Organiza los botones "Editar" y "Asignar Tarea"
+*/
+.brigada-actions {
+  display: flex;     /* Coloca botones en fila horizontal */
+  gap: 10px;        /* Espacio entre botones */
+  margin-top: 15px; /* Separación del contenido superior */
+}
+
+/* =============================================
+   ESTILOS DE BOTONES - Sistema de botones unificado
+   ============================================= */
+
+/* Estilos base para botones secundarios (Editar y Asignar) */
+.btn-editar, .btn-asignar {
+  padding: 8px 15px;    /* Espaciado interno compacto */
+  border: none;         /* Elimina borde por defecto */
+  border-radius: 5px;   /* Esquinas ligeramente redondeadas */
+  cursor: pointer;      /* Cursor de mano al pasar por encima */
+  font-weight: bold;    /* Texto en negrita */
+  transition: 0.3s;     /* Transición suave para efectos hover */
+}
+
+/* Botón de edición - Color amarillo/dorado */
+.btn-editar {
+  background-color: #FFC107; /* Amarillo corporativo */
+  color: #212121;            /* Texto oscuro para contraste */
+}
+
+/* Botón de asignar - Color azul */
+.btn-asignar {
+  background-color: #1E88E5; /* Azul corporativo */
+  color: white;              /* Texto blanco */
+}
+
+/* Efectos hover para botones secundarios */
+.btn-editar:hover {
+  background-color: #FFA000; /* Amarillo más oscuro al hover */
+}
+
+.btn-asignar:hover {
+  background-color: #1565C0; /* Azul más oscuro al hover */
+}
+
+/* 
+   Botones principales de acción 
+   Se usan para acciones principales como crear nueva brigada, agregar miembro, etc.
+*/
+.btn-nueva-brigada, .btn-agregar-miembro, .btn-guardar-zonas, .btn-asignar-tarea {
+  background-color: #2E7D32; /* Verde institucional del IFN */
+  color: white;              /* Texto blanco */
+  font-weight: bold;         /* Negrita */
+  border: none;              /* Sin borde */
+  padding: 12px 20px;        /* Espaciado interno generoso */
+  border-radius: 8px;        /* Esquinas redondeadas */
+  cursor: pointer;           /* Cursor de mano */
+  transition: 0.3s;          /* Transición suave */
+  display: block;            /* Ocupa todo el ancho disponible */
+  margin-top: 10px;          /* Separación superior */
+}
+
+/* Efecto hover para botones principales */
+.btn-nueva-brigada:hover, .btn-agregar-miembro:hover, .btn-guardar-zonas:hover, .btn-asignar-tarea:hover {
+  background-color: #1B5E20; /* Verde más oscuro al hover */
+  transform: translateY(-2px); /* Efecto de elevación sutil */
+}
+
+/* =============================================
+   GESTIÓN DE MIEMBROS - Lista de miembros editables
+   ============================================= */
+.miembros-container {
+  display: flex;              /* Flexbox para alineación vertical */
+  flex-direction: column;     /* Elementos en columna (uno debajo de otro) */
+  gap: 15px;                  /* Espacio entre elementos de miembro */
+  margin-bottom: 20px;        /* Separación antes del botón "Agregar Miembro" */
+}
+
+/* Items individuales de miembros - Cada fila representa un miembro */
+.miembro-item {
+  display: flex;                   /* Flexbox para alinear nombre y selector */
+  justify-content: space-between;  /* Nombre a la izquierda, selector a la derecha */
+  align-items: center;            /* Centrado vertical */
+  padding: 10px;                  /* Espaciado interno */
+  background: white;              /* Fondo blanco */
+  border-radius: 5px;             /* Esquinas redondeadas */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Sombra muy sutil */
+}
+
+/* Nombre del miembro - Texto destacado */
+.miembro-item span {
+  font-weight: bold; /* Negrita para énfasis */
+  color: #212121;    /* Color gris oscuro */
+}
+
+/* Selector de brigada para el miembro */
+.miembro-item select {
+  padding: 5px 10px;   /* Espaciado interno */
+  border-radius: 5px;  /* Esquinas redondeadas */
+  border: 1px solid #ccc; /* Borde gris claro */
+}
+
+/* =============================================
+   ASIGNACIÓN DE ZONAS - Gestión de áreas de trabajo
+   ============================================= */
+.zonas-container {
+  display: flex;              /* Flexbox para alineación vertical */
+  flex-direction: column;     /* Elementos en columna */
+  gap: 15px;                  /* Espacio entre zonas */
+  margin-bottom: 20px;        /* Separación antes del botón "Guardar" */
+}
+
+/* Items individuales de zonas - Cada zona tiene su área de texto */
+.zona-item {
+  background: white;          /* Fondo blanco */
+  padding: 15px;              /* Espaciado interno */
+  border-radius: 8px;         /* Esquinas redondeadas */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Sombra sutil */
+}
+
+/* Título de la zona */
+.zona-item h3 {
+  margin-top: 0;              /* Elimina margen superior por defecto */
+  color: #212121;             /* Texto gris oscuro */
+}
+
+/* Área de texto para descripción de la zona */
+.zona-item textarea {
+  width: 100%;                /* Ocupa todo el ancho disponible */
+  padding: 10px;              /* Espaciado interno */
+  border: 1px solid #ccc;     /* Borde gris claro */
+  border-radius: 5px;         /* Esquinas redondeadas */
+  font-family: inherit;       /* Hereda la fuente del documento */
+  resize: vertical;           /* Permite redimensionar solo verticalmente */
+}
+
+/* =============================================
+   FORMULARIO DE TAREAS - Asignación de nuevas tareas
+   ============================================= */
+.tarea-form {
+  display: flex;              /* Flexbox para organización */
+  flex-direction: column;     /* Elementos en columna */
+  gap: 15px;                  /* Espacio entre campos del formulario */
+}
+
+/* Grupos de formulario - Cada campo con su label */
+.form-group {
+  display: flex;              /* Flexbox */
+  flex-direction: column;     /* Label arriba, campo abajo */
+}
+
+/* Fila para agrupar campos horizontalmente (ej: fechas de inicio y fin) */
+.form-row {
+  display: flex;    /* Flexbox para alineación horizontal */
+  gap: 15px;        /* Espacio entre campos */
+}
+
+/* Cada grupo de formulario dentro de una fila ocupa espacio igual */
+.form-row .form-group {
+  flex: 1; /* Distribuye el espacio disponible equitativamente */
+}
+
+/* Etiquetas de los campos del formulario */
+.tarea-form label {
+  font-weight: bold;    /* Negrita para destacar */
+  margin-bottom: 5px;   /* Espacio debajo de la etiqueta */
+  color: #333;          /* Color de texto gris oscuro */
+}
+
+/* Campos de formulario (inputs, selects, textareas) */
+.tarea-form input, 
+.tarea-form select, 
+.tarea-form textarea {
+  padding: 10px;              /* Espaciado interno */
+  border: 1px solid #ccc;     /* Borde gris claro */
+  border-radius: 5px;         /* Esquinas redondeadas */
+  font-family: inherit;       /* Hereda fuente del documento */
+}
+
+/* Efecto cuando un campo del formulario está enfocado (seleccionado) */
+.tarea-form input:focus, 
+.tarea-form select:focus, 
+.tarea-form textarea:focus {
+  border-color: #2E7D32;      /* Borde verde al estar enfocado */
+  outline: none;              /* Elimina el outline por defecto del navegador */
+  box-shadow: 0 0 5px rgba(46,125,50,0.5); /* Sombra verde suave */
+}
+
+/* =============================================
+   ANIMACIONES - Efectos visuales dinámicos
+   ============================================= */
+
+/* 
+   Animación de entrada fadeInUp
+   Hace que los elementos aparezcan desvaneciéndose y moviéndose hacia arriba
+*/
+@keyframes fadeInUp {
+  to {
+    opacity: 1;               /* Opacidad completa al final */
+    transform: translateY(0); /* Posición final normal */
+  }
+}
+
+/* 
+   Retrasos escalonados para animación secuencial
+   Cada sección aparece con un pequeño retraso para crear efecto cascada
+*/
+.brigadas-section {
+  animation-delay: 0.1s; /* Primera sección - menor retraso */
+}
+
+.miembros-section {
+  animation-delay: 0.2s; /* Segunda sección */
+}
+
+.zonas-section {
+  animation-delay: 0.3s; /* Tercera sección */
+}
+
+.tareas-section {
+  animation-delay: 0.4s; /* Cuarta sección - mayor retraso */
+}
+
+/* =============================================
+   ESTILOS GENERALES DEL BODY - Configuración base
+   ============================================= */
+body {
+  margin: 0; /* Elimina márgenes por defecto del navegador */
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Fuente principal del sistema */
+  background-color: #F2F2F2; /* Color de fondo gris claro para toda la página */
+  display: flex; /* Usa flexbox para layout general */
+  flex-direction: column; /* Organiza elementos en columna: header, main, footer */
+  min-height: 100vh; /* Asegura que el body ocupe al menos toda la altura de la ventana */
+}
+
+/* =============================================
+   ENCABEZADO PRINCIPAL - Barra de navegación superior
+   ============================================= */
+header {
+  display: flex; /* Flexbox para organizar elementos del header */
+  align-items: center; /* Centra verticalmente los elementos */
+  justify-content: space-between; /* Distribuye espacio: logo izquierda, título centro, usuario derecha */
+  padding: 20px 30px; /* Espaciado interno: 20px arriba/abajo, 30px izquierda/derecha */
+  background: linear-gradient(90deg, #212121, #424242); /* Degradado horizontal de gris oscuro */
+  color: white; /* Texto en color blanco para contraste */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3); /* Sombra para efecto de profundidad */
+  border-bottom-left-radius: 12px; /* Esquinas inferiores redondeadas */
+  border-bottom-right-radius: 12px;
+}
+
+/* Logo del IFN en el header */
+header .Logo {
+  width: 90px; /* Ancho fijo para el logo */
+}
+
+/* Contenedor central del header para título y navegación */
+.center-header {
+  text-align: center; /* Centra el contenido horizontalmente */
+  flex-grow: 1; /* Ocupa el espacio disponible entre logo y sección de usuario */
+}
+
+/* Título principal del sistema en el header */
+.center-header h1 {
+  margin: 0 0 20px 0; /* Sin margen superior, 20px de margen inferior */
+  font-size: 1.8em; /* Tamaño de fuente grande */
+  font-weight: 700; /* Texto en negrita */
+  letter-spacing: 1px; /* Espaciado entre letras para mejor legibilidad */
+  color: #FFFFFF; /* Color blanco */
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5); /* Sombra de texto para resaltar sobre fondo oscuro */
+}
+
+/* =============================================
+   BOTONES DEL DASHBOARD EN EL HEADER - Navegación principal
+   ============================================= */
+header .dashboard {
+  display: flex; /* Coloca los botones en fila */
+  justify-content: center; /* Centra horizontalmente los botones */
+  gap: 15px; /* Espacio entre botones */
+  flex-wrap: wrap; /* Permite que los botones se envuelvan en múltiples líneas si es necesario */
+}
+
+/* Estilo base para botones de navegación del dashboard */
+header .dashboard-btn {
+  padding: 10px 20px; /* Espaciado interno del botón */
+  font-size: 0.9em; /* Tamaño de fuente ligeramente reducido */
+  font-weight: bold; /* Texto en negrita */
+  border: none; /* Elimina borde por defecto */
+  border-radius: 8px; /* Esquinas redondeadas */
+  background-color: #1E88E5; /* Color azul institucional */
+  color: white; /* Texto blanco */
+  cursor: pointer; /* Cambia cursor a mano al pasar por encima */
+  box-shadow: 0 3px 5px rgba(0,0,0,0.3); /* Sombra para efecto elevado */
+  transition: all 0.3s ease; /* Transición suave para efectos hover */
+  text-decoration: none; /* Elimina subrayado de enlaces */
+  display: inline-block; /* Se comporta como botón */
+  text-align: center; /* Texto centrado */
+  min-width: 100px; /* Ancho mínimo para consistencia visual */
+}
+
+/* Efecto hover para botones de navegación */
+header .dashboard-btn:hover {
+  background-color: #FFC107; /* Cambia a color amarillo/dorado */
+  color: #212121; /* Texto oscuro para contraste */
+  transform: translateY(-2px); /* Efecto de elevación al pasar el mouse */
+}
+
+/* =============================================
+   SECCIÓN DE USUARIO EN EL HEADER - Info y cierre de sesión
+   ============================================= */
+.login-imagen {
+  display: flex; /* Activa flexbox */
+  flex-direction: column; /* Organiza elementos en columna: texto, imagen, botón */
+  align-items: center; /* Centra horizontalmente los elementos */
+}
+
+/* Texto del nombre de usuario */
+.login-imagen p {
+  margin: 0 0 5px 0; /* Sin margen superior, 5px de margen inferior */
+  font-weight: bold; /* Texto en negrita */
+  color: #FFFFFF; /* Texto blanco */
+}
+
+/* Imagen de perfil del usuario */
+.login-imagen img {
+  width: 70px; /* Tamaño de la imagen */
+  border-radius: 50%; /* Forma circular */
+  border: 2px solid #FFFFFF; /* Borde blanco alrededor de la imagen */
+}
+
+/* Botón de cerrar sesión */
+.login-imagen button {
+  margin-top: 8px; /* Espacio superior */
+  padding: 6px 12px; /* Espaciado interno reducido */
+  border: none; /* Sin borde */
+  background-color: #FFC107; /* Fondo amarillo/dorado */
+  color: #212121; /* Texto oscuro */
+  border-radius: 6px; /* Esquinas redondeadas */
+  font-weight: bold; /* Texto en negrita */
+  cursor: pointer; /* Cursor de mano al pasar */
+  font-size: 0.8em; /* Tamaño de fuente pequeño */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3); /* Sombra sutil */
+  transition: 0.3s; /* Transición suave para hover */
+}
+
+/* Efecto hover en botón de cerrar sesión */
+.login-imagen button:hover {
+  background-color: #FFA000; /* Amarillo más oscuro al pasar el mouse */
+}
+
+/* =============================================
+   CONTENIDO PRINCIPAL - Área central de la aplicación
+   ============================================= */
+main {
+  background-color: #FFFFFF; /* Fondo blanco para el área de contenido */
+  max-width: 1200px; /* Ancho máximo para pantallas grandes */
+  margin: 30px auto; /* Centrado horizontal con margen superior/inferior */
+  padding: 25px; /* Espaciado interno */
+  border-radius: 12px; /* Esquinas redondeadas */
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2); /* Sombra para efecto elevado */
+}
+
+/* Título principal dentro del main (h1) */
+main h1 {
+  font-size: 1.8em; /* Tamaño grande */
+  margin-bottom: 25px; /* Espacio inferior */
+  color: #2E7D32; /* Color verde institucional del IFN */
+  text-transform: uppercase; /* Texto en mayúsculas */
+  border-bottom: 3px solid #2E7D32; /* Línea decorativa inferior en verde */
+  padding-bottom: 10px; /* Espacio entre texto y línea */
+  text-align: center; /* Centrado horizontal */
+}
+
+/* =============================================
+   BARRA DE BÚSQUEDA - Para buscar brigadas o miembros
+   ============================================= */
+.search-container {
+  display: flex; /* Flexbox para alinear contenido */
+  justify-content: flex-end; /* Alinea a la derecha del contenedor */
+  margin: 15px 30px 15px 0; /* Margen: arriba 15px, derecha 30px, abajo 15px, izquierda 0 */
+}
+
+/* Caja que contiene el input de búsqueda y el icono */
+.search-box {
+  display: flex; /* Flexbox para colocar input e icono en línea */
+  align-items: center; /* Centra verticalmente los elementos */
+  background: white; /* Fondo blanco */
+  border-radius: 25px; /* Bordes muy redondeados (forma de cápsula) */
+  padding: 5px 15px; /* Espaciado interno: arriba/abajo 5px, izquierda/derecha 15px */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra ligera para efecto de elevación */
+  width: 250px; /* Ancho fijo de la caja de búsqueda */
+  border: 1px solid #ccc; /* Borde gris claro */
+}
+
+/* Campo de entrada de búsqueda */
+.search-box input {
+  border: none; /* Elimina borde por defecto */
+  outline: none; /* Elimina el contorno al enfocar */
+  padding: 10px; /* Espaciado interno del texto */
+  font-size: 1em; /* Tamaño de fuente estándar */
+  width: 100%; /* Ocupa todo el ancho disponible dentro de la caja */
+  background: transparent; /* Fondo transparente para mostrar el fondo de la caja */
+}
+
+/* Icono de lupa de búsqueda */
+.search-icon {
+  color: #555; /* Color gris del icono */
+  cursor: pointer; /* Cambia el cursor a mano al pasar por encima */
+  font-size: 1.2em; /* Tamaño del icono ligeramente más grande que el texto */
+  margin-left: 5px; /* Separación del input hacia la izquierda */
+}
+
+/* Efecto visual cuando la caja de búsqueda está enfocada */
+.search-box:focus-within {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2); /* Sombra más marcada al enfocar */
+  border-color: #1E88E5; /* Cambia el color del borde a azul */
+}
+
+/* =============================================
+   ESTILOS DEL FOOTER - Pie de página institucional
+   ============================================= */
+footer {
+  background-color: #212121; /* Fondo gris oscuro */
+  color: white; /* Texto en color blanco */
+  padding: 20px; /* Espaciado interno */
+  text-align: center; /* Contenido centrado */
+  border-top-left-radius: 12px; /* Esquinas superiores redondeadas */
+  border-top-right-radius: 12px;
+  box-shadow: 0 -3px 8px rgba(0,0,0,0.2); /* Sombra superior para efecto de elevación */
+  margin-top: 30px; /* Espacio superior para separación del contenido */
+}
+
+/* Contenedor principal del footer */
+.footer-container {
+  max-width: 1000px; /* Ancho máximo para centrar el contenido */
+  margin: 0 auto; /* Centrado automático horizontal */
+  display: flex; /* Flexbox para organización */
+  flex-direction: column; /* Elementos en columna (uno debajo de otro) */
+  align-items: center; /* Centrados horizontalmente */
+  gap: 10px; /* Espacio entre elementos */
+}
+
+/* Párrafos de información en el footer */
+.footer-container p {
+  margin: 5px 0; /* Margen vertical pequeño entre párrafos */
+  font-size: 0.9em; /* Tamaño de fuente pequeño */
+}
+
+/* Contenedor de redes sociales */
+.redes-sociales {
+  display: flex; /* Íconos en fila horizontal */
+  justify-content: center; /* Centrados horizontalmente */
+  gap: 15px; /* Espacio entre íconos */
+  margin: 10px 0; /* Margen vertical */
+}
+
+/* Iconos individuales de redes sociales */
+.redes-sociales img {
+  width: 25px;  /* Tamaño de los íconos */
+  height: 25px;
+  transition: transform 0.3s ease, filter 0.3s ease; /* Animación al pasar el mouse */
+  cursor: pointer; /* Mano al pasar sobre el ícono */
+}
+
+/* Efecto hover en los íconos de redes sociales */
+.redes-sociales img:hover {
+  transform: scale(1.2); /* Aumenta el tamaño ligeramente */
+  filter: brightness(1.3); /* Aumenta el brillo */
+}
+
+/* =============================================
+   DISEÑO RESPONSIVE - Adaptaciones para diferentes tamaños de pantalla
+   ============================================= */
+
+/* Media query para tablets y pantallas medianas (hasta 768px) */
+@media (max-width: 768px) {
+  /* Ajustes para el contenido principal en tablets */
+  main {
+    margin: 15px; /* Reduce márgenes laterales */
+    padding: 15px; /* Reduce padding interno */
+  }
+  
+  /* Una sola columna para brigadas en tablets */
+  .brigadas-container {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Campos de fecha en columna en tablets */
+  .form-row {
+    flex-direction: column;
+  }
+  
+  /* Miembros en columna en tablets */
+  .miembro-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  /* Selector de brigada ocupa ancho completo */
+  .miembro-item select {
+    width: 100%;
+  }
+  
+  /* Header en columna para tablets */
+  header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px 20px;
+  }
+  
+  /* Menos espacio entre botones de navegación */
+  .dashboard {
+    gap: 10px;
+  }
+  
+  /* Botones más compactos en tablets */
+  .dashboard-btn {
+    padding: 8px 15px;
+    font-size: 0.8em;
+    min-width: 80px;
+  }
+  
+  /* Título más pequeño en tablets */
+  .center-header h1 {
+    font-size: 1.4em;
+    margin-bottom: 15px;
+  }
+  
+  /* Búsqueda centrada en tablets */
+  .search-container {
+    justify-content: center;
+    margin: 15px;
+  }
+  
+  /* Búsqueda ocupa ancho disponible */
+  .search-box {
+    width: 100%;
+    max-width: 400px;
+  }
+}
+
+/* Media query para móviles pequeños (hasta 480px) */
+@media (max-width: 480px) {
+  /* Imagen de usuario más pequeña en móviles */
+  .login-imagen img {
+    width: 50px;
+  }
+  
+  /* Botón de cerrar sesión más compacto */
+  .login-imagen button {
+    font-size: 0.7em;
+    padding: 4px 8px;
+  }
+  
+  /* Logo más pequeño en móviles */
+  .Logo {
+    width: 70px;
+  }
+  
+  /* Botones de acción en columna en móviles */
+  .brigada-actions {
+    flex-direction: column;
+  }
+  
+  /* Botones ocupan ancho completo en móviles */
+  .btn-editar, .btn-asignar {
+    width: 100%;
+  }
+}
