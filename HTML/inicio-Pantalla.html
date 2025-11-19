@@ -1,32 +1,86 @@
 <!DOCTYPE html>
-<!-- Cambié el idioma a español -->
+<!-- 
+  CONFIGURACIÓN DE IDIOMA
+  Propósito: Especificar que el contenido está en español para navegadores y motores de búsqueda
+  Beneficios: Mejora la accesibilidad y el SEO para usuarios hispanohablantes
+-->
 <html lang="es">
 <head>
-    <!-- Cambié el charset a UTF-8 para mejor compatibilidad con caracteres especiales -->
+    <!-- 
+      CONFIGURACIÓN DE CODIFICACIÓN DE CARACTERES
+      Propósito: Asegurar la correcta visualización de caracteres especiales del español (ñ, á, é, í, ó, ú)
+      Estándar: UTF-8 es el estándar universal que soporta todos los caracteres necesarios
+    -->
     <meta charset="UTF-8">
-    <!-- Cambié el valor de initial-scale a 1.0 para mejorar la visualización en dispositivos móviles -->
+    
+    <!-- 
+      CONFIGURACIÓN DE VIEWPORT PARA DISPOSITIVOS MÓVILES
+      Propósito: Optimizar la visualización en diferentes tamaños de pantalla
+      Parámetros:
+        - width=device-width: Adapta el ancho al dispositivo
+        - initial-scale=1.0: Establece el zoom inicial al 100%
+      Beneficio: Mejora la experiencia de usuario en móviles y tablets
+    -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Aca se definio el titulo que tendra la pestaña de la pagina web-->
+    
+    <!-- 
+      TÍTULO DE LA PÁGINA
+      Propósito: Texto que aparece en la pestaña del navegador
+      Importancia: Fundamental para identificación y bookmarking
+    -->
     <title>Proyecto Web IFN</title>
-    <!-- Agregue un enlace a un archivo CSS externo -->
+    
+    <!-- 
+      ENLACE A HOJA DE ESTILOS EXTERNA
+      Propósito: Separar la presentación visual del contenido estructural
+      Ubicación: Archivo CSS en la carpeta ../CSS/
+      Ventaja: Mantenimiento más fácil y carga más eficiente
+    -->
     <link rel="stylesheet" href="../CSS/styles-inicio.css">
 </head>
 
 <body>
-    <!-- Contenido del encabezado -->
+    <!-- 
+      ENCABEZADO PRINCIPAL DEL SITIO
+      Propósito: Contener elementos de identificación y navegación principal
+      Estructura: Logo, título del sistema, menú de navegación y información de usuario
+    -->
     <header>
-        <!-- puse el logo de IFN en el encabezado, ademas de crear una clase Logo para llamarlo en el css -->
-        <!-- Define el encabezado del sitio, donde normalmente va el logo, título y accesos de usuario. -->
-        <img class="Logo" src ="../IMG/ifn-baja-tcm30-525131.png" alt="Logo IFN" width="150">
+        <!-- 
+          LOGO INSTITUCIONAL DEL IFN
+          Propósito: Identificación visual de la institución
+          Atributos:
+            - class: "Logo" para aplicar estilos específicos en CSS
+            - src: Ruta relativa a la imagen del logo
+            - alt: Texto alternativo para accesibilidad (lectores de pantalla)
+            - width: Ancho fijo para mantener consistencia visual
+        -->
+        <img class="Logo" src="../IMG/ifn-baja-tcm30-525131.png" alt="Logo IFN" width="150">
         
-        <!-- Contenedor centrado para título + dashboard -->
+        <!-- 
+          CONTENEDOR CENTRADO PARA TÍTULO Y DASHBOARD
+          Propósito: Agrupar y centrar los elementos principales del header
+          Diseño: Proporciona estructura visual organizada
+        -->
         <div class="center-header">
-            <!-- Título principal de la página (etiqueta H1)-->
+            <!-- 
+              TÍTULO PRINCIPAL DEL SISTEMA (ETIQUETA H1)
+              Propósito: Identificar claramente la aplicación y su propósito
+              Importancia SEO: Es el título más importante de la página
+            -->
             <h1>SISTEMA DE IDENTIFICACION DE ESPECIES</h1>
 
-            <!-- Dashboard donde se agrupan las acciones principales del encabezado -->
+            <!-- 
+              DASHBOARD DE NAVEGACIÓN PRINCIPAL
+              Propósito: Agrupar las acciones principales del sistema
+              Característica: Enlaces con clase "dashboard-btn" para estilos consistentes
+            -->
             <div class="dashboard">
-                <!-- Boton de Subir Árbol movera de la pantalla de inicio a subirArbol.html y demás -->
+                <!-- 
+                  BOTONES DE NAVEGACIÓN PRINCIPAL
+                  Propósito: Permitir acceso rápido a los diferentes módulos del sistema
+                  Estructura: Enlaces que redirigen a sus respectivas páginas HTML
+                -->
                 <a href="subirArbol.html" class="dashboard-btn">Subir Árbol</a> 
                 <a href="subirSuelo.html" class="dashboard-btn">Subir Suelo</a> 
                 <a href="registro.html" class="dashboard-btn">Registro</a>
@@ -36,84 +90,221 @@
             </div>
         </div>
 
-        <!-- Agregue un contenedor para el logo y el texto de bienvenida del usuario -->
+        <!-- 
+          CONTENEDOR DE INFORMACIÓN DEL USUARIO
+          Propósito: Mostrar información del usuario logueado y opciones de cuenta
+          Componentes: Nombre de usuario, avatar y botón de cierre de sesión
+        -->
         <div class="login-imagen">
-            <!-- Texto de bienvenida en una clase llamada texto-arriba -->
+            <!-- 
+              TEXTO DE BIENVENIDA DEL USUARIO
+              Propósito: Mostrar el nombre del usuario actualmente logueado
+              Clase: "texto-arriba" para estilos específicos de posición
+              Comportamiento: Se actualiza dinámicamente con JavaScript
+            -->
             <p class="texto-arriba">User</p>
-            <!-- Imagen de ícono de usuario/login -->
+            
+            <!-- 
+              IMAGEN DE ÍCONO DE USUARIO/LOGIN
+              Propósito: Representar visualmente al usuario (avatar/icono)
+              Atributos:
+                - class: "Login" para estilos específicos
+                - src: Ruta a la imagen de perfil por defecto
+                - alt: Texto descriptivo para accesibilidad
+                - width: Tamaño consistente con el diseño
+            -->
             <img class="Login" src="../IMG/login.png" alt="Login User" width="150">
-            <!-- Botón para cerrar sesión en clase texto-abajo -->
+            
+            <!-- 
+              BOTÓN PARA CERRAR SESIÓN
+              Propósito: Permitir al usuario finalizar su sesión de forma segura
+              Clase: "texto-abajo" para estilos de posición
+              Funcionalidad: Se maneja mediante event listener en JavaScript
+            -->
             <button class="texto-abajo">Cerrar sesión</button>
         </div>
     </header>
-     <!-- Contenedor principal de la barra de búsqueda -->
+    
+    <!-- 
+      CONTENEDOR PRINCIPAL DE LA BARRA DE BÚSQUEDA
+      Propósito: Proporcionar funcionalidad de búsqueda en todo el sistema
+      Ubicación: Estratégicamente colocada debajo del header para fácil acceso
+    -->
     <div class="search-container">
-    <!-- Caja que contiene el input de búsqueda y el icono -->
-    <div class="search-box"> 
-        <!-- Campo de texto donde el usuario escribe su búsqueda -->
-        <input type="text" placeholder="Buscar...">
-        <!-- Icono de lupa que representa la acción de buscar -->
-        <span class="search-icon">🔍</span>
+        <!-- 
+          CAJA QUE CONTIENE EL INPUT DE BÚSQUEDA Y EL ICONO
+          Propósito: Interface unificada para búsquedas en el sistema
+          Diseño: Combinación de campo de texto e icono visual
+        -->
+        <div class="search-box"> 
+            <!-- 
+              CAMPO DE TEXTO PARA BÚSQUEDA
+              Propósito: Permitir al usuario ingresar términos de búsqueda
+              Atributos:
+                - type="text": Campo de texto estándar
+                - placeholder: Texto guía que desaparece al escribir
+              Funcionalidad: Búsqueda en tiempo real mediante JavaScript
+            -->
+            <input type="text" placeholder="Buscar...">
+            
+            <!-- 
+              ICONO DE LUPA PARA BÚSQUEDA
+              Propósito: Representar visualmente la acción de buscar
+              Característica: Elemento span con emoji como icono temporal
+              Comportamiento: Clickable para activar búsqueda
+            -->
+            <span class="search-icon">🔍</span>
+        </div>
     </div>
-</div>
 
+    <!-- 
+      CONTENIDO PRINCIPAL DE LA PÁGINA
+      Propósito: Albergar el contenido central y más importante de la página
+      Estructura: Títulos, descripción, accesos directos y tarjetas informativas
+    -->
     <main>
-        <!-- Contenido principal aquí -->
+        <!-- 
+          TÍTULO PRINCIPAL DEL PANEL
+          Propósito: Identificar esta sección como el panel de control principal
+          Jerarquía: H1 ya usado en header, por lo que se usa H2 para subtítulo
+        -->
         <h1>Panel de Control</h1>
+        
+        <!-- 
+          MENSAJE DE BIENVENIDA
+          Propósito: Dar la bienvenida al usuario y contextualizar la página
+          Jerarquía: H2 como subtítulo del panel de control
+        -->
         <h2>Bienvenido al Sistema de Identificación de Especies</h2>
         
-        <!-- Descripción de la función del software -->
+        <!-- 
+          DESCRIPCIÓN DE LA FUNCIÓN DEL SOFTWARE
+          Propósito: Explicar claramente el propósito y beneficios del sistema
+          Clase: "descripcion" para estilos específicos de texto explicativo
+          Contenido: Información valiosa para nuevos usuarios
+        -->
         <p class="descripcion">
             Este software permite a las brigadas del Inventario Forestal Nacional identificar y registrar especies vegetales a partir de fotografías. 
             Facilita el trabajo en campo, reduce errores en la clasificación y centraliza la información para un análisis más rápido y seguro.
         </p>
         
-        <!-- Accesos directos a funciones principales del software -->
+        <!-- 
+          ACCESOS DIRECTOS A FUNCIONES PRINCIPALES
+          Propósito: Proporcionar acceso rápido a las funcionalidades más usadas
+          Característica: Se adapta dinámicamente según el rol del usuario
+          Diseño: Botones prominentes para acciones principales
+        -->
         <div class="accesos-directos">
+            <!-- 
+              BOTONES DE ACCESO DIRECTO - VERSIÓN BASE
+              Propósito: Enlaces rápidos a funcionalidades frecuentes
+              Nota: Se actualizan dinámicamente según el rol del usuario
+            -->
             <a href="subirArbol.html" class="acceso-btn">Subir Arbol</a>
             <a href="subirSuelo.html" class="acceso-btn">Subir Suelo</a>
         </div>
-        <!-- Cuadros de información importantes -->
+        
+        <!-- 
+          CUADROS DE INFORMACIÓN IMPORTANTES (CARDS)
+          Propósito: Mostrar métricas clave del sistema de forma visual
+          Diseño: Grid de tarjetas con información resumida
+          Utilidad: Dashboard visual para estado del sistema
+        -->
         <div class="info-cards">
+            <!-- 
+              TARJETA INFORMATIVA - MUESTRAS
+              Propósito: Mostrar el total de muestras registradas
+              Estructura: Título + valor numérico
+            -->
             <div class="card">
                 <h3>Muestras</h3>
                 <p class="card-value">152 registradas</p>
+            </div>
+            
+            <!-- 
+              TARJETA INFORMATIVA - ESPECIES
+              Propósito: Mostrar el total de especies identificadas
+            -->
+            <div class="card">
+                <h3>Especies</h3>
+                <p class="card-value">28 registradas</p>
+            </div>
+            
+            <!-- 
+              TARJETA INFORMATIVA - UBICACIONES
+              Propósito: Mostrar la diversidad geográfica de los registros
+            -->
+            <div class="card">
+                <h3>Ubicaciones</h3>
+                <p class="card-value">12 distintas</p>
+            </div>
         </div>
-        <div class="card">
-            <h3>Especies</h3>
-            <p class="card-value">28 registradas</p>
-        </div>
-        <div class="card">
-            <h3>Ubicaciones</h3>
-            <p class="card-value">12 distintas</p>
-        </div>
-</div>
     </main>
     
+    <!-- 
+      PIE DE PÁGINA INSTITUCIONAL
+      Propósito: Proporcionar información de contacto y enlaces institucionales
+      Contenido: Dirección, contacto, redes sociales y derechos de autor
+    -->
     <footer>
         <div class="footer-container">
-            <!-- Dirección institucional -->
+            <!-- 
+              DIRECCIÓN INSTITUCIONAL
+              Propósito: Información de ubicación física del IFN
+              Icono: 📍 para identificación visual rápida
+            -->
             <p>📍 Dirección: Calle 25 D No. 110911, Colombia</p>
 
-            <!-- Información de contacto -->
+            <!-- 
+              INFORMACIÓN DE CONTACTO
+              Propósito: Múltiples vías de contacto para usuarios
+              Formatos: Correo electrónico y teléfono con iconos representativos
+            -->
             <p>📧 Correo: contacto@ideam.gov.co | ☎ Tel: +57 (601) 4442060</p>
 
-            <!-- Redes sociales con iconos -->
+            <!-- 
+              REDES SOCIALES CON ICONOS
+              Propósito: Enlaces a las redes sociales oficiales del IFN
+              Diseño: Disposición horizontal de iconos clickeables
+            -->
             <div class="redes-sociales">
-                <!-- Enlace a Facebook -->
-                <a href="https://www.facebook.com/ideam.instituto/?locale=es_LA"><img src="../IMG/facebook.png" alt="Facebook"></a>
-                <!-- Enlace a X -->
-                <a href="https://x.com/IDEAMColombia?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><img src="../IMG/twitter.png" alt="X"></a>
-                <!-- Enlace a Instagram -->
-                <a href="https://www.instagram.com/ideamcolombia/?hl=es"><img src="../IMG/instagram.png" alt="Instagram"></a>
-                <!-- Enlace a YouTube -->
-                <a href="https://www.youtube.com/@InstitutoIDEAM"><img src="../IMG/youtube.png" alt="YouTube"></a>
+                <!-- Enlace a Facebook con icono -->
+                <a href="https://www.facebook.com/ideam.instituto/?locale=es_LA">
+                    <img src="../IMG/facebook.png" alt="Facebook">
+                </a>
+                
+                <!-- Enlace a X (Twitter) con icono -->
+                <a href="https://x.com/IDEAMColombia?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">
+                    <img src="../IMG/twitter.png" alt="X">
+                </a>
+                
+                <!-- Enlace a Instagram con icono -->
+                <a href="https://www.instagram.com/ideamcolombia/?hl=es">
+                    <img src="../IMG/instagram.png" alt="Instagram">
+                </a>
+                
+                <!-- Enlace a YouTube con icono -->
+                <a href="https://www.youtube.com/@InstitutoIDEAM">
+                    <img src="../IMG/youtube.png" alt="YouTube">
+                </a>
             </div>
 
-            <!-- Derechos reservados -->
+            <!-- 
+              DERECHOS RESERVADOS
+              Propósito: Información legal de copyright
+              Formato: Año actual + nombre del proyecto + derechos
+            -->
             <p>&copy; 2024 Proyecto Web IFN. Todos los derechos reservados.</p>
         </div>
     </footer>
+    
+    <!-- 
+      INCLUSIÓN DE SCRIPTS JAVASCRIPT
+      Propósito: Añadir funcionalidad interactiva a la página
+      Orden de carga:
+        1. inicio.js - Lógica específica de la página de inicio
+        2. buscador-universal.js - Sistema de búsqueda en todo el sistema
+    -->
     <script src="../JS/inicio.js"></script>
     <script src="../JS/buscador-universal.js"></script>
 </body>

@@ -1,7 +1,27 @@
-// gestionBrigadas.js - Lógica para la gestión de brigadas del IFN
+/**
+ * SISTEMA DE GESTIÓN DE BRIGADAS - INVENTARIO FORESTAL NACIONAL
+ * Archivo: gestionBrigadas.js
+ * Propósito: Lógica completa para la gestión de brigadas, miembros, zonas y tareas del IFN
+ * Funcionalidades principales:
+ *   - CRUD de brigadas (Crear, Leer, Actualizar, Eliminar)
+ *   - Gestión de miembros y asignación a brigadas
+ *   - Administración de zonas de trabajo
+ *   - Asignación y seguimiento de tareas
+ *   - Búsqueda en tiempo real
+ * Autor: Equipo IFN Colombia
+ * Versión: 1.0
+ * Fecha: 2024
+ */
 
 // ===== CÓDIGO DE AUTENTICACIÓN =====
+/**
+ * MANEJADOR DE AUTENTICACIÓN Y AUTORIZACIÓN
+ * Propósito: Verificar sesión de usuario y configurar interfaz según rol
+ * Se ejecuta inmediatamente al cargar la página
+ * Dependencias: sessionStorage para gestión de estado de sesión
+ */
 document.addEventListener("DOMContentLoaded", () => {
+  // Obtener información de sesión del sessionStorage
   const loggedIn = sessionStorage.getItem("loggedIn");
   const username = sessionStorage.getItem("username");
   const userRole = sessionStorage.getItem("userRole");
@@ -9,24 +29,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutBtn = document.querySelector(".texto-abajo");
   const dashboard = document.querySelector(".dashboard");
 
-  // Si no hay sesión activa, redirige al login
+  // Validar existencia de sesión activa
   if (!loggedIn || loggedIn !== "true") {
     alert("Debes iniciar sesión primero.");
     window.location.href = "login.html";
     return;
   }
 
-  // Muestra el nombre del usuario
+  // Actualizar interfaz con información del usuario
   if (userLabel && username) {
     userLabel.textContent = username;
   }
 
-  // Mostrar dashboard según el rol
+  // Configurar dashboard según permisos de rol
   if (dashboard) {
     mostrarDashboardSegunRol(userRole, dashboard);
   }
 
-  // Cerrar sesión
+  // Configurar evento de cierre de sesión
   if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
       sessionStorage.clear();
@@ -38,16 +58,25 @@ document.addEventListener("DOMContentLoaded", () => {
   inicializarAplicacionGestionBrigadas();
 });
 
+/**
+ * CONFIGURA EL DASHBOARD SEGÚN EL ROL DEL USUARIO
+ * @param {string} rol - Rol del usuario (brigadista, encargado, etc.)
+ * @param {HTMLElement} dashboardElement - Elemento del DOM que contiene el dashboard
+ * Propósito: Mostrar solo las opciones de navegación permitidas para cada rol
+ * Seguridad: Limita el acceso a funcionalidades según privilegios
+ */
 function mostrarDashboardSegunRol(rol, dashboardElement) {
   if (rol === 'brigadista') {
+    // Dashboard para brigadistas - solo funcionalidades básicas
     dashboardElement.innerHTML = `
       <a href="subirArbol.html" class="dashboard-btn">Subir Árbol</a> 
       <a href="subirSuelo.html" class="dashboard-btn">Subir Suelo</a> 
       <a href="registro.html" class="dashboard-btn">Registro</a>
     `;
   } else if (rol === 'encargado') {
+    // Dashboard para encargados - funcionalidades de gestión
     dashboardElement.innerHTML = `
-      <a href="inicio-Pantalla.html" class="dashboard-btn">Inico</a>
+      <a href="inicio-Pantalla.html" class="dashboard-btn">Inicio</a>
       <a href="estadisticas.html" class="dashboard-btn">Estadísticas</a>
       <a href="supervision.html" class="dashboard-btn">Supervisión</a>
     `;
@@ -55,19 +84,39 @@ function mostrarDashboardSegunRol(rol, dashboardElement) {
 }
 
 // ===== VARIABLES GLOBALES Y ESTADO =====
+/**
+ * VARIABLES GLOBALES DE LA APLICACIÓN
+ * Propósito: Almacenar el estado completo de la aplicación
+ * Estructura:
+ *   - brigadas: Array de objetos con información de brigadas
+ *   - miembros: Array de objetos con información de miembros
+ *   - tareas: Array de objetos con información de tareas
+ *   - zonas: Array de objetos con información de zonas (futura implementación)
+ */
 let brigadas = [];
 let miembros = [];
 let tareas = [];
 let zonas = [];
 
 // ===== INICIALIZACIÓN DE LA APLICACIÓN =====
+/**
+ * INICIALIZA EL MÓDULO DE GESTIÓN DE BRIGADAS
+ * Propósito: Configurar toda la funcionalidad del módulo
+ * Orden de ejecución:
+ *   1. Cargar datos iniciales
+ *   2. Configurar event listeners
+ *   3. Configurar sistema de búsqueda
+ *   4. Actualizar interfaz inicial
+ */
 function inicializarAplicacionGestionBrigadas() {
     console.log('Inicializando módulo de gestión de brigadas...');
     inicializarAplicacion();
 }
 
 /**
- * Función principal de inicialización
+ * FUNCIÓN PRINCIPAL DE INICIALIZACIÓN
+ * Propósito: Coordinar todas las tareas de inicialización
+ * Flujo secuencial para garantizar dependencias correctas
  */
 function inicializarAplicacion() {
     cargarDatosIniciales();
@@ -77,10 +126,13 @@ function inicializarAplicacion() {
 }
 
 /**
- * Carga los datos iniciales de la aplicación
+ * CARGA LOS DATOS INICIALES DE LA APLICACIÓN
+ * Propósito: Poblar la aplicación con datos de ejemplo para demostración
+ * En producción: Realizaría una llamada AJAX al servidor
+ * Estructura de datos: Objetos con propiedades consistentes para cada entidad
  */
 function cargarDatosIniciales() {
-    // Datos de ejemplo para demostración
+    // Datos de ejemplo para demostración - Brigadas
     brigadas = [
         {
             id: 1,
@@ -111,6 +163,7 @@ function cargarDatosIniciales() {
         }
     ];
 
+    // Datos de ejemplo - Miembros
     miembros = [
         { id: 1, nombre: 'Carlos Rodríguez', brigadaId: 1, rol: 'Líder' },
         { id: 2, nombre: 'Ana Martínez', brigadaId: 2, rol: 'Líder' },
@@ -122,6 +175,7 @@ function cargarDatosIniciales() {
         { id: 8, nombre: 'Sofia Castro', brigadaId: null, rol: 'Sin asignar' }
     ];
 
+    // Datos de ejemplo - Tareas
     tareas = [
         {
             id: 1,
@@ -138,7 +192,9 @@ function cargarDatosIniciales() {
 }
 
 /**
- * Configura todos los event listeners
+ * CONFIGURA TODOS LOS EVENT LISTENERS DE LA APLICACIÓN
+ * Propósito: Establecer manejadores para todas las interacciones del usuario
+ * Estrategia: Combinación de event listeners directos y delegación de eventos
  */
 function configurarEventListeners() {
     // Formulario de asignación de tareas
@@ -155,7 +211,11 @@ function configurarEventListeners() {
     // Configurar fechas mínimas en el formulario de tareas
     configurarFechasFormulario();
 
-    // Delegación de eventos para botones dinámicos
+    // 
+    // DELEGACIÓN DE EVENTOS PARA BOTONES DINÁMICOS
+    // Propósito: Manejar eventos en elementos creados dinámicamente
+    // Ventaja: Funciona incluso para elementos añadidos después de la carga inicial
+    //
     document.addEventListener('click', function(e) {
         // Botones de editar brigada
         if (e.target.classList.contains('btn-editar')) {
@@ -184,17 +244,23 @@ function configurarEventListeners() {
 }
 
 /**
- * Configura el sistema de búsqueda
+ * CONFIGURA EL SISTEMA DE BÚSQUEDA
+ * Propósito: Implementar búsqueda en tiempo real en brigadas y miembros
+ * Características:
+ *   - Búsqueda con debounce nativo (setTimeout)
+ *   - Activación por input y Enter
+ *   - Búsqueda por icono de lupa
  */
 function configurarBusqueda() {
     const searchInput = document.querySelector('.search-box input');
     if (searchInput) {
+        // Búsqueda en tiempo real durante la escritura
         searchInput.addEventListener('input', function(e) {
             const termino = e.target.value.toLowerCase();
             buscarBrigadasYMiembros(termino);
         });
 
-        // Buscar al presionar Enter
+        // Búsqueda al presionar Enter
         searchInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 const termino = e.target.value.toLowerCase();
@@ -202,7 +268,7 @@ function configurarBusqueda() {
             }
         });
 
-        // Buscar al hacer clic en el icono de búsqueda
+        // Búsqueda al hacer clic en el icono de búsqueda
         document.querySelector('.search-icon')?.addEventListener('click', function() {
             const termino = searchInput.value.toLowerCase();
             buscarBrigadasYMiembros(termino);
@@ -211,7 +277,11 @@ function configurarBusqueda() {
 }
 
 /**
- * Configura las fechas en el formulario de tareas
+ * CONFIGURA LAS FECHAS EN EL FORMULARIO DE TAREAS
+ * Propósito: Establecer restricciones y valores por defecto para fechas
+ * Validaciones:
+ *   - Fecha mínima: hoy (no se pueden asignar tareas en el pasado)
+ *   - Fecha fin no puede ser anterior a fecha inicio
  */
 function configurarFechasFormulario() {
     const fechaInicio = document.getElementById('fecha-inicio');
@@ -245,7 +315,10 @@ function configurarFechasFormulario() {
 // ===== GESTIÓN DE BRIGADAS =====
 
 /**
- * Muestra el formulario para crear una nueva brigada
+ * MUESTRA EL FORMULARIO PARA CREAR UNA NUEVA BRIGADA
+ * Propósito: Capturar información básica para crear una nueva brigada
+ * Interfaz: Usa prompts nativos (en producción sería un formulario modal)
+ * Flujo: Nombre → Líder → Zona → Creación
  */
 function mostrarFormularioNuevaBrigada() {
     const nombre = prompt('Nombre de la nueva brigada:');
@@ -257,6 +330,7 @@ function mostrarFormularioNuevaBrigada() {
     const zona = prompt('Zona de trabajo asignada:');
     if (!zona) return;
 
+    // Crear objeto de nueva brigada
     const nuevaBrigada = {
         id: generarIdUnico(),
         nombre: nombre,
@@ -267,7 +341,7 @@ function mostrarFormularioNuevaBrigada() {
         estado: 'activa'
     };
 
-    // Agregar el líder como miembro
+    // Agregar el líder como miembro de la brigada
     const nuevoMiembro = {
         id: generarIdUnico(),
         nombre: lider,
@@ -275,6 +349,7 @@ function mostrarFormularioNuevaBrigada() {
         rol: 'Líder'
     };
 
+    // Actualizar estado de la aplicación
     brigadas.push(nuevaBrigada);
     miembros.push(nuevoMiembro);
 
@@ -284,12 +359,16 @@ function mostrarFormularioNuevaBrigada() {
 }
 
 /**
- * Edita una brigada existente
+ * EDITA UNA BRIGADA EXISTENTE
+ * @param {string} nombreBrigada - Nombre de la brigada a editar
+ * Propósito: Permitir la modificación de los datos de una brigada existente
+ * Campos editables: Nombre, líder y zona de trabajo
  */
 function editarBrigada(nombreBrigada) {
     const brigada = brigadas.find(b => b.nombre === nombreBrigada);
     if (!brigada) return;
 
+    // Solicitar nuevos valores mediante prompts
     const nuevoNombre = prompt('Nuevo nombre de la brigada:', brigada.nombre);
     if (!nuevoNombre) return;
 
@@ -315,14 +394,17 @@ function editarBrigada(nombreBrigada) {
 }
 
 /**
- * Elimina una brigada
+ * ELIMINA UNA BRIGADA
+ * @param {number} idBrigada - ID de la brigada a eliminar
+ * Propósito: Eliminar una brigada y liberar sus miembros
+ * Seguridad: Solicita confirmación antes de proceder
  */
 function eliminarBrigada(idBrigada) {
     const brigada = brigadas.find(b => b.id === idBrigada);
     if (!brigada) return;
 
     if (confirm(`¿Está seguro de que desea eliminar la brigada "${brigada.nombre}"?`)) {
-        // Liberar miembros de la brigada
+        // Liberar miembros de la brigada (reasignar a "Sin asignar")
         miembros.forEach(miembro => {
             if (miembro.brigadaId === idBrigada) {
                 miembro.brigadaId = null;
@@ -330,7 +412,7 @@ function eliminarBrigada(idBrigada) {
             }
         });
 
-        // Eliminar brigada
+        // Eliminar brigada del array
         brigadas = brigadas.filter(b => b.id !== idBrigada);
 
         actualizarInterfaz();
@@ -341,19 +423,23 @@ function eliminarBrigada(idBrigada) {
 // ===== GESTIÓN DE MIEMBROS =====
 
 /**
- * Muestra el formulario para agregar un nuevo miembro
+ * MUESTRA EL FORMULARIO PARA AGREGAR UN NUEVO MIEMBRO
+ * Propósito: Añadir un nuevo miembro al sistema
+ * Validación: Verifica que el miembro no exista previamente
+ * Estado inicial: Miembro creado como "Sin asignar"
  */
 function mostrarFormularioNuevoMiembro() {
     const nombre = prompt('Nombre del nuevo miembro:');
     if (!nombre) return;
 
-    // Verificar si el miembro ya existe
+    // Verificar si el miembro ya existe (evitar duplicados)
     const miembroExistente = miembros.find(m => m.nombre.toLowerCase() === nombre.toLowerCase());
     if (miembroExistente) {
         mostrarMensaje('Este miembro ya existe en el sistema', 'error');
         return;
     }
 
+    // Crear nuevo miembro
     const nuevoMiembro = {
         id: generarIdUnico(),
         nombre: nombre,
@@ -367,7 +453,11 @@ function mostrarFormularioNuevoMiembro() {
 }
 
 /**
- * Actualiza la brigada de un miembro
+ * ACTUALIZA LA BRIGADA DE UN MIEMBRO
+ * @param {string} nombreMiembro - Nombre del miembro a actualizar
+ * @param {string} nombreBrigada - Nombre de la nueva brigada (o "Sin asignar")
+ * Propósito: Reasignar un miembro a una brigada diferente
+ * Lógica: Actualiza brigadaId y rol del miembro
  */
 function actualizarBrigadaMiembro(nombreMiembro, nombreBrigada) {
     const miembro = miembros.find(m => m.nombre === nombreMiembro);
@@ -376,6 +466,7 @@ function actualizarBrigadaMiembro(nombreMiembro, nombreBrigada) {
     let nuevaBrigadaId = null;
     let nuevoRol = 'Sin asignar';
 
+    // Si se selecciona una brigada válida (no "Sin asignar")
     if (nombreBrigada !== 'Sin asignar') {
         const brigada = brigadas.find(b => b.nombre === nombreBrigada);
         if (brigada) {
@@ -396,7 +487,9 @@ function actualizarBrigadaMiembro(nombreMiembro, nombreBrigada) {
 }
 
 /**
- * Recalcula los contadores de miembros por brigada
+ * RECALCULA LOS CONTADORES DE MIEMBROS POR BRIGADA
+ * Propósito: Mantener sincronizado el contador de miembros en cada brigada
+ * Lógica: Cuenta los miembros asignados a cada brigada y actualiza el contador
  */
 function actualizarContadoresMiembros() {
     brigadas.forEach(brigada => {
@@ -408,12 +501,16 @@ function actualizarContadoresMiembros() {
 // ===== GESTIÓN DE ZONAS =====
 
 /**
- * Guarda los cambios en las zonas
+ * GUARDA LOS CAMBIOS EN LAS ZONAS
+ * Propósito: Persistir las descripciones de zonas modificadas por el usuario
+ * Detección de cambios: Solo guarda si realmente hubo modificaciones
+ * Feedback: Mensaje informativo según si hubo cambios o no
  */
 function guardarZonas() {
     const zonasItems = document.querySelectorAll('.zona-item');
     let cambiosRealizados = false;
 
+    // Iterar sobre cada zona y verificar cambios
     zonasItems.forEach(item => {
         const nombreBrigada = item.querySelector('h3').textContent;
         const descripcion = item.querySelector('textarea').value;
@@ -425,6 +522,7 @@ function guardarZonas() {
         }
     });
 
+    // Mostrar mensaje apropiado según si hubo cambios
     if (cambiosRealizados) {
         mostrarMensaje('Cambios en las zonas guardados correctamente', 'success');
     } else {
@@ -435,27 +533,34 @@ function guardarZonas() {
 // ===== GESTIÓN DE TAREAS =====
 
 /**
- * Maneja el envío del formulario de asignación de tareas
+ * MANEJA EL ENVÍO DEL FORMULARIO DE ASIGNACIÓN DE TAREAS
+ * @param {Event} e - Evento de envío del formulario
+ * Propósito: Procesar y validar la creación de una nueva tarea
+ * Flujo: Validación → Creación → Reset → Feedback
  */
 function manejarAsignacionTarea(e) {
     e.preventDefault();
 
+    // Obtener valores del formulario
     const brigadaNombre = document.getElementById('brigada-tarea').value;
     const descripcion = document.getElementById('tarea-descripcion').value;
     const fechaInicio = document.getElementById('fecha-inicio').value;
     const fechaFin = document.getElementById('fecha-fin').value;
     const objetivos = document.getElementById('objetivos').value;
 
+    // Validar fechas antes de proceder
     if (!validarFechasTarea(fechaInicio, fechaFin)) {
         return;
     }
 
+    // Verificar que la brigada existe
     const brigada = brigadas.find(b => b.nombre === brigadaNombre);
     if (!brigada) {
         mostrarMensaje('Brigada no encontrada', 'error');
         return;
     }
 
+    // Crear nueva tarea
     const nuevaTarea = {
         id: generarIdUnico(),
         brigadaId: brigada.id,
@@ -469,14 +574,17 @@ function manejarAsignacionTarea(e) {
 
     tareas.push(nuevaTarea);
     e.target.reset();
-    configurarFechasFormulario(); // Resetear fechas
+    configurarFechasFormulario(); // Resetear fechas a valores por defecto
 
     mostrarMensaje(`Tarea asignada a ${brigadaNombre} exitosamente`, 'success');
     console.log('Nueva tarea asignada:', nuevaTarea);
 }
 
 /**
- * Asigna una tarea rápida desde la tarjeta de brigada
+ * ASIGNA UNA TAREA RÁPIDA DESDE LA TARJETA DE BRIGADA
+ * @param {string} nombreBrigada - Nombre de la brigada a la que asignar la tarea
+ * Propósito: Asignación rápida de tareas sin usar el formulario completo
+ * Características: Fechas automáticas (hoy + 7 días), objetivos genéricos
  */
 function asignarTareaRapida(nombreBrigada) {
     const descripcion = prompt(`Descripción de la tarea para ${nombreBrigada}:`);
@@ -485,6 +593,7 @@ function asignarTareaRapida(nombreBrigada) {
     const brigada = brigadas.find(b => b.nombre === nombreBrigada);
     if (!brigada) return;
 
+    // Crear tarea con valores por defecto
     const nuevaTarea = {
         id: generarIdUnico(),
         brigadaId: brigada.id,
@@ -501,7 +610,14 @@ function asignarTareaRapida(nombreBrigada) {
 }
 
 /**
- * Valida las fechas de una tarea
+ * VALIDA LAS FECHAS DE UNA TAREA
+ * @param {string} fechaInicio - Fecha de inicio en formato YYYY-MM-DD
+ * @param {string} fechaFin - Fecha de fin en formato YYYY-MM-DD
+ * @returns {boolean} True si las fechas son válidas
+ * Propósito: Validar coherencia temporal en las fechas de tareas
+ * Reglas:
+ *   - Fecha inicio no puede ser mayor que fecha fin
+ *   - Fecha inicio no puede ser en el pasado
  */
 function validarFechasTarea(fechaInicio, fechaFin) {
     if (new Date(fechaInicio) > new Date(fechaFin)) {
@@ -520,7 +636,12 @@ function validarFechasTarea(fechaInicio, fechaFin) {
 // ===== BÚSQUEDA =====
 
 /**
- * Busca brigadas y miembros según el término
+ * BUSCA BRIGADAS Y MIEMBROS SEGÚN EL TÉRMINO
+ * @param {string} termino - Término de búsqueda en minúsculas
+ * Propósito: Filtrar y mostrar brigadas y miembros que coincidan con la búsqueda
+ * Campos buscados:
+ *   - Brigadas: nombre, líder, zona
+ *   - Miembros: nombre, rol
  */
 function buscarBrigadasYMiembros(termino) {
     if (!termino) {
@@ -528,14 +649,14 @@ function buscarBrigadasYMiembros(termino) {
         return;
     }
 
-    // Filtrar brigadas
+    // Filtrar brigadas por múltiples campos
     const brigadasFiltradas = brigadas.filter(brigada => 
         brigada.nombre.toLowerCase().includes(termino) ||
         brigada.lider.toLowerCase().includes(termino) ||
         brigada.zona.toLowerCase().includes(termino)
     );
 
-    // Filtrar miembros
+    // Filtrar miembros por múltiples campos
     const miembrosFiltrados = miembros.filter(miembro =>
         miembro.nombre.toLowerCase().includes(termino) ||
         miembro.rol.toLowerCase().includes(termino)
@@ -557,7 +678,9 @@ function buscarBrigadasYMiembros(termino) {
 // ===== ACTUALIZACIÓN DE INTERFAZ =====
 
 /**
- * Actualiza toda la interfaz de usuario
+ * ACTUALIZA TODA LA INTERFAZ DE USUARIO
+ * Propósito: Sincronizar la interfaz visual con el estado actual de los datos
+ * Componentes actualizados: Lista de brigadas, miembros, zonas y select de tareas
  */
 function actualizarInterfaz() {
     actualizarListaBrigadas();
@@ -567,7 +690,9 @@ function actualizarInterfaz() {
 }
 
 /**
- * Actualiza la lista de brigadas
+ * ACTUALIZA LA LISTA DE BRIGADAS
+ * Propósito: Renderizar dinámicamente las tarjetas de brigadas
+ * Características: Incluye botones de acción y estado visual
  */
 function actualizarListaBrigadas() {
     const container = document.querySelector('.brigadas-container');
@@ -593,7 +718,7 @@ function actualizarListaBrigadas() {
         container.appendChild(card);
     });
 
-    // Agregar event listeners para botones de eliminar
+    // Agregar event listeners para botones de eliminar (creados dinámicamente)
     document.querySelectorAll('.btn-eliminar').forEach(btn => {
         btn.addEventListener('click', function() {
             const brigadaId = parseInt(this.getAttribute('data-brigada-id'));
@@ -603,7 +728,9 @@ function actualizarListaBrigadas() {
 }
 
 /**
- * Actualiza la lista de miembros
+ * ACTUALIZA LA LISTA DE MIEMBROS
+ * Propósito: Renderizar dinámicamente la lista de miembros editables
+ * Características: Selectores con estado actual preseleccionado
  */
 function actualizarListaMiembros() {
     const container = document.querySelector('.miembros-container');
@@ -612,6 +739,7 @@ function actualizarListaMiembros() {
     container.innerHTML = '';
 
     miembros.forEach(miembro => {
+        // Generar opciones de brigadas para el selector
         const opcionesBrigadas = brigadas.map(b => 
             `<option value="${b.nombre}" ${miembro.brigadaId === b.id ? 'selected' : ''}>${b.nombre}</option>`
         ).join('');
@@ -630,7 +758,8 @@ function actualizarListaMiembros() {
 }
 
 /**
- * Actualiza las zonas asignadas
+ * ACTUALIZA LAS ZONAS ASIGNADAS
+ * Propósito: Sincronizar las áreas de texto con las descripciones actuales
  */
 function actualizarZonas() {
     const container = document.querySelector('.zonas-container');
@@ -650,7 +779,9 @@ function actualizarZonas() {
 }
 
 /**
- * Actualiza el select de brigadas en el formulario de tareas
+ * ACTUALIZA EL SELECT DE BRIGADAS EN EL FORMULARIO DE TAREAS
+ * Propósito: Mantener actualizada la lista de brigadas en el formulario
+ * Preservación: Intenta mantener la selección actual si sigue existiendo
  */
 function actualizarSelectBrigadas() {
     const select = document.getElementById('brigada-tarea');
@@ -659,7 +790,7 @@ function actualizarSelectBrigadas() {
     // Guardar valor seleccionado actual
     const valorActual = select.value;
 
-    // Limpiar opciones (excepto la primera)
+    // Limpiar opciones (excepto la primera - placeholder)
     while (select.options.length > 1) {
         select.remove(1);
     }
@@ -679,7 +810,10 @@ function actualizarSelectBrigadas() {
 }
 
 /**
- * Actualiza la interfaz con brigadas filtradas
+ * ACTUALIZA LA INTERFAZ CON BRIGADAS FILTRADAS
+ * @param {Array} brigadasFiltradas - Array de brigadas que coinciden con la búsqueda
+ * Propósito: Mostrar solo las brigadas que coinciden con el criterio de búsqueda
+ * Estado vacío: Muestra mensaje cuando no hay resultados
  */
 function actualizarInterfazBrigadasFiltradas(brigadasFiltradas) {
     const container = document.querySelector('.brigadas-container');
@@ -710,7 +844,10 @@ function actualizarInterfazBrigadasFiltradas(brigadasFiltradas) {
 }
 
 /**
- * Actualiza la interfaz con miembros filtrados
+ * ACTUALIZA LA INTERFAZ CON MIEMBROS FILTRADOS
+ * @param {Array} miembrosFiltrados - Array de miembros que coinciden con la búsqueda
+ * Propósito: Mostrar solo los miembros que coinciden con el criterio de búsqueda
+ * Estado vacío: Muestra mensaje cuando no hay resultados
  */
 function actualizarInterfazMiembrosFiltrados(miembrosFiltrados) {
     const container = document.querySelector('.miembros-container');
@@ -744,14 +881,25 @@ function actualizarInterfazMiembrosFiltrados(miembrosFiltrados) {
 // ===== UTILIDADES =====
 
 /**
- * Genera un ID único
+ * GENERA UN ID ÚNICO
+ * @returns {number} ID único basado en timestamp y número aleatorio
+ * Propósito: Generar identificadores únicos para nuevas entidades
+ * Estrategia: Combinación de timestamp actual y número aleatorio
  */
 function generarIdUnico() {
     return Date.now() + Math.floor(Math.random() * 1000);
 }
 
 /**
- * Muestra un mensaje al usuario
+ * MUESTRA UN MENSAJE AL USUARIO
+ * @param {string} mensaje - Texto del mensaje a mostrar
+ * @param {string} tipo - Tipo de mensaje (success, error, warning, info)
+ * Propósito: Sistema unificado de notificaciones al usuario
+ * Características:
+ *   - Toast notifications temporales
+ *   - Colores semánticos según el tipo
+ *   - Animaciones de entrada y salida
+ *   - Auto-eliminación después de 5 segundos
  */
 function mostrarMensaje(mensaje, tipo = 'info') {
     // Eliminar mensajes existentes
@@ -775,7 +923,7 @@ function mostrarMensaje(mensaje, tipo = 'info') {
         max-width: 300px;
     `;
 
-    // Colores según el tipo
+    // Colores según el tipo de mensaje
     const colores = {
         success: '#4CAF50',
         error: '#f44336',
@@ -796,7 +944,10 @@ function mostrarMensaje(mensaje, tipo = 'info') {
 }
 
 /**
- * Agrega estilos CSS dinámicos
+ * AGREGA ESTILOS CSS DINÁMICOS
+ * Propósito: Inyectar estilos específicos necesarios para la funcionalidad
+ * Ventaja: No requiere archivo CSS adicional para estilos específicos de JavaScript
+ * Contenido: Animaciones, estados de brigadas, botones dinámicos
  */
 function agregarEstilosDinamicos() {
     const estilos = `
@@ -868,10 +1019,15 @@ function agregarEstilosDinamicos() {
     document.head.appendChild(styleSheet);
 }
 
-// Inicializar estilos dinámicos
+// Inicializar estilos dinámicos cuando se carga el script
 agregarEstilosDinamicos();
 
-// Exportar funciones para uso global si es necesario
+// ===== INTERFAZ PÚBLICA =====
+/**
+ * INTERFAZ PÚBLICA DEL MÓDULO DE GESTIÓN DE BRIGADAS
+ * Propósito: Exponer funciones y datos principales para uso externo
+ * Ventaja: Permite integración con otros módulos y debugging
+ */
 window.GestionBrigadas = {
     brigadas,
     miembros,
@@ -881,4 +1037,5 @@ window.GestionBrigadas = {
     mostrarFormularioNuevoMiembro
 };
 
+// Mensaje de confirmación de carga
 console.log('Módulo de gestión de brigadas cargado correctamente');
