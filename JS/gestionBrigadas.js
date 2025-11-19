@@ -1,5 +1,59 @@
 // gestionBrigadas.js - Lógica para la gestión de brigadas del IFN
 
+// ===== CÓDIGO DE AUTENTICACIÓN =====
+document.addEventListener("DOMContentLoaded", () => {
+  const loggedIn = sessionStorage.getItem("loggedIn");
+  const username = sessionStorage.getItem("username");
+  const userRole = sessionStorage.getItem("userRole");
+  const userLabel = document.querySelector(".texto-arriba");
+  const logoutBtn = document.querySelector(".texto-abajo");
+  const dashboard = document.querySelector(".dashboard");
+
+  // Si no hay sesión activa, redirige al login
+  if (!loggedIn || loggedIn !== "true") {
+    alert("Debes iniciar sesión primero.");
+    window.location.href = "login.html";
+    return;
+  }
+
+  // Muestra el nombre del usuario
+  if (userLabel && username) {
+    userLabel.textContent = username;
+  }
+
+  // Mostrar dashboard según el rol
+  if (dashboard) {
+    mostrarDashboardSegunRol(userRole, dashboard);
+  }
+
+  // Cerrar sesión
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      sessionStorage.clear();
+      window.location.href = "login.html";
+    });
+  }
+
+  // Inicializar la aplicación de gestión de brigadas después de la autenticación
+  inicializarAplicacionGestionBrigadas();
+});
+
+function mostrarDashboardSegunRol(rol, dashboardElement) {
+  if (rol === 'brigadista') {
+    dashboardElement.innerHTML = `
+      <a href="subirArbol.html" class="dashboard-btn">Subir Árbol</a> 
+      <a href="subirSuelo.html" class="dashboard-btn">Subir Suelo</a> 
+      <a href="registro.html" class="dashboard-btn">Registro</a>
+    `;
+  } else if (rol === 'encargado') {
+    dashboardElement.innerHTML = `
+      <a href="inicio-Pantalla.html" class="dashboard-btn">Inico</a>
+      <a href="estadisticas.html" class="dashboard-btn">Estadísticas</a>
+      <a href="supervision.html" class="dashboard-btn">Supervisión</a>
+    `;
+  }
+}
+
 // ===== VARIABLES GLOBALES Y ESTADO =====
 let brigadas = [];
 let miembros = [];
@@ -7,10 +61,10 @@ let tareas = [];
 let zonas = [];
 
 // ===== INICIALIZACIÓN DE LA APLICACIÓN =====
-document.addEventListener('DOMContentLoaded', function() {
+function inicializarAplicacionGestionBrigadas() {
     console.log('Inicializando módulo de gestión de brigadas...');
     inicializarAplicacion();
-});
+}
 
 /**
  * Función principal de inicialización

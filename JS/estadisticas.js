@@ -1,5 +1,59 @@
 // estadisticas.js - Lógica para la generación de reportes del IFN
 
+// ===== CÓDIGO DE AUTENTICACIÓN =====
+document.addEventListener("DOMContentLoaded", () => {
+  const loggedIn = sessionStorage.getItem("loggedIn");
+  const username = sessionStorage.getItem("username");
+  const userRole = sessionStorage.getItem("userRole");
+  const userLabel = document.querySelector(".texto-arriba");
+  const logoutBtn = document.querySelector(".texto-abajo");
+  const dashboard = document.querySelector(".dashboard");
+
+  // Si no hay sesión activa, redirige al login
+  if (!loggedIn || loggedIn !== "true") {
+    alert("Debes iniciar sesión primero.");
+    window.location.href = "login.html";
+    return;
+  }
+
+  // Muestra el nombre del usuario
+  if (userLabel && username) {
+    userLabel.textContent = username;
+  }
+
+  // Mostrar dashboard según el rol
+  if (dashboard) {
+    mostrarDashboardSegunRol(userRole, dashboard);
+  }
+
+  // Cerrar sesión
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      sessionStorage.clear();
+      window.location.href = "login.html";
+    });
+  }
+
+  // Inicializar la aplicación de estadísticas después de la autenticación
+  inicializarAplicacionEstadisticas();
+});
+
+function mostrarDashboardSegunRol(rol, dashboardElement) {
+  if (rol === 'brigadista') {
+    dashboardElement.innerHTML = `
+      <a href="subirArbol.html" class="dashboard-btn">Subir Árbol</a> 
+      <a href="subirSuelo.html" class="dashboard-btn">Subir Suelo</a> 
+      <a href="registro.html" class="dashboard-btn">Registro</a>
+    `;
+  } else if (rol === 'encargado') {
+    dashboardElement.innerHTML = `
+      <a href="inicio-Pantalla.html" class="dashboard-btn">Inicio</a>
+      <a href="gestionBrigadas.html" class="dashboard-btn">Gestión Brigadas</a>
+      <a href="supervision.html" class="dashboard-btn">Supervisión</a>
+    `;
+  }
+}
+
 // ===== DECLARACIÓN DE VARIABLES GLOBALES =====
 let datosGlobales = null;
 let graficoEspeciesInstancia = null;
@@ -7,9 +61,18 @@ let graficoRegistrosInstancia = null;
 let graficoSaludInstancia = null;
 
 // ===== INICIALIZACIÓN DE LA APLICACIÓN =====
-document.addEventListener('DOMContentLoaded', function() {
-    inicializarAplicacion();
-});
+function inicializarAplicacionEstadisticas() {
+    console.log('Inicializando módulo de reportes IFN...');
+    
+    // Configurar event listeners
+    configurarEventListeners();
+    
+    // Cargar datos iniciales
+    cargarDatosIniciales();
+    
+    // Configurar fechas por defecto
+    configurarFechasPorDefecto();
+}
 
 /**
  * Función principal de inicialización de la aplicación

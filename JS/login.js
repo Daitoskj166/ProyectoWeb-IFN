@@ -11,7 +11,7 @@
     "encargado": {
       password: "encargado2025", 
       role: "encargado",
-      name: "Justifico Validerrama",
+      name: "Juanito Validerrama",
       redirect: "inicio-Pantalla.html"
     }
   };
