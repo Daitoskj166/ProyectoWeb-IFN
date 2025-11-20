@@ -1,7 +1,34 @@
-// buscador-universal.js - Sistema de búsqueda universal para todos los paneles
+/**
+ * SISTEMA DE BÚSQUEDA UNIVERSAL - IFN COLOMBIA
+ * 
+ * Este módulo implementa un sistema de búsqueda unificado que funciona en todos los paneles
+ * del sistema. Permite buscar a través de múltiples categorías de datos (brigadas, miembros,
+ * especies, ubicaciones, tareas, registros) con una interfaz consistente y responsive.
+ * 
+ * @file buscador-universal.js
+ * @version 1.0
+ * @author Inventario Forestal Nacional - Colombia
+ * 
+ * @class BuscadorUniversal
+ * @description Clase principal que gestiona todo el sistema de búsqueda universal
+ */
 
 class BuscadorUniversal {
+    /**
+     * Constructor de la clase BuscadorUniversal
+     * Inicializa las propiedades y configuración del buscador
+     */
     constructor() {
+        /**
+         * Almacén de datos para la búsqueda organizado por categorías
+         * @type {Object}
+         * @property {Array} brigadas - Datos de las brigadas del sistema
+         * @property {Array} miembros - Datos de los miembros de brigadas
+         * @property {Array} especies - Datos de especies forestales
+         * @property {Array} ubicaciones - Datos de ubicaciones geográficas
+         * @property {Array} tareas - Datos de tareas y actividades
+         * @property {Array} registros - Datos de registros del sistema
+         */
         this.datos = {
             brigadas: [],
             miembros: [],
@@ -11,22 +38,42 @@ class BuscadorUniversal {
             registros: []
         };
         
+        /**
+         * Estado de inicialización del buscador
+         * @type {boolean}
+         */
         this.inicializado = false;
+        
+        /**
+         * Configuración del comportamiento del buscador
+         * @type {Object}
+         * @property {number} tiempoDebounce - Tiempo en ms para debounce de búsqueda
+         * @property {number} minCaracteres - Mínimo de caracteres para activar búsqueda
+         */
         this.configuracion = {
             tiempoDebounce: 300,
             minCaracteres: 2
         };
         
+        // Inicializar el buscador automáticamente al crear la instancia
         this.init();
     }
 
     /**
-     * Inicializa el buscador universal
+     * INICIALIZACIÓN PRINCIPAL DEL BUSCADOR
+     * Carga datos y configura los eventos de búsqueda en la página
+     * @async
+     * @returns {Promise<void>}
      */
     async init() {
         try {
+            // Cargar datos iniciales para la búsqueda
             await this.cargarDatos();
+            
+            // Configurar eventos y elementos de búsqueda en el DOM
             this.configurarBusqueda();
+            
+            // Marcar como inicializado
             this.inicializado = true;
             console.log('Buscador universal inicializado correctamente');
         } catch (error) {
@@ -35,11 +82,14 @@ class BuscadorUniversal {
     }
 
     /**
-     * Carga los datos necesarios para la búsqueda
+     * CARGA DE DATOS PARA BÚSQUEDA
+     * Simula la carga de datos desde una API o base de datos
+     * En producción, estos datos vendrían de endpoints reales
+     * @async
+     * @returns {Promise<void>}
      */
     async cargarDatos() {
-        // En una implementación real, estos datos vendrían de una API
-        // Por ahora usamos datos de ejemplo
+        // DATOS DE EJEMPLO - En implementación real vendrían de APIs
         this.datos = {
             brigadas: [
                 { 
@@ -101,23 +151,28 @@ class BuscadorUniversal {
     }
 
     /**
-     * Configura el sistema de búsqueda en todos los paneles
+     * CONFIGURACIÓN DEL SISTEMA DE BÚSQUEDA
+     * Busca y configura todos los elementos de búsqueda en la página
+     * @returns {void}
      */
     configurarBusqueda() {
-        // Buscar todos los campos de búsqueda en la página
-        const searchInputs = document.querySelectorAll('input[type="text"][placeholder*="buscar"], input[type="text"][placeholder*="Buscar"]');
+        // BUSCAR CAMPOS DE BÚSQUEDA POR PLACEHOLDER
+        const searchInputs = document.querySelectorAll(
+            'input[type="text"][placeholder*="buscar"], input[type="text"][placeholder*="Buscar"]'
+        );
         
+        // Configurar cada input encontrado
         searchInputs.forEach(input => {
             this.configurarInputBusqueda(input);
         });
 
-        // También buscar por clase específica si existe
+        // BUSCAR CAMPOS DE BÚSQUEDA POR CLASE ESPECÍFICA
         const searchBoxes = document.querySelectorAll('.search-box input');
         searchBoxes.forEach(input => {
             this.configurarInputBusqueda(input);
         });
 
-        // Configurar iconos de búsqueda
+        // CONFIGURAR ICONOS DE BÚSQUEDA
         const searchIcons = document.querySelectorAll('.search-icon, .lupa');
         searchIcons.forEach(icon => {
             icon.addEventListener('click', (e) => {
@@ -133,17 +188,21 @@ class BuscadorUniversal {
     }
 
     /**
-     * Configura un input individual de búsqueda
+     * CONFIGURA UN INPUT INDIVIDUAL DE BÚSQUEDA
+     * Aplica eventos y comportamientos específicos a un campo de búsqueda
+     * @param {HTMLInputElement} input - Elemento input a configurar
+     * @returns {void}
      */
     configurarInputBusqueda(input) {
-        // Evitar configurar múltiples veces el mismo input
+        // EVITAR CONFIGURACIÓN MÚLTIPLE DEL MISMO INPUT
         if (input.hasAttribute('data-buscador-configurado')) {
             return;
         }
 
+        // MARCAR COMO CONFIGURADO
         input.setAttribute('data-buscador-configurado', 'true');
 
-        // Evento de input con debounce
+        // EVENTO DE INPUT CON TÉCNICA DEBOUNCE
         let timeout;
         input.addEventListener('input', (e) => {
             clearTimeout(timeout);
@@ -158,7 +217,7 @@ class BuscadorUniversal {
             }
         });
 
-        // Evento de Enter
+        // EVENTO DE TECLA ENTER PARA BÚSQUEDA INMEDIATA
         input.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 const termino = e.target.value.trim();
@@ -170,15 +229,24 @@ class BuscadorUniversal {
     }
 
     /**
-     * Realiza la búsqueda en todos los datos disponibles
+     * REALIZA LA BÚSQUEDA EN TODOS LOS DATOS DISPONIBLES
+     * Ejecuta la búsqueda across todas las categorías de datos
+     * @param {string} termino - Término de búsqueda ingresado por el usuario
+     * @returns {void}
      */
     realizarBusqueda(termino) {
+        // VERIFICAR INICIALIZACIÓN
         if (!this.inicializado) {
             console.warn('Buscador no inicializado');
             return;
         }
 
         const terminoLower = termino.toLowerCase();
+        
+        /**
+         * Objeto para almacenar resultados organizados por categoría
+         * @type {Object}
+         */
         const resultados = {
             brigadas: [],
             miembros: [],
@@ -188,76 +256,86 @@ class BuscadorUniversal {
             registros: []
         };
 
-        // Buscar en brigadas
+        // BÚSQUEDA EN BRIGADAS
         resultados.brigadas = this.datos.brigadas.filter(brigada =>
             brigada.nombre.toLowerCase().includes(terminoLower) ||
             brigada.lider.toLowerCase().includes(terminoLower) ||
             brigada.zona.toLowerCase().includes(terminoLower)
         );
 
-        // Buscar en miembros
+        // BÚSQUEDA EN MIEMBROS
         resultados.miembros = this.datos.miembros.filter(miembro =>
             miembro.nombre.toLowerCase().includes(terminoLower) ||
             miembro.brigada.toLowerCase().includes(terminoLower) ||
             miembro.rol.toLowerCase().includes(terminoLower)
         );
 
-        // Buscar en especies
+        // BÚSQUEDA EN ESPECIES
         resultados.especies = this.datos.especies.filter(especie =>
             especie.nombre.toLowerCase().includes(terminoLower) ||
             (especie.nombreCientifico && especie.nombreCientifico.toLowerCase().includes(terminoLower)) ||
             especie.ubicacion.toLowerCase().includes(terminoLower)
         );
 
-        // Buscar en tareas
+        // BÚSQUEDA EN TAREAS
         resultados.tareas = this.datos.tareas.filter(tarea =>
             tarea.descripcion.toLowerCase().includes(terminoLower) ||
             tarea.brigada.toLowerCase().includes(terminoLower)
         );
 
+        // MOSTRAR RESULTADOS AL USUARIO
         this.mostrarResultados(resultados, termino);
     }
 
     /**
-     * Muestra los resultados de la búsqueda
+     * MUESTRA LOS RESULTADOS DE BÚSQUEDA EN LA INTERFAZ
+     * @param {Object} resultados - Resultados organizados por categoría
+     * @param {string} termino - Término original de búsqueda
+     * @returns {void}
      */
     mostrarResultados(resultados, termino) {
-        // Primero, limpiar resultados anteriores
+        // LIMPIAR RESULTADOS ANTERIORES
         this.limpiarResultados();
 
+        // CALCULAR TOTAL DE RESULTADOS
         const totalResultados = Object.values(resultados).reduce((total, categoria) => total + categoria.length, 0);
         
+        // MANEJAR CASO SIN RESULTADOS
         if (totalResultados === 0) {
             this.mostrarSinResultados(termino);
             return;
         }
 
-        // Crear contenedor de resultados
+        // CREAR INTERFAZ DE RESULTADOS
         const resultadosContainer = this.crearContenedorResultados();
         
-        // Agregar resultados por categoría
+        // AGREGAR RESULTADOS POR CATEGORÍA
         Object.keys(resultados).forEach(categoria => {
             if (resultados[categoria].length > 0) {
                 this.agregarCategoriaResultados(resultadosContainer, categoria, resultados[categoria]);
             }
         });
 
+        // MOSTRAR RESUMEN DE BÚSQUEDA
         this.mostrarMensaje(`Se encontraron ${totalResultados} resultados para "${termino}"`, 'info');
     }
 
     /**
-     * Crea el contenedor para mostrar los resultados
+     * CREA EL CONTENEDOR PARA MOSTRAR RESULTADOS
+     * @returns {HTMLDivElement} Contenedor de resultados creado
      */
     crearContenedorResultados() {
-        // Eliminar contenedor anterior si existe
+        // ELIMINAR CONTENEDOR ANTERIOR SI EXISTE
         const contenedorAnterior = document.getElementById('resultados-busqueda-universal');
         if (contenedorAnterior) {
             contenedorAnterior.remove();
         }
 
-        // Crear nuevo contenedor
+        // CREAR NUEVO CONTENEDOR
         const contenedor = document.createElement('div');
         contenedor.id = 'resultados-busqueda-universal';
+        
+        // ESTILOS DEL CONTENEDOR
         contenedor.style.cssText = `
             position: absolute;
             top: 100%;
@@ -273,7 +351,7 @@ class BuscadorUniversal {
             margin-top: 5px;
         `;
 
-        // Insertar después del primer search-box encontrado
+        // INSERTAR EN EL DOM
         const primerSearchBox = document.querySelector('.search-box');
         if (primerSearchBox) {
             primerSearchBox.style.position = 'relative';
@@ -286,9 +364,14 @@ class BuscadorUniversal {
     }
 
     /**
-     * Agrega una categoría de resultados al contenedor
+     * AGREGA UNA CATEGORÍA DE RESULTADOS AL CONTENEDOR
+     * @param {HTMLDivElement} contenedor - Contenedor principal de resultados
+     * @param {string} categoria - Nombre de la categoría (brigadas, miembros, etc.)
+     * @param {Array} items - Array de items de la categoría
+     * @returns {void}
      */
     agregarCategoriaResultados(contenedor, categoria, items) {
+        // CREAR TÍTULO DE CATEGORÍA
         const tituloCategoria = document.createElement('div');
         tituloCategoria.style.cssText = `
             padding: 10px 15px;
@@ -300,6 +383,7 @@ class BuscadorUniversal {
         tituloCategoria.textContent = this.formatearTituloCategoria(categoria) + ` (${items.length})`;
         contenedor.appendChild(tituloCategoria);
 
+        // AGREGAR ITEMS DE LA CATEGORÍA
         items.forEach(item => {
             const elementoResultado = this.crearElementoResultado(item);
             contenedor.appendChild(elementoResultado);
@@ -307,9 +391,15 @@ class BuscadorUniversal {
     }
 
     /**
-     * Formatea el título de la categoría para mostrar
+     * FORMATEA EL TÍTULO DE CATEGORÍA PARA MOSTRAR
+     * @param {string} categoria - Nombre técnico de la categoría
+     * @returns {string} Título formateado para mostrar
      */
     formatearTituloCategoria(categoria) {
+        /**
+         * Mapeo de nombres técnicos a nombres amigables
+         * @type {Object}
+         */
         const titulos = {
             brigadas: 'Brigadas',
             miembros: 'Miembros',
@@ -322,10 +412,14 @@ class BuscadorUniversal {
     }
 
     /**
-     * Crea un elemento individual de resultado
+     * CREA UN ELEMENTO INDIVIDUAL DE RESULTADO
+     * @param {Object} item - Item de resultado a mostrar
+     * @returns {HTMLDivElement} Elemento de resultado creado
      */
     crearElementoResultado(item) {
         const elemento = document.createElement('div');
+        
+        // ESTILOS BASE DEL ELEMENTO
         elemento.style.cssText = `
             padding: 12px 15px;
             border-bottom: 1px solid #eee;
@@ -333,12 +427,15 @@ class BuscadorUniversal {
             transition: background-color 0.2s;
         `;
 
+        // GENERAR CONTENIDO HTML SEGÚN EL TIPO DE ITEM
         elemento.innerHTML = this.generarHTMLResultado(item);
         
+        // EVENTO CLICK PARA SELECCIÓN
         elemento.addEventListener('click', () => {
             this.seleccionarResultado(item);
         });
 
+        // EFECTOS HOVER PARA MEJOR UX
         elemento.addEventListener('mouseenter', () => {
             elemento.style.backgroundColor = '#f8f9fa';
         });
@@ -351,9 +448,12 @@ class BuscadorUniversal {
     }
 
     /**
-     * Genera el HTML para un resultado individual
+     * GENERA EL HTML PARA UN RESULTADO INDIVIDUAL
+     * @param {Object} item - Item del que generar el HTML
+     * @returns {string} HTML generado para el resultado
      */
     generarHTMLResultado(item) {
+        // GENERAR HTML ESPECÍFICO SEGÚN EL TIPO DE ITEM
         switch (item.tipo) {
             case 'brigada':
                 return `
@@ -388,6 +488,7 @@ class BuscadorUniversal {
                 `;
             
             default:
+                // FALLBACK PARA TIPOS NO ESPECIFICADOS
                 return `
                     <div style="font-weight: bold;">${item.nombre || item.descripcion}</div>
                     <div style="font-size: 0.9em; color: #666;">
@@ -398,14 +499,14 @@ class BuscadorUniversal {
     }
 
     /**
-     * Maneja la selección de un resultado
+     * MANEJA LA SELECCIÓN DE UN RESULTADO
+     * @param {Object} item - Item seleccionado por el usuario
+     * @returns {void}
      */
     seleccionarResultado(item) {
         console.log('Resultado seleccionado:', item);
         
-        // Aquí defines qué hacer cuando se selecciona un resultado
-        // Por ejemplo, redirigir a la página correspondiente o mostrar detalles
-        
+        // REDIRIGIR O MOSTRAR DETALLES SEGÚN EL TIPO DE ITEM
         switch (item.tipo) {
             case 'brigada':
                 this.mostrarDetallesBrigada(item);
@@ -424,17 +525,22 @@ class BuscadorUniversal {
                 break;
         }
 
+        // LIMPIAR INTERFAZ DESPUÉS DE LA SELECCIÓN
         this.limpiarResultados();
         
-        // Limpiar el campo de búsqueda
-        const searchInputs = document.querySelectorAll('input[type="text"][placeholder*="buscar"], input[type="text"][placeholder*="Buscar"]');
+        // LIMPIAR CAMPOS DE BÚSQUEDA
+        const searchInputs = document.querySelectorAll(
+            'input[type="text"][placeholder*="buscar"], input[type="text"][placeholder*="Buscar"]'
+        );
         searchInputs.forEach(input => {
             input.value = '';
         });
     }
 
     /**
-     * Muestra mensaje cuando no hay resultados
+     * MUESTRA MENSAJE CUANDO NO HAY RESULTADOS
+     * @param {string} termino - Término de búsqueda que no produjo resultados
+     * @returns {void}
      */
     mostrarSinResultados(termino) {
         this.mostrarMensaje(`No se encontraron resultados para "${termino}"`, 'warning');
@@ -442,7 +548,8 @@ class BuscadorUniversal {
     }
 
     /**
-     * Limpia los resultados de búsqueda
+     * LIMPIA LOS RESULTADOS DE BÚSQUEDA DE LA INTERFAZ
+     * @returns {void}
      */
     limpiarResultados() {
         const contenedor = document.getElementById('resultados-busqueda-universal');
@@ -452,17 +559,22 @@ class BuscadorUniversal {
     }
 
     /**
-     * Muestra un mensaje al usuario
+     * MUESTRA UN MENSAJE AL USUARIO
+     * @param {string} mensaje - Texto del mensaje a mostrar
+     * @param {string} tipo - Tipo de mensaje (success, error, warning, info)
+     * @returns {void}
      */
     mostrarMensaje(mensaje, tipo = 'info') {
-        // Eliminar mensajes existentes
+        // ELIMINAR MENSAJES EXISTENTES
         const mensajesExistentes = document.querySelectorAll('.mensaje-busqueda-universal');
         mensajesExistentes.forEach(msg => msg.remove());
 
-        // Crear nuevo mensaje
+        // CREAR NUEVO ELEMENTO DE MENSAJE
         const mensajeElement = document.createElement('div');
         mensajeElement.className = `mensaje-busqueda-universal mensaje-${tipo}`;
         mensajeElement.textContent = mensaje;
+        
+        // ESTILOS DEL MENSAJE
         mensajeElement.style.cssText = `
             position: fixed;
             top: 20px;
@@ -477,7 +589,7 @@ class BuscadorUniversal {
             font-size: 0.9em;
         `;
 
-        // Colores según el tipo
+        // COLORES SEGÚN EL TIPO DE MENSAJE
         const colores = {
             success: '#4CAF50',
             error: '#f44336',
@@ -486,9 +598,10 @@ class BuscadorUniversal {
         };
         mensajeElement.style.backgroundColor = colores[tipo] || colores.info;
 
+        // AGREGAR AL DOM
         document.body.appendChild(mensajeElement);
 
-        // Auto-eliminar después de 3 segundos
+        // AUTO-ELIMINAR DESPUÉS DE 3 SEGUNDOS
         setTimeout(() => {
             if (mensajeElement.parentNode) {
                 mensajeElement.style.animation = 'slideOutRight 0.3s ease';
@@ -497,33 +610,59 @@ class BuscadorUniversal {
         }, 3000);
     }
 
-    // Métodos para manejar la selección de resultados (personalizar según necesidades)
+    // =============================================
+    // MÉTODOS PARA MANEJAR LA SELECCIÓN DE RESULTADOS
+    // =============================================
+
+    /**
+     * MANEJA LA SELECCIÓN DE UNA BRIGADA
+     * @param {Object} brigada - Brigada seleccionada
+     * @returns {void}
+     */
     mostrarDetallesBrigada(brigada) {
-        // Implementar según la lógica de tu aplicación
+        // IMPLEMENTAR SEGÚN LA LÓGICA DE LA APLICACIÓN
         console.log('Mostrando detalles de brigada:', brigada);
         this.mostrarMensaje(`Redirigiendo a detalles de ${brigada.nombre}`, 'success');
     }
 
+    /**
+     * MANEJA LA SELECCIÓN DE UN MIEMBRO
+     * @param {Object} miembro - Miembro seleccionado
+     * @returns {void}
+     */
     mostrarDetallesMiembro(miembro) {
-        // Implementar según la lógica de tu aplicación
+        // IMPLEMENTAR SEGÚN LA LÓGICA DE LA APLICACIÓN
         console.log('Mostrando detalles de miembro:', miembro);
         this.mostrarMensaje(`Redirigiendo a perfil de ${miembro.nombre}`, 'success');
     }
 
+    /**
+     * MANEJA LA SELECCIÓN DE UNA ESPECIE
+     * @param {Object} especie - Especie seleccionada
+     * @returns {void}
+     */
     mostrarDetallesEspecie(especie) {
-        // Implementar según la lógica de tu aplicación
+        // IMPLEMENTAR SEGÚN LA LÓGICA DE LA APLICACIÓN
         console.log('Mostrando detalles de especie:', especie);
         this.mostrarMensaje(`Redirigiendo a información de ${especie.nombre}`, 'success');
     }
 
+    /**
+     * MANEJA LA SELECCIÓN DE UNA TAREA
+     * @param {Object} tarea - Tarea seleccionada
+     * @returns {void}
+     */
     mostrarDetallesTarea(tarea) {
-        // Implementar según la lógica de tu aplicación
+        // IMPLEMENTAR SEGÚN LA LÓGICA DE LA APLICACIÓN
         console.log('Mostrando detalles de tarea:', tarea);
         this.mostrarMensaje(`Redirigiendo a detalles de tarea`, 'success');
     }
 
     /**
-     * Agrega datos adicionales para búsqueda
+     * AGREGA DATOS ADICIONALES PARA BÚSQUEDA
+     * @param {string} categoria - Categoría a la que agregar datos
+     * @param {Array} datos - Array de datos a agregar
+     * @returns {void}
      */
     agregarDatos(categoria, datos) {
         if (this.datos[categoria]) {
@@ -534,7 +673,8 @@ class BuscadorUniversal {
     }
 
     /**
-     * Limpia todos los datos de búsqueda
+     * LIMPIA TODOS LOS DATOS DE BÚSQUEDA
+     * @returns {void}
      */
     limpiarDatos() {
         this.datos = {
@@ -548,12 +688,26 @@ class BuscadorUniversal {
     }
 }
 
-// Inicializar el buscador cuando se carga la página
+// =============================================
+// INICIALIZACIÓN GLOBAL DEL BUSCADOR
+// =============================================
+
+/**
+ * Inicializa el buscador universal cuando se carga la página
+ * Crea una instancia global accesible desde la consola del navegador
+ */
 document.addEventListener('DOMContentLoaded', function() {
     window.buscadorUniversal = new BuscadorUniversal();
 });
 
-// Agregar estilos CSS dinámicos para el buscador
+// =============================================
+// ESTILOS CSS DINÁMICOS PARA EL BUSCADOR
+// =============================================
+
+/**
+ * Estilos CSS inyectados para el funcionamiento del buscador
+ * @type {string}
+ */
 const estilosBuscador = `
     @keyframes slideInRight {
         from { transform: translateX(100%); opacity: 0; }
@@ -588,7 +742,7 @@ const estilosBuscador = `
     }
 `;
 
-// Injectar estilos
+// INYECTAR ESTILOS EN EL HEAD DEL DOCUMENTO
 const styleSheet = document.createElement('style');
 styleSheet.textContent = estilosBuscador;
 document.head.appendChild(styleSheet);
