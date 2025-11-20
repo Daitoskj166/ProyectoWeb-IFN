@@ -4,20 +4,49 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Supervisión de Datos - IFN</title>
-  <!-- Enlace al archivo CSS específico para supervisión de datos -->
+  <!-- 
+    ENLACE A HOJA DE ESTILOS ESPECÍFICA PARA SUPERVISIÓN
+    Archivo: styles-supervision.css
+    Ubicación: ../CSS/styles-supervision.css
+    Propósito: Define los estilos visuales específicos para la página de supervisión de datos
+  -->
   <link rel="stylesheet" href="../CSS/styles-supervision.css">
 </head>
 <body>
   <!-- ===== ENCABEZADO PRINCIPAL ===== -->
   <header>
-    <!-- Logo institucional del IFN -->
+    <!-- 
+      LOGO INSTITUCIONAL DEL IFN
+      Imagen: ifn-baja-tcm30-525131.png
+      Ubicación: ../IMG/ifn-baja-tcm30-525131.png
+      Propósito: Identificación visual de la institución
+      Atributos:
+        - class: "Logo" - Clase CSS para estilizado
+        - alt: Texto alternativo para accesibilidad
+        - width: 150 - Ancho fijo en píxeles
+    -->
     <img class="Logo" src="../IMG/ifn-baja-tcm30-525131.png" alt="Logo IFN" width="150">
     
-    <!-- Contenedor central con título del sistema y menú de navegación -->
+    <!-- CONTENEDOR CENTRAL CON TÍTULO Y NAVEGACIÓN -->
     <div class="center-header">
+      <!-- 
+        TÍTULO PRINCIPAL DEL SISTEMA
+        Texto: "SISTEMA DE IDENTIFICACION DE ESPECIES"
+        Propósito: Identificar el nombre del sistema
+      -->
       <h1>SISTEMA DE IDENTIFICACION DE ESPECIES</h1>
-      <!-- Menú de navegación principal del sistema -->
+      
+      <!-- 
+        MENÚ DE NAVEGACIÓN PRINCIPAL
+        Contiene enlaces a todas las secciones principales del sistema
+        Propósito: Facilitar la navegación entre módulos
+      -->
       <div class="dashboard">
+        <!-- 
+          ENLACES DE NAVEGACIÓN
+          Cada enlace redirige a una página específica del sistema
+          Clase: "dashboard-btn" - Estilos consistentes para botones de navegación
+        -->
         <a href="inicio-Pantalla.html" class="dashboard-btn">Inicio</a>
         <a href="subirArbol.html" class="dashboard-btn">Subir Árbol</a>
         <a href="subirSuelo.html" class="dashboard-btn">Subir Suelo</a>
@@ -27,10 +56,27 @@
       </div>
     </div>
 
-    <!-- Sección de información del usuario y cierre de sesión -->
+    <!-- 
+      SECCIÓN DE INFORMACIÓN DEL USUARIO
+      Muestra información de la sesión activa y opción de cierre
+      Propósito: Gestión de sesión de usuario
+    -->
     <div class="login-imagen">
+      <!-- Nombre del usuario actualmente logueado -->
       <p class="texto-arriba">Juanito Valderrama</p>
+      
+      <!-- 
+        IMAGEN DE PERFIL/LOGIN
+        Imagen: login.png
+        Propósito: Representación visual del usuario
+      -->
       <img class="Login" src="../IMG/login.png" alt="Login User" width="150">
+      
+      <!-- 
+        BOTÓN DE CERRAR SESIÓN
+        Propósito: Finalizar la sesión actual del usuario
+        Comportamiento: Redirige al login y limpia la sesión
+      -->
       <button class="texto-abajo">Cerrar sesión</button>
     </div>
   </header>
@@ -38,35 +84,55 @@
   <!-- ===== BARRA DE BÚSQUEDA GLOBAL ===== -->
   <div class="search-container">
     <div class="search-box"> 
-      <!-- Campo de búsqueda para encontrar registros o incidencias específicas -->
+      <!-- 
+        CAMPO DE BÚSQUEDA
+        Propósito: Buscar registros o incidencias específicas en todo el sistema
+        Placeholder: Texto guía para el usuario
+        Tipo: text - Entrada de texto libre
+      -->
       <input type="text" placeholder="Buscar registros, incidencias...">
+      
+      <!-- 
+        ÍCONO DE BÚSQUEDA
+        Propósito: Indicador visual de la función de búsqueda
+        Carácter: 🔍 (Emoji de lupa)
+      -->
       <span class="search-icon">🔍</span>
     </div>
   </div>
 
   <!-- ===== CONTENIDO PRINCIPAL DE SUPERVISIÓN ===== -->
   <main>
-    <!-- Título principal de la página de supervisión -->
+    <!-- 
+      TÍTULO PRINCIPAL DE LA PÁGINA
+      Propósito: Identificar claramente la funcionalidad de la página
+      Texto: "SUPERVISIÓN DE DATOS"
+    -->
     <h1>SUPERVISIÓN DE DATOS</h1>
 
     <!-- ===== SECCIÓN 1: DASHBOARD DE CALIDAD DE DATOS ===== -->
-    <!-- Muestra métricas generales de calidad de datos del sistema -->
+    <!-- 
+      PROPÓSITO: Mostrar métricas generales de calidad de datos del sistema
+      Contiene 4 tarjetas con indicadores clave de calidad
+    -->
     <section class="dashboard-calidad">
       <h2>📊 DASHBOARD DE CALIDAD DE DATOS</h2>
       
-      <!-- Contenedor grid para las tarjetas de métricas -->
+      <!-- CONTENEDOR GRID PARA LAS TARJETAS DE MÉTRICAS -->
       <div class="metricas-container">
-        <!-- Tarjeta de métrica: Completitud de registros -->
+        <!-- TARJETA DE MÉTRICA: COMPLETITUD DE REGISTROS -->
         <div class="metrica-card">
           <div class="metrica-icon">✅</div>
           <div class="metrica-info">
             <h3>Completitud</h3>
+            <!-- Valor numérico de la métrica -->
             <div class="metrica-valor">87%</div>
+            <!-- Descripción de lo que representa la métrica -->
             <div class="metrica-desc">Registros completos</div>
           </div>
         </div>
         
-        <!-- Tarjeta de métrica: Consistencia de datos -->
+        <!-- TARJETA DE MÉTRICA: CONSISTENCIA DE DATOS -->
         <div class="metrica-card">
           <div class="metrica-icon">🔄</div>
           <div class="metrica-info">
@@ -76,7 +142,7 @@
           </div>
         </div>
         
-        <!-- Tarjeta de métrica: Incidencias identificadas -->
+        <!-- TARJETA DE MÉTRICA: INCIDENCIAS IDENTIFICADAS -->
         <div class="metrica-card">
           <div class="metrica-icon">⚠️</div>
           <div class="metrica-info">
@@ -86,11 +152,12 @@
           </div>
         </div>
         
-        <!-- Tarjeta de métrica: Registros validados -->
+        <!-- TARJETA DE MÉTRICA: REGISTROS VALIDADOS -->
         <div class="metrica-card">
           <div class="metrica-icon">📝</div>
           <div class="metrica-info">
             <h3>Validados</h3>
+            <!-- Valor formateado con separador de miles -->
             <div class="metrica-valor">1,248</div>
             <div class="metrica-desc">Registros verificados</div>
           </div>
@@ -99,12 +166,20 @@
     </section>
 
     <!-- ===== SECCIÓN 2: REGISTROS PROBLEMÁTICOS ===== -->
-    <!-- Lista de registros que requieren atención y corrección -->
+    <!-- 
+      PROPÓSITO: Listar registros que requieren atención y corrección
+      Permite filtrar, visualizar y actuar sobre registros con problemas
+    -->
     <section class="registros-section">
       <h2>⚠️ REGISTROS PROBLEMÁTICOS</h2>
       
-      <!-- Filtros rápidos para categorizar los tipos de problemas -->
+      <!-- FILTROS RÁPIDOS PARA CATEGORIZAR TIPOS DE PROBLEMAS -->
       <div class="filtros-rapidos">
+        <!-- 
+          BOTONES DE FILTRO
+          Cada botón representa una categoría de problema
+          Clase "active" indica el filtro actualmente seleccionado
+        -->
         <button class="filtro-btn active">Todos</button>
         <button class="filtro-btn">Formato incorrecto</button>
         <button class="filtro-btn">Datos incompletos</button>
@@ -112,30 +187,34 @@
         <button class="filtro-btn">Fuera de rango</button>
       </div>
       
-      <!-- Contenedor de la lista de registros problemáticos -->
+      <!-- CONTENEDOR DE LA LISTA DE REGISTROS PROBLEMÁTICOS -->
       <div class="registros-container">
-        <!-- Registro problemático individual - Nivel Crítico -->
+        <!-- REGISTRO PROBLEMÁTICO INDIVIDUAL - NIVEL CRÍTICO -->
         <div class="registro-item">
           <div class="registro-header">
+            <!-- Identificador único del registro -->
             <span class="registro-id">#REG-2024-001</span>
+            <!-- Indicador de severidad con clase CSS específica -->
             <span class="registro-estado critico">Crítico</span>
           </div>
           <div class="registro-desc">
             <strong>Problema:</strong> Coordenadas fuera de rango válido
           </div>
           <div class="registro-detalle">
+            <!-- Información contextual del registro -->
             <span><strong>Fecha:</strong> 15/03/2024</span>
             <span><strong>Brigada:</strong> Norte</span>
             <span><strong>Tipo:</strong> Geolocalización</span>
           </div>
           <div class="registro-actions">
+            <!-- BOTONES DE ACCIÓN PARA EL REGISTRO -->
             <button class="btn-corregir">Corregir</button>
             <button class="btn-ignorar">Ignorar</button>
             <button class="btn-detalles">Ver detalles</button>
           </div>
         </div>
         
-        <!-- Registro problemático individual - Nivel Medio -->
+        <!-- REGISTRO PROBLEMÁTICO INDIVIDUAL - NIVEL MEDIO -->
         <div class="registro-item">
           <div class="registro-header">
             <span class="registro-id">#REG-2024-002</span>
@@ -156,7 +235,7 @@
           </div>
         </div>
         
-        <!-- Registro problemático individual - Nivel Bajo -->
+        <!-- REGISTRO PROBLEMÁTICO INDIVIDUAL - NIVEL BAJO -->
         <div class="registro-item">
           <div class="registro-header">
             <span class="registro-id">#REG-2024-003</span>
@@ -180,13 +259,16 @@
     </section>
 
     <!-- ===== SECCIÓN 3: CORRECCIÓN MASIVA ===== -->
-    <!-- Permite aplicar correcciones a múltiples registros con patrones similares -->
+    <!-- 
+      PROPÓSITO: Permitir aplicar correcciones a múltiples registros con patrones similares
+      Funcionalidad: Identificar patrones de error y aplicar correcciones en lote
+    -->
     <section class="correccion-section">
       <h2>🔄 CORRECCIÓN MASIVA</h2>
       
-      <!-- Formulario para definir y aplicar correcciones masivas -->
+      <!-- FORMULARIO PARA DEFINIR Y APLICAR CORRECCIONES MASIVAS -->
       <div class="correccion-form">
-        <!-- Selección del patrón de error identificado -->
+        <!-- GRUPO DE FORMULARIO: SELECCIÓN DE PATRÓN DE ERROR -->
         <div class="form-group">
           <label for="patron-error">Patrón de error identificado:</label>
           <select id="patron-error">
@@ -198,26 +280,28 @@
           </select>
         </div>
         
-        <!-- Descripción de la corrección a aplicar -->
+        <!-- GRUPO DE FORMULARIO: DESCRIPCIÓN DE LA CORRECCIÓN -->
         <div class="form-group">
           <label for="correccion-aplicar">Corrección a aplicar:</label>
           <textarea id="correccion-aplicar" placeholder="Describa la corrección a aplicar..." rows="3"></textarea>
         </div>
         
-        <!-- Información sobre el alcance de la corrección -->
+        <!-- FILA DE FORMULARIO CON CAMPOS RELACIONADOS -->
         <div class="form-row">
+          <!-- CAMPO: REGISTROS AFECTADOS (solo lectura) -->
           <div class="form-group">
             <label for="registros-afectados">Registros afectados:</label>
             <input type="number" id="registros-afectados" value="0" readonly>
           </div>
           
+          <!-- CAMPO: FECHA DE APLICACIÓN -->
           <div class="form-group">
             <label for="fecha-aplicacion">Fecha de aplicación:</label>
             <input type="date" id="fecha-aplicacion">
           </div>
         </div>
         
-        <!-- Botones de acción para la corrección masiva -->
+        <!-- BOTONES DE ACCIÓN PARA LA CORRECCIÓN MASIVA -->
         <div class="correccion-actions">
           <button class="btn-previsualizar">Previsualizar cambios</button>
           <button class="btn-aplicar-correccion">Aplicar corrección masiva</button>
@@ -226,13 +310,16 @@
     </section>
 
     <!-- ===== SECCIÓN 4: REPORTE DE INCIDENCIAS ===== -->
-    <!-- Generación de reportes de calidad de datos -->
+    <!-- 
+      PROPÓSITO: Generación de reportes de calidad de datos
+      Permite crear reportes personalizados y exportarlos en diferentes formatos
+    -->
     <section class="reportes-section">
       <h2>📋 REPORTE DE INCIDENCIAS</h2>
       
-      <!-- Opciones de configuración del reporte -->
+      <!-- OPCIONES DE CONFIGURACIÓN DEL REPORTE -->
       <div class="reporte-options">
-        <!-- Selección del tipo de reporte -->
+        <!-- GRUPO: TIPO DE REPORTE -->
         <div class="form-group">
           <label for="tipo-reporte">Tipo de reporte:</label>
           <select id="tipo-reporte">
@@ -243,7 +330,7 @@
           </select>
         </div>
         
-        <!-- Rango de fechas para el reporte -->
+        <!-- FILA: RANGO DE FECHAS -->
         <div class="form-row">
           <div class="form-group">
             <label for="fecha-inicio">Fecha inicio:</label>
@@ -256,10 +343,11 @@
           </div>
         </div>
         
-        <!-- Selección del formato de exportación -->
+        <!-- GRUPO: FORMATO DE EXPORTACIÓN -->
         <div class="form-group">
           <label for="formato-reporte">Formato de exportación:</label>
           <div class="formatos-exportacion">
+            <!-- OPCIONES DE RADIO PARA SELECCIONAR FORMATO -->
             <label class="formato-opcion">
               <input type="radio" name="formato" value="pdf" checked> PDF
             </label>
@@ -273,7 +361,7 @@
         </div>
       </div>
       
-      <!-- Botones para generar y exportar reportes -->
+      <!-- BOTONES PARA GENERAR Y EXPORTAR REPORTES -->
       <div class="reporte-actions">
         <button class="btn-generar-reporte">Generar Reporte</button>
         <button class="btn-exportar">Exportar a PDF</button>
@@ -281,11 +369,14 @@
     </section>
 
     <!-- ===== SECCIÓN 5: DATOS CORRUPTOS O IRRECUPERABLES ===== -->
-    <!-- Manejo de registros que no pueden ser recuperados automáticamente -->
+    <!-- 
+      PROPÓSITO: Manejo de registros que no pueden ser recuperados automáticamente
+      Proporciona opciones para archivar, eliminar o auditar datos corruptos
+    -->
     <section class="corruptos-section">
       <h2>🗑️ DATOS CORRUPTOS O IRRECUPERABLES</h2>
       
-      <!-- Alerta destacada para datos corruptos -->
+      <!-- ALERTA DESTACADA PARA DATOS CORRUPTOS -->
       <div class="alerta-corruptos">
         <div class="alerta-icon">🚨</div>
         <div class="alerta-content">
@@ -304,23 +395,39 @@
   <!-- ===== PIE DE PÁGINA INSTITUCIONAL ===== -->
   <footer>
     <div class="footer-container">
+      <!-- INFORMACIÓN DE CONTACTO INSTITUCIONAL -->
       <p>📍 Dirección: Calle 25 D No. 110911, Colombia</p>
       <p>📧 Correo: contacto@ideam.gov.co | ☎ Tel: +57 (601) 4442060</p>
 
-      <!-- Enlaces a redes sociales -->
+      <!-- ENLACES A REDES SOCIALES -->
       <div class="redes-sociales">
-        <a href="https://www.facebook.com/ideam.instituto/?locale=es_LA"><img src="../IMG/facebook.png" alt="Facebook"></a>
-        <a href="https://x.com/IDEAMColombia?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><img src="../IMG/X.jpeg" alt="X"></a>
-        <a href="https://www.instagram.com/ideamcolombia/?hl=es"><img src="../IMG/instagram.png" alt="Instagram"></a>
-        <a href="https://www.youtube.com/@InstitutoIDEAM"><img src="../IMG/youtube.png" alt="YouTube"></a>
+        <a href="https://www.facebook.com/ideam.instituto/?locale=es_LA">
+          <img src="../IMG/facebook.png" alt="Facebook">
+        </a>
+        <a href="https://x.com/IDEAMColombia?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">
+          <img src="../IMG/X.jpeg" alt="X">
+        </a>
+        <a href="https://www.instagram.com/ideamcolombia/?hl=es">
+          <img src="../IMG/instagram.png" alt="Instagram">
+        </a>
+        <a href="https://www.youtube.com/@InstitutoIDEAM">
+          <img src="../IMG/youtube.png" alt="YouTube">
+        </a>
       </div>
 
+      <!-- DERECHOS DE AUTOR -->
       <p>&copy; 2024 Proyecto Web IFN. Todos los derechos reservados.</p>
     </div>
   </footer>
 
   <!-- ===== JAVASCRIPT PARA INTERACTIVIDAD ===== -->
   <script>
+    /**
+     * SCRIPT DE INTERACTIVIDAD PARA LA PÁGINA DE SUPERVISIÓN
+     * Se ejecuta cuando el DOM está completamente cargado
+     * Maneja la interactividad básica de la interfaz
+     */
+    
     // Esperar a que el DOM esté completamente cargado
     document.addEventListener('DOMContentLoaded', function() {
       
@@ -390,8 +497,31 @@
       });
     });
   </script>
+  
+  <!-- 
+    SCRIPTS EXTERNOS PARA FUNCIONALIDADES AVANZADAS
+    Estos archivos contienen la lógica completa de cada módulo
+  -->
+  
+  <!-- 
+    supervision.js - Lógica completa del sistema de supervisión
+    Ubicación: ../JS/supervision.js
+    Propósito: Manejo avanzado de registros problemáticos, corrección masiva, reportes
+  -->
   <script src="../JS/supervision.js"></script>
+  
+  <!-- 
+    auth.js - Sistema de autenticación y control de acceso
+    Ubicación: ../JS/auth.js
+    Propósito: Manejo de sesiones de usuario, verificación de permisos
+  -->
   <script src="../JS/auth.js"></script>
+  
+  <!-- 
+    buscador-universal.js - Funcionalidad de búsqueda global
+    Ubicación: ../JS/buscador-universal.js
+    Propósito: Búsqueda unificada en todo el sistema
+  -->
   <script src="../JS/buscador-universal.js"></script>
 </body>
 </html>

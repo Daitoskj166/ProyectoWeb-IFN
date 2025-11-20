@@ -1,20 +1,42 @@
+/**
+ * SISTEMA DE GESTIÓN DE REGISTROS BIOLÓGICOS
+ * 
+ * Este módulo JavaScript implementa un sistema completo para la gestión, 
+ * visualización y filtrado de registros de muestras biológicas (árboles y suelos).
+ * Incluye funcionalidades de búsqueda, paginación, estadísticas y modales de detalle.
+ * 
+ * @version 1.0
+ * @author Sistema de Gestión Ambiental
+ */
+
+// Esperar a que el DOM esté completamente cargado antes de ejecutar el código
 document.addEventListener('DOMContentLoaded', function() {
     // =============================================
     // VARIABLES GLOBALES Y CONFIGURACIÓN
     // =============================================
     
-    // Referencias a elementos principales del DOM
-    const searchBox = document.querySelector('.search-box input');
-    const filtroTipo = document.getElementById('filtro-tipo');
-    const filtroFecha = document.getElementById('filtro-fecha');
-    const btnFiltrar = document.querySelector('.btn-filtrar');
-    const tablaRegistros = document.querySelector('.tabla-registros tbody');
-    const estadisticasNumeros = document.querySelectorAll('.estadistica-numero');
-    const controlesPaginacion = document.querySelector('.controles-paginacion');
-    const infoPaginacion = document.querySelector('.info-paginacion');
-    const numerosPaginacion = document.querySelector('.numeros-paginacion');
+    /**
+     * Referencias a los elementos principales del DOM utilizados en la aplicación
+     * @type {HTMLElement}
+     */
+    const searchBox = document.querySelector('.search-box input'); // Campo de búsqueda principal
+    const filtroTipo = document.getElementById('filtro-tipo');     // Selector de filtro por tipo (árbol/suelo)
+    const filtroFecha = document.getElementById('filtro-fecha');   // Selector de filtro por fecha
+    const btnFiltrar = document.querySelector('.btn-filtrar');     // Botón para aplicar filtros
+    const tablaRegistros = document.querySelector('.tabla-registros tbody'); // Cuerpo de la tabla de registros
+    const estadisticasNumeros = document.querySelectorAll('.estadistica-numero'); // Elementos para mostrar estadísticas
+    const controlesPaginacion = document.querySelector('.controles-paginacion');  // Contenedor de controles de paginación
+    const infoPaginacion = document.querySelector('.info-paginacion');            // Información de paginación
+    const numerosPaginacion = document.querySelector('.numeros-paginacion');      // Números de página
     
-    // Configuración de paginación
+    /**
+     * Configuración de paginación para controlar la visualización de registros
+     * @type {Object}
+     * @property {number} registrosPorPagina - Número de registros a mostrar por página (valor por defecto: 5)
+     * @property {number} paginaActual - Página actualmente visible (valor por defecto: 1)
+     * @property {number} totalRegistros - Número total de registros después de aplicar filtros
+     * @property {number} totalPaginas - Número total de páginas calculado
+     */
     const configPaginacion = {
         registrosPorPagina: 5,
         paginaActual: 1,
@@ -22,7 +44,17 @@ document.addEventListener('DOMContentLoaded', function() {
         totalPaginas: 0
     };
     
-    // Datos de ejemplo (en una aplicación real, estos vendrían de una API)
+    /**
+     * Array de registros de ejemplo que simula una base de datos
+     * En una aplicación real, estos datos vendrían de una API o base de datos
+     * @type {Array<Object>}
+     * @property {string} id - Identificador único del registro (ej: 'ARB-2024-001')
+     * @property {string} tipo - Tipo de registro ('arbol' o 'suelo')
+     * @property {string} especie - Descripción de la especie o muestra
+     * @property {string} ubicacion - Ubicación geográfica del registro
+     * @property {string} fecha - Fecha del registro en formato YYYY-MM-DD
+     * @property {string} estado - Estado del registro ('completo', 'pendiente', 'proceso')
+     */
     let registros = [
         {
             id: 'ARB-2024-001',
@@ -87,8 +119,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // =============================================
     
     /**
-     * Inicializa todos los componentes de la página
-     * Se ejecuta cuando el DOM está completamente cargado
+     * INICIALIZADOR PRINCIPAL - Coordina la inicialización de todos los componentes
+     * Se ejecuta cuando el DOM está completamente cargado y prepara la aplicación para su uso
+     * @returns {void}
      */
     function inicializarPagina() {
         configurarFechaFiltro();
@@ -99,12 +132,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     /**
-     * Configura la fecha actual como valor por defecto en el filtro de fecha
-     * Permite al usuario filtrar rápidamente por la fecha actual
+     * Configura el filtro de fecha con la fecha actual como valor predeterminado
+     * Permite a los usuarios filtrar rápidamente por la fecha actual sin tener que seleccionarla manualmente
+     * @returns {void}
      */
     function configurarFechaFiltro() {
         const hoy = new Date();
-        const fechaFormateada = hoy.toISOString().split('T')[0];
+        const fechaFormateada = hoy.toISOString().split('T')[0]; // Formato YYYY-MM-DD
         filtroFecha.value = fechaFormateada;
     }
     
@@ -113,17 +147,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // =============================================
     
     /**
-     * Filtra los registros según los criterios seleccionados
-     * @param {Array} registros - Array de registros a filtrar
-     * @returns {Array} Registros filtrados
+     * FILTRA registros según múltiples criterios (texto, tipo y fecha)
+     * Aplica filtros en cascada: primero por texto, luego por tipo, finalmente por fecha
+     * @param {Array} registros - Array completo de registros a filtrar
+     * @returns {Array} Nuevo array con los registros que cumplen todos los criterios de filtrado
      */
     function filtrarRegistros(registros) {
-        let registrosFiltrados = [...registros];
+        let registrosFiltrados = [...registros]; // Crear copia para no mutar el array original
         const textoBusqueda = searchBox.value.toLowerCase().trim();
         const tipoSeleccionado = filtroTipo.value;
         const fechaSeleccionada = filtroFecha.value;
         
-        // Filtro por texto de búsqueda
+        // Filtro por texto de búsqueda (busca en ID, especie y ubicación)
         if (textoBusqueda) {
             registrosFiltrados = registrosFiltrados.filter(registro => 
                 registro.id.toLowerCase().includes(textoBusqueda) ||
@@ -150,20 +185,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     /**
-     * Ordena los registros por fecha (más recientes primero)
+     * ORDENA registros por fecha de manera descendente (más recientes primero)
+     * Utiliza el objeto Date de JavaScript para una comparación precisa de fechas
      * @param {Array} registros - Array de registros a ordenar
-     * @returns {Array} Registros ordenados
+     * @returns {Array} Registros ordenados cronológicamente (más reciente primero)
      */
     function ordenarRegistros(registros) {
         return registros.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
     }
     
     /**
-     * Obtiene los registros para la página actual
+     * CALCULA y devuelve los registros correspondientes a una página específica
+     * Utiliza algoritmos de paginación estándar para dividir el array en páginas
      * @param {Array} registros - Array completo de registros
-     * @param {number} pagina - Número de página
-     * @param {number} registrosPorPagina - Cantidad de registros por página
-     * @returns {Array} Registros de la página solicitada
+     * @param {number} pagina - Número de página solicitada (comienza en 1)
+     * @param {number} registrosPorPagina - Cantidad de registros a mostrar por página
+     * @returns {Array} Subconjunto de registros correspondiente a la página solicitada
      */
     function obtenerRegistrosPagina(registros, pagina, registrosPorPagina) {
         const inicio = (pagina - 1) * registrosPorPagina;
@@ -176,15 +213,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // =============================================
     
     /**
-     * Renderiza los registros en la tabla
-     * @param {Array} registros - Array de registros a mostrar
+     * RENDERIZA los registros en la tabla HTML
+     * Genera dinámicamente las filas de la tabla basándose en los datos proporcionados
+     * Maneja el estado vacío mostrando un mensaje amigable al usuario
+     * @param {Array} registros - Array de registros a mostrar en la tabla
+     * @returns {void}
      */
     function renderizarRegistros(registros) {
-        // Limpiar tabla actual
+        // Limpiar tabla actual antes de renderizar nuevos datos
         tablaRegistros.innerHTML = '';
         
+        // Manejar estado cuando no hay registros que mostrar
         if (registros.length === 0) {
-            // Mostrar mensaje cuando no hay registros
             tablaRegistros.innerHTML = `
                 <tr>
                     <td colspan="7" class="sin-registros">
@@ -198,12 +238,12 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Renderizar cada registro
+        // Renderizar cada registro como una fila en la tabla
         registros.forEach(registro => {
             const fila = document.createElement('tr');
-            fila.className = `registro-${registro.tipo}`;
+            fila.className = `registro-${registro.tipo}`; // Clase CSS para estilizado por tipo
             
-            // Determinar clase CSS para el estado
+            // Determinar clase CSS y texto para el estado del registro
             let claseEstado = '';
             let textoEstado = '';
             
@@ -222,7 +262,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     break;
             }
             
-            // Crear HTML de la fila
+            // Construir el HTML de la fila con los datos del registro
             fila.innerHTML = `
                 <td>${registro.id}</td>
                 <td>
@@ -243,14 +283,15 @@ document.addEventListener('DOMContentLoaded', function() {
             tablaRegistros.appendChild(fila);
         });
         
-        // Configurar event listeners para los botones de acción
+        // Configurar los event listeners para los botones recién creados
         configurarBotonesAccion();
     }
     
     /**
-     * Formatea una fecha de YYYY-MM-DD a DD/MM/YYYY
-     * @param {string} fechaISO - Fecha en formato ISO
-     * @returns {string} Fecha formateada
+     * FORMATEA una fecha de formato ISO (YYYY-MM-DD) a formato legible (DD/MM/YYYY)
+     * Mejora la experiencia de usuario mostrando fechas en formato local
+     * @param {string} fechaISO - Fecha en formato ISO 8601 (YYYY-MM-DD)
+     * @returns {string} Fecha formateada en formato DD/MM/YYYY
      */
     function formatearFecha(fechaISO) {
         const [anio, mes, dia] = fechaISO.split('-');
@@ -258,42 +299,47 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     /**
-     * Renderiza los controles de paginación
-     * @param {number} paginaActual - Página actual
-     * @param {number} totalPaginas - Total de páginas
-     * @param {number} totalRegistros - Total de registros
+     * RENDERIZA los controles de paginación en la interfaz
+     * Muestra información contextual y controles de navegación entre páginas
+     * @param {number} paginaActual - Número de la página actualmente visible
+     * @param {number} totalPaginas - Número total de páginas disponibles
+     * @param {number} totalRegistros - Número total de registros después de filtros
+     * @returns {void}
      */
     function renderizarPaginacion(paginaActual, totalPaginas, totalRegistros) {
+        // Manejar estado cuando no hay registros
         if (totalRegistros === 0) {
             infoPaginacion.innerHTML = '<span>No hay registros para mostrar</span>';
             controlesPaginacion.style.display = 'none';
             return;
         }
         
-        // Calcular rango de registros mostrados
+        // Calcular el rango de registros mostrados actualmente
         const inicio = (paginaActual - 1) * configPaginacion.registrosPorPagina + 1;
         const fin = Math.min(paginaActual * configPaginacion.registrosPorPagina, totalRegistros);
         
-        // Actualizar información de paginación
+        // Actualizar información textual de paginación
         infoPaginacion.innerHTML = `<span>Mostrando ${inicio}-${fin} de ${totalRegistros} registros</span>`;
         
-        // Actualizar números de página
+        // Limpiar números de página anteriores
         numerosPaginacion.innerHTML = '';
         
-        // Mostrar máximo 5 números de página
+        // Calcular rango de páginas a mostrar (máximo 5 páginas alrededor de la actual)
         const inicioPaginas = Math.max(1, paginaActual - 2);
         const finPaginas = Math.min(totalPaginas, paginaActual + 2);
         
+        // Generar números de página clickeables
         for (let i = inicioPaginas; i <= finPaginas; i++) {
             const span = document.createElement('span');
             span.textContent = i;
             if (i === paginaActual) {
-                span.className = 'pagina-activa';
+                span.className = 'pagina-activa'; // Resaltar página actual
             }
             span.addEventListener('click', () => cambiarPagina(i));
             numerosPaginacion.appendChild(span);
         }
         
+        // Mostrar controles de paginación
         controlesPaginacion.style.display = 'flex';
     }
     
@@ -302,17 +348,20 @@ document.addEventListener('DOMContentLoaded', function() {
     // =============================================
     
     /**
-     * Actualiza las estadísticas mostradas en la página
+     * ACTUALIZA las estadísticas mostradas en las tarjetas de la interfaz
+     * Calcula métricas en tiempo real basadas en los registros filtrados actualmente
+     * @returns {void}
      */
     function actualizarEstadisticas() {
         const registrosFiltrados = filtrarRegistros(registros);
         
+        // Calcular métricas principales
         const arbolesCount = registrosFiltrados.filter(r => r.tipo === 'arbol').length;
         const suelosCount = registrosFiltrados.filter(r => r.tipo === 'suelo').length;
         const completosCount = registrosFiltrados.filter(r => r.estado === 'completo').length;
         const procesoCount = registrosFiltrados.filter(r => r.estado === 'proceso' || r.estado === 'pendiente').length;
         
-        // Actualizar números en las tarjetas de estadísticas
+        // Actualizar los números en las tarjetas de estadísticas
         if (estadisticasNumeros.length >= 4) {
             estadisticasNumeros[0].textContent = arbolesCount;
             estadisticasNumeros[1].textContent = suelosCount;
@@ -322,25 +371,27 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     /**
-     * Carga y muestra los registros aplicando filtros y paginación
+     * CARGA y muestra los registros aplicando filtros y paginación actuales
+     * Función central que coordina el filtrado, ordenamiento y renderizado
+     * @returns {void}
      */
     function cargarRegistros() {
-        // Aplicar filtros
+        // Aplicar filtros a los registros
         const registrosFiltrados = filtrarRegistros(registros);
         const registrosOrdenados = ordenarRegistros(registrosFiltrados);
         
-        // Actualizar configuración de paginación
+        // Actualizar configuración de paginación con los nuevos cálculos
         configPaginacion.totalRegistros = registrosOrdenados.length;
         configPaginacion.totalPaginas = Math.ceil(registrosOrdenados.length / configPaginacion.registrosPorPagina);
         
-        // Obtener registros para la página actual
+        // Obtener registros específicos para la página actual
         const registrosPagina = obtenerRegistrosPagina(
             registrosOrdenados, 
             configPaginacion.paginaActual, 
             configPaginacion.registrosPorPagina
         );
         
-        // Renderizar componentes
+        // Renderizar todos los componentes con los nuevos datos
         renderizarRegistros(registrosPagina);
         renderizarPaginacion(
             configPaginacion.paginaActual, 
@@ -351,16 +402,20 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     /**
-     * Cambia a una página específica
+     * CAMBIA a una página específica y actualiza la interfaz
+     * Incluye scroll suave hacia la parte superior de la tabla para mejor UX
      * @param {number} pagina - Número de página a la que cambiar
+     * @returns {void}
      */
     function cambiarPagina(pagina) {
+        // Validar que la página esté dentro del rango permitido
         if (pagina < 1 || pagina > configPaginacion.totalPaginas) return;
         
+        // Actualizar página actual y recargar registros
         configPaginacion.paginaActual = pagina;
         cargarRegistros();
         
-        // Scroll suave hacia la parte superior de la tabla
+        // Scroll suave hacia la parte superior de la tabla para mejor experiencia de usuario
         tablaRegistros.closest('.tabla-contenedor').scrollIntoView({ 
             behavior: 'smooth', 
             block: 'start' 
@@ -372,12 +427,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // =============================================
     
     /**
-     * Configura los event listeners para los botones de acción (Editar/Ver)
+     * CONFIGURA los event listeners para los botones de acción (Editar/Ver) en cada fila
+     * Se ejecuta después de renderizar las filas para conectar los botones con sus funciones
+     * @returns {void}
      */
     function configurarBotonesAccion() {
         const botonesEditar = document.querySelectorAll('.btn-editar');
         const botonesVer = document.querySelectorAll('.btn-ver');
         
+        // Configurar botones de edición
         botonesEditar.forEach(boton => {
             boton.addEventListener('click', function() {
                 const registroId = this.getAttribute('data-id');
@@ -385,6 +443,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
         
+        // Configurar botones de visualización
         botonesVer.forEach(boton => {
             boton.addEventListener('click', function() {
                 const registroId = this.getAttribute('data-id');
@@ -394,18 +453,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     /**
-     * Maneja la acción de editar un registro
-     * @param {string} registroId - ID del registro a editar
+     * MANEJA la acción de editar un registro específico
+     * En una implementación real, redirigiría al formulario de edición correspondiente
+     * @param {string} registroId - ID único del registro a editar
+     * @returns {void}
      */
     function manejarEditarRegistro(registroId) {
+        // Buscar el registro en el array de datos
         const registro = registros.find(r => r.id === registroId);
         
+        // Validar que el registro existe
         if (!registro) {
             alert('Registro no encontrado');
             return;
         }
         
-        // Determinar a qué página redirigir según el tipo de registro
+        // Simular redirección a formulario de edición (en producción esto sería real)
         if (registro.tipo === 'arbol') {
             alert(`Redirigiendo a edición del árbol: ${registroId}\n\nEn una implementación real, esto abriría el formulario de edición.`);
             // window.location.href = `subirArbol.html?editar=${registroId}`;
@@ -418,29 +481,35 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     /**
-     * Maneja la acción de ver un registro en detalle
-     * @param {string} registroId - ID del registro a visualizar
+     * MANEJA la acción de ver los detalles completos de un registro
+     * Abre un modal con información detallada del registro seleccionado
+     * @param {string} registroId - ID único del registro a visualizar
+     * @returns {void}
      */
     function manejarVerRegistro(registroId) {
+        // Buscar el registro en el array de datos
         const registro = registros.find(r => r.id === registroId);
         
+        // Validar que el registro existe
         if (!registro) {
             alert('Registro no encontrado');
             return;
         }
         
-        // Crear y mostrar modal de detalles
+        // Mostrar modal con detalles completos
         mostrarModalDetalles(registro);
         
         console.log(`Viendo detalles del registro: ${registroId}`, registro);
     }
     
     /**
-     * Muestra un modal con los detalles completos del registro
-     * @param {Object} registro - Objeto registro con todos los datos
+     * MUESTRA un modal con los detalles completos de un registro
+     * Crea dinámicamente un modal overlay con información estructurada del registro
+     * @param {Object} registro - Objeto completo del registro con todos sus datos
+     * @returns {void}
      */
     function mostrarModalDetalles(registro) {
-        // Crear elemento modal
+        // Crear elemento modal principal
         const modal = document.createElement('div');
         modal.className = 'modal-detalles';
         modal.style.cssText = `
@@ -456,12 +525,12 @@ document.addEventListener('DOMContentLoaded', function() {
             z-index: 1000;
         `;
         
-        // Determinar color según tipo
+        // Determinar color del tema según tipo de registro
         const colorTipo = registro.tipo === 'arbol' ? '#2E7D32' : '#1565C0';
         const textoEstado = registro.estado === 'completo' ? 'Completo' : 
                            registro.estado === 'pendiente' ? 'Pendiente' : 'En proceso';
         
-        // Contenido del modal
+        // Construir contenido HTML del modal
         modal.innerHTML = `
             <div style="background: white; padding: 30px; border-radius: 12px; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid ${colorTipo}; padding-bottom: 10px;">
@@ -507,23 +576,28 @@ document.addEventListener('DOMContentLoaded', function() {
         // Agregar modal al documento
         document.body.appendChild(modal);
         
-        // Configurar event listeners del modal
+        // Configurar event listeners para los controles del modal
         const btnCerrar = modal.querySelector('.btn-cerrar');
         const btnCerrarModal = modal.querySelector('.btn-cerrar-modal');
         const btnEditarModal = modal.querySelector('.btn-editar-modal');
         
+        /**
+         * Función para cerrar y eliminar el modal del DOM
+         * @returns {void}
+         */
         const cerrarModal = () => {
             document.body.removeChild(modal);
         };
         
+        // Conectar eventos de cierre
         btnCerrar.addEventListener('click', cerrarModal);
         btnCerrarModal.addEventListener('click', cerrarModal);
         btnEditarModal.addEventListener('click', () => {
             cerrarModal();
-            manejarEditarRegistro(registro.id);
+            manejarEditarRegistro(registro.id); // Redirigir a edición después de cerrar
         });
         
-        // Cerrar modal al hacer clic fuera del contenido
+        // Cerrar modal al hacer clic fuera del contenido (en el overlay)
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 cerrarModal();
@@ -532,32 +606,36 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     /**
-     * Configura todos los event listeners de la página
+     * CONFIGURA todos los event listeners globales de la aplicación
+     * Incluye búsqueda, filtros, paginación y funcionalidades especiales
+     * @returns {void}
      */
     function configurarEventListeners() {
-        // Búsqueda en tiempo real
+        // Búsqueda en tiempo real con debounce para mejor rendimiento
         searchBox.addEventListener('input', debounce(() => {
-            configPaginacion.paginaActual = 1;
+            configPaginacion.paginaActual = 1; // Resetear a primera página al buscar
             cargarRegistros();
         }, 300));
         
-        // Filtros
+        // Filtro por tipo - recargar registros cuando cambia
         filtroTipo.addEventListener('change', () => {
             configPaginacion.paginaActual = 1;
             cargarRegistros();
         });
         
+        // Filtro por fecha - recargar registros cuando cambia
         filtroFecha.addEventListener('change', () => {
             configPaginacion.paginaActual = 1;
             cargarRegistros();
         });
         
+        // Botón de filtrar - acción explícita del usuario
         btnFiltrar.addEventListener('click', () => {
             configPaginacion.paginaActual = 1;
             cargarRegistros();
         });
         
-        // Botones de paginación
+        // Configurar botones de paginación (anterior/siguiente)
         const btnAnterior = controlesPaginacion.querySelector('.btn-paginacion:first-child');
         const btnSiguiente = controlesPaginacion.querySelector('.btn-paginacion:last-child');
         
@@ -569,7 +647,7 @@ document.addEventListener('DOMContentLoaded', function() {
             cambiarPagina(configPaginacion.paginaActual + 1);
         });
         
-        // Limpiar filtros con doble clic en el título
+        // FUNCIÓN EASTER EGG: Limpiar todos los filtros con doble clic en el título
         const titulo = document.querySelector('main h2');
         titulo.addEventListener('dblclick', () => {
             searchBox.value = '';
@@ -586,10 +664,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // =============================================
     
     /**
-     * Función debounce para optimizar búsquedas
-     * @param {Function} func - Función a ejecutar
-     * @param {number} wait - Tiempo de espera en milisegundos
-     * @returns {Function} Función debounceada
+     * FUNCIÓN DEBOUNDE - Optimiza funciones que se ejecutan frecuentemente
+     * Evita múltiples ejecuciones rápidas retrasando la ejecución hasta que pase un tiempo sin nuevas llamadas
+     * @param {Function} func - Función a la que aplicar debounce
+     * @param {number} wait - Tiempo de espera en milisegundos antes de ejecutar la función
+     * @returns {Function} Nueva función con comportamiento debounce
      */
     function debounce(func, wait) {
         let timeout;
@@ -604,9 +683,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // =============================================
-    // INICIALIZACIÓN
+    // INICIALIZACIÓN DE LA APLICACIÓN
     // =============================================
     
-    // Iniciar la aplicación
+    // Punto de entrada principal - inicia la aplicación cuando el DOM está listo
     inicializarPagina();
 });

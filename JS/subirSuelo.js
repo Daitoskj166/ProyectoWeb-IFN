@@ -1,21 +1,46 @@
+/**
+ * SISTEMA DE REGISTRO DE MUESTRAS DE SUELO - IFN COLOMBIA
+ * 
+ * Este módulo maneja la lógica completa del formulario de registro de muestras de suelo,
+ * incluyendo validaciones, procesamiento de datos de múltiples puntos de muestreo,
+ * manejo de archivos y envío de información estructurada.
+ * 
+ * @file subirSuelo.js
+ * @version 1.0
+ * @author Inventario Forestal Nacional - Colombia
+ */
+
+// Esperar a que el DOM esté completamente cargado
 document.addEventListener('DOMContentLoaded', function() {
     // =============================================
     // VARIABLES GLOBALES Y REFERENCIAS A ELEMENTOS
     // =============================================
     
-    // Referencia al formulario principal de suelo
+    /**
+     * Referencia al formulario principal de registro de muestras de suelo
+     * @type {HTMLFormElement}
+     */
     const formulario = document.getElementById('formularioSuelo');
     
-    // Referencias a los botones de acción
+    /**
+     * Referencias a los botones de acción principales
+     * @type {HTMLButtonElement}
+     */
     const btnLimpiar = document.getElementById('btnLimpiar');
     const btnSubir = document.getElementById('btnSubir');
     
-    // Referencias a campos obligatorios para validaciones
+    /**
+     * Referencias a campos obligatorios para validaciones específicas
+     * @type {HTMLInputElement}
+     */
     const campoConglomerado = document.getElementById('conglomerado');
     const campoDiligenciadoPor = document.getElementById('diligenciadoPor');
     const campoFechaMuestreo = document.getElementById('fechaMuestreo');
     
-    // Referencia al input de archivos
+    /**
+     * Referencia al input de archivos para resultados de laboratorio
+     * @type {HTMLInputElement}
+     */
     const campoArchivos = document.getElementById('archivos');
     
     // =============================================
@@ -25,6 +50,9 @@ document.addEventListener('DOMContentLoaded', function() {
     /**
      * Configura la fecha actual como valor por defecto en el campo fecha de muestreo
      * Facilita el registro al usuario mostrando la fecha actual automáticamente
+     * y reduce errores de ingreso manual.
+     * 
+     * @returns {void}
      */
     function configurarFechaActual() {
         const hoy = new Date();
@@ -34,7 +62,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Inicializa todas las configuraciones del formulario
-     * Se ejecuta cuando el DOM está completamente cargado
+     * Se ejecuta cuando el DOM está completamente cargado y prepara
+     * el formulario para su uso.
+     * 
+     * @returns {void}
      */
     function inicializarFormulario() {
         configurarFechaActual();
@@ -42,12 +73,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // =============================================
-    // VALIDACIONES DEL FORMULARIO
+    // SISTEMA DE VALIDACIONES DEL FORMULARIO
     // =============================================
     
     /**
      * Valida los campos obligatorios del formulario
-     * @returns {boolean} True si todos los campos obligatorios están completos, False si falta alguno
+     * Verifica que los campos marcados como requeridos tengan valores válidos
+     * antes de permitir el envío del formulario.
+     * 
+     * @returns {boolean} True si todos los campos obligatorios están completos, 
+     *                    False si falta alguno
      */
     function validarCamposObligatorios() {
         const conglomeradoValor = campoConglomerado.value.trim();
@@ -73,6 +108,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Valida que todos los valores de azimut estén dentro del rango permitido (0-360 grados)
+     * Recorre todos los campos de azimut de los 4 puntos de muestreo y verifica
+     * que cumplan con las especificaciones técnicas.
+     * 
      * @returns {boolean} True si todos los azimuts son válidos
      */
     function validarAzimuts() {
@@ -105,6 +143,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Valida que los valores de distancia no sean negativos
+     * Verifica que todas las distancias ingresadas en los puntos de muestreo
+     * sean valores positivos o cero.
+     * 
      * @returns {boolean} True si todas las distancias son válidas
      */
     function validarDistancias() {
@@ -130,6 +171,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Valida que los valores de profundidad sean positivos
+     * Asegura que las profundidades de muestreo sean mayores a 0 cm,
+     * ya que no tiene sentido muestrear a profundidad cero.
+     * 
      * @returns {boolean} True si todas las profundidades son válidas
      */
     function validarProfundidades() {
@@ -155,6 +199,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Valida los archivos adjuntos (tamaño y tipo)
+     * Verifica que los archivos de resultados de laboratorio cumplan con
+     * los formatos permitidos y no excedan el tamaño máximo.
+     * 
      * @returns {boolean} True si todos los archivos son válidos
      */
     function validarArchivos() {
@@ -188,6 +235,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Valida que al menos un punto de muestreo tenga datos completos
+     * Garantiza que se haya ingresado información en al menos un punto
+     * de muestreo para evitar envíos vacíos.
+     * 
      * @returns {boolean} True si al menos un punto tiene datos
      */
     function validarPuntosMuestreo() {
@@ -216,7 +266,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Validación completa del formulario antes del envío
-     * @returns {boolean} True si el formulario es válido
+     * Ejecuta todas las validaciones en el orden correcto y
+     * proporciona retroalimentación específica al usuario.
+     * 
+     * @returns {boolean} True si el formulario es válido y puede enviarse
      */
     function validarFormularioCompleto() {
         return validarCamposObligatorios() && 
@@ -234,6 +287,8 @@ document.addEventListener('DOMContentLoaded', function() {
     /**
      * Prepara los datos del formulario para el envío
      * Organiza la información de los puntos de muestreo en un formato estructurado
+     * que facilita el procesamiento en el backend.
+     * 
      * @returns {Object} Objeto con todos los datos del formulario estructurados
      */
     function prepararDatosFormulario() {
@@ -255,7 +310,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         };
         
-        // Procesar datos de cada punto de muestreo
+        // Procesar datos de cada punto de muestreo (1-4)
         for (let i = 1; i <= 4; i++) {
             datosEstructurados.puntosMuestreo[`punto${i}`] = {
                 azimut: document.querySelector(`input[name="azimut${i}"]`).value,
@@ -286,6 +341,8 @@ document.addEventListener('DOMContentLoaded', function() {
     /**
      * Simula el envío de datos al servidor
      * En una implementación real, aquí iría una petición fetch o XMLHttpRequest
+     * hacia el backend del IFN.
+     * 
      * @param {Object} datos - Datos del formulario a enviar
      * @returns {Promise<Object>} Promesa que resuelve con la respuesta del servidor
      */
@@ -318,7 +375,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Maneja el envío exitoso del formulario
-     * @param {Object} respuesta - Respuesta del servidor
+     * Proporciona feedback detallado al usuario sobre el resultado del envío
+     * y realiza las acciones de limpieza necesarias.
+     * 
+     * @param {Object} respuesta - Respuesta del servidor con los datos del registro
+     * @returns {void}
      */
     function manejarEnvioExitoso(respuesta) {
         // Mostrar mensaje de éxito detallado
@@ -353,7 +414,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Maneja errores en el envío del formulario
+     * Proporciona manejo de errores robusto y feedback informativo al usuario
+     * cuando ocurren problemas en la comunicación con el servidor.
+     * 
      * @param {Error} error - Error ocurrido durante el envío
+     * @returns {void}
      */
     function manejarErrorEnvio(error) {
         // Mostrar mensaje de error al usuario
@@ -369,7 +434,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Maneja el evento de envío del formulario
+     * Coordina todo el proceso de envío: validación, preparación de datos,
+     * comunicación con el servidor y manejo de respuestas.
+     * 
      * @param {Event} event - Evento de envío del formulario
+     * @returns {Promise<void>}
      */
     async function manejarEnvioFormulario(event) {
         // Prevenir el envío tradicional del formulario
@@ -412,6 +481,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Limpia todos los estilos de validación aplicados a los campos
+     * Restaura la apariencia original de todos los campos del formulario
+     * después de una limpieza o corrección de errores.
+     * 
+     * @returns {void}
      */
     function limpiarEstilosValidacion() {
         formulario.querySelectorAll('input, select, textarea').forEach(elemento => {
@@ -422,6 +495,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Maneja la limpieza del formulario con confirmación del usuario
+     * Implementa medidas de seguridad para prevenir pérdida accidental
+     * de datos mediante confirmación explícita del usuario.
+     * 
+     * @returns {void}
      */
     function manejarLimpiezaFormulario() {
         // Verificar si el formulario tiene datos para evitar confirmaciones innecesarias
@@ -455,12 +532,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // =============================================
-    // VALIDACIÓN EN TIEMPO REAL
+    // SISTEMA DE VALIDACIÓN EN TIEMPO REAL
     // =============================================
     
     /**
      * Aplica estilo de error a un campo específico
+     * Proporciona feedback visual inmediato al usuario cuando
+     * se detecta un error en un campo específico.
+     * 
      * @param {HTMLElement} campo - Campo al que aplicar el estilo de error
+     * @returns {void}
      */
     function aplicarEstiloError(campo) {
         campo.style.borderColor = '#f44336';
@@ -469,7 +550,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Remueve el estilo de error de un campo específico
+     * Restaura la apariencia normal del campo cuando el error
+     * ha sido corregido por el usuario.
+     * 
      * @param {HTMLElement} campo - Campo al que remover el estilo de error
+     * @returns {void}
      */
     function removerEstiloError(campo) {
         campo.style.borderColor = '';
@@ -478,7 +563,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Valida un campo numérico en tiempo real y aplica estilos visuales
+     * Se ejecuta cuando el usuario abandona un campo (evento blur) y
+     * proporciona validación inmediata sin esperar al envío del formulario.
+     * 
      * @param {Event} event - Evento blur del campo
+     * @returns {void}
      */
     function validarCampoNumericoTiempoReal(event) {
         const campo = event.target;
@@ -525,6 +614,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Configura la validación en tiempo real para todos los campos numéricos
+     * Establece los event listeners necesarios para proporcionar
+     * validación inmediata durante la interacción del usuario.
+     * 
+     * @returns {void}
      */
     function configurarValidacionTiempoReal() {
         const camposNumericos = formulario.querySelectorAll('input[type="number"]');
@@ -546,11 +639,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // =============================================
-    // FUNCIONALIDADES ADICIONALES
+    // FUNCIONALIDADES ADICIONALES Y ESTADÍSTICAS
     // =============================================
     
     /**
      * Calcula y muestra estadísticas de los puntos de muestreo
+     * Proporciona información sobre el estado de completitud de los
+     * puntos de muestreo para ayudar al usuario a verificar su progreso.
+     * 
+     * @returns {void}
      */
     function mostrarEstadisticasMuestreo() {
         const puntos = [1, 2, 3, 4];
@@ -579,6 +676,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Configura eventos para cálculos y estadísticas automáticas
+     * Establece los event listeners necesarios para actualizar
+     * estadísticas en tiempo real mientras el usuario trabaja.
+     * 
+     * @returns {void}
      */
     function configurarCalculosAutomaticos() {
         // Agregar event listeners a campos clave para actualizar estadísticas
@@ -591,6 +692,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Maneja la selección de archivos y muestra información al usuario
+     * Proporciona feedback sobre los archivos seleccionados, incluyendo
+     * cantidad y tamaño total, con advertencias si es necesario.
+     * 
+     * @returns {void}
      */
     function configurarManejoArchivos() {
         campoArchivos.addEventListener('change', function() {
@@ -619,6 +724,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Configura todos los event listeners del formulario
+     * Establece las conexiones entre los elementos de la interfaz
+     * y las funciones de manejo correspondientes.
+     * 
+     * @returns {void}
      */
     function configurarEventListeners() {
         // Evento de envío del formulario
@@ -649,12 +758,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // =============================================
-    // INICIALIZACIÓN PRINCIPAL
+    // INICIALIZACIÓN PRINCIPAL DEL SISTEMA
     // =============================================
     
     /**
      * Función principal de inicialización
-     * Orquesta todas las configuraciones necesarias
+     * Orquesta todas las configuraciones necesarias para que
+     * el formulario esté completamente operativo.
+     * 
+     * @returns {void}
      */
     function inicializar() {
         try {

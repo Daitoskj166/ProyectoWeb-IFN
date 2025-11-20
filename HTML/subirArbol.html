@@ -8,12 +8,18 @@
 </head>
 
 <body>
+    <!-- ============================================= -->
+    <!-- ENCABEZADO PRINCIPAL CON NAVEGACIÓN -->
+    <!-- ============================================= -->
     <header>
+        <!-- Logo institucional del IFN -->
         <img class="Logo" src="../IMG/ifn-baja-tcm30-525131.png" alt="Logo IFN" width="150">
 
+        <!-- Título central y menú de navegación -->
         <div class="center-header">
             <h1>INVENTARIO FORESTAL NACIONAL - COLOMBIA</h1>
 
+            <!-- Dashboard de navegación entre módulos -->
             <div class="dashboard">
                 <a href="inicio-Pantalla.html" class="dashboard-btn">Inicio</a>
                 <a href="subirSuelo.html" class="dashboard-btn">Subir Suelo</a>
@@ -24,6 +30,7 @@
             </div>
         </div>
 
+        <!-- Sección de usuario con información de sesión -->
         <div class="login-imagen">
             <p class="texto-arriba">User</p>
             <img class="Login" src="../IMG/login.png" alt="Login User" width="150">
@@ -31,6 +38,9 @@
         </div>
     </header>
 
+    <!-- ============================================= -->
+    <!-- BARRA DE BÚSQUEDA GLOBAL -->
+    <!-- ============================================= -->
     <div class="search-container">
         <div class="search-box">
             <input type="text" placeholder="Buscar...">
@@ -38,15 +48,20 @@
         </div>
     </div>
 
+    <!-- ============================================= -->
+    <!-- CONTENIDO PRINCIPAL - FORMULARIO DE REGISTRO -->
+    <!-- ============================================= -->
     <main>
         <h2>REGISTRAR ÁRBOL - F3 REGISTRO Y MEDICIÓN DE INDIVIDUOS</h2>
 
+        <!-- Formulario principal para registro de árboles -->
         <form class="formulario-arbol" id="formularioArbol">
             
-            <!-- Sección de datos generales -->
+            <!-- SECCIÓN 1: DATOS GENERALES -->
             <div class="seccion-formulario">
                 <h3>Datos Generales</h3>
                 
+                <!-- Fila 1: Colector y Conglomerado -->
                 <div class="fila-campos">
                     <div class="campo-formulario">
                         <label for="colector">Colector y número de colección *</label>
@@ -59,6 +74,7 @@
                     </div>
                 </div>
                 
+                <!-- Fila 2: Fecha y Tipo de Plantación -->
                 <div class="fila-campos">
                     <div class="campo-formulario">
                         <label for="fecha">Fecha *</label>
@@ -77,10 +93,11 @@
                 </div>
             </div>
 
-            <!-- Sección de mediciones de altura -->
+            <!-- SECCIÓN 2: MEDICIONES DE ALTURA -->
             <div class="seccion-formulario">
                 <h3>Mediciones de Altura</h3>
                 
+                <!-- Fila 1: Alturas principales -->
                 <div class="fila-campos">
                     <div class="campo-formulario">
                         <label for="alturaTotal">Altura Total (m)</label>
@@ -93,6 +110,7 @@
                     </div>
                 </div>
                 
+                <!-- Fila 2: Ángulos de medición -->
                 <div class="fila-campos">
                     <div class="campo-formulario">
                         <label for="vAlturaTotal">V + Altura Total (°)</label>
@@ -105,6 +123,7 @@
                     </div>
                 </div>
                 
+                <!-- Fila 3: Ángulo y distancia adicionales -->
                 <div class="fila-campos">
                     <div class="campo-formulario">
                         <label for="vAltura">V - Altura (°)</label>
@@ -117,6 +136,7 @@
                     </div>
                 </div>
                 
+                <!-- Equipo utilizado para medición de altura -->
                 <div class="campo-formulario">
                     <label for="equipoAltura">Equipo Altura</label>
                     <select id="equipoAltura" name="equipoAltura">
@@ -129,10 +149,11 @@
                 </div>
             </div>
 
-            <!-- Sección de mediciones de diámetro -->
+            <!-- SECCIÓN 3: MEDICIONES DE DIÁMETRO -->
             <div class="seccion-formulario">
                 <h3>Mediciones de Diámetro</h3>
                 
+                <!-- Fila: Diámetros 1 y 2 -->
                 <div class="fila-campos">
                     <div class="campo-formulario">
                         <label for="diametro1">Diámetro 1 (cm)</label>
@@ -145,6 +166,7 @@
                     </div>
                 </div>
                 
+                <!-- Equipo utilizado para medición de diámetro -->
                 <div class="campo-formulario">
                     <label for="equipoDiametro">Equipo Diámetro</label>
                     <select id="equipoDiametro" name="equipoDiametro">
@@ -156,10 +178,11 @@
                 </div>
             </div>
 
-            <!-- Sección de fuste y ubicación -->
+            <!-- SECCIÓN 4: FUSTE Y UBICACIÓN -->
             <div class="seccion-formulario">
                 <h3>Fuste y Ubicación</h3>
                 
+                <!-- Fila 1: Características del fuste -->
                 <div class="fila-campos">
                     <div class="campo-formulario">
                         <label for="numeroFuste">Número de Fuste</label>
@@ -177,6 +200,7 @@
                     </div>
                 </div>
                 
+                <!-- Fila 2: Posicionamiento -->
                 <div class="fila-campos">
                     <div class="campo-formulario">
                         <label for="distancia">Distancia (m)</label>
@@ -189,6 +213,7 @@
                     </div>
                 </div>
                 
+                <!-- Condición del árbol (campo obligatorio) -->
                 <div class="campo-formulario">
                     <label for="condicion">Condición *</label>
                     <select id="condicion" name="condicion" required>
@@ -202,10 +227,11 @@
                 </div>
             </div>
 
-            <!-- Sección de datos del individuo -->
+            <!-- SECCIÓN 5: DATOS DEL INDIVIDUO -->
             <div class="seccion-formulario">
                 <h3>Datos del Individuo</h3>
                 
+                <!-- Fila: Identificación y tamaño -->
                 <div class="fila-campos">
                     <div class="campo-formulario">
                         <label for="individuoID">Nº Individuo ID</label>
@@ -223,6 +249,7 @@
                     </div>
                 </div>
                 
+                <!-- Subparcela y observaciones -->
                 <div class="campo-formulario">
                     <label for="subparcela">Subparcela</label>
                     <input type="text" id="subparcela" name="subparcela" placeholder="Identificador de subparcela">
@@ -234,16 +261,22 @@
                 </div>
             </div>
 
-            <!-- Botones de acción -->
+            <!-- ============================================= -->
+            <!-- BOTONES DE ACCIÓN PRINCIPALES -->
+            <!-- ============================================= -->
             <div class="botones-accion">
                 <button type="button" class="btn-limpiar" id="btnLimpiar">Limpiar Formulario</button>
                 <button type="submit" class="btn-guardar" id="btnGuardar">Registrar Árbol</button>
             </div>
             
+            <!-- Nota informativa sobre el proceso de guardado -->
             <p class="nota-guardar">Al hacer clic en registrar, el árbol se guardará con un identificador único en la base de datos del IFN</p>
         </form>
     </main>
 
+    <!-- ============================================= -->
+    <!-- PIE DE PÁGINA INSTITUCIONAL -->
+    <!-- ============================================= -->
     <footer>
         <div class="footer-container">
             <p>📍 Dirección: Calle 25 D No. 110911, Colombia</p>
@@ -258,15 +291,24 @@
         </div>
     </footer>
 
+    <!-- ============================================= -->
+    <!-- SCRIPTS DE FUNCIONALIDAD -->
+    <!-- ============================================= -->
     <script>
+        /**
+         * SCRIPT DE INICIALIZACIÓN BÁSICA DEL FORMULARIO
+         * Maneja la validación inicial y configuración básica
+         */
         document.addEventListener('DOMContentLoaded', function() {
             const formulario = document.getElementById('formularioArbol');
             const btnLimpiar = document.getElementById('btnLimpiar');
             const btnGuardar = document.getElementById('btnGuardar');
             
+            // Evento de envío del formulario
             formulario.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
+                // Validar campos obligatorios
                 const colector = document.getElementById('colector').value;
                 const fecha = document.getElementById('fecha').value;
                 const condicion = document.getElementById('condicion').value;
@@ -276,7 +318,7 @@
                     return;
                 }
                 
-                // Validación de rangos
+                // Validación específica de Azimut
                 const azimut = document.getElementById('azimut').value;
                 if (azimut && (azimut < 0 || azimut > 360)) {
                     alert('El valor de Azimut debe estar entre 0 y 360 grados');
@@ -284,7 +326,7 @@
                     return;
                 }
                 
-                // Simular envío exitoso
+                // Simular envío exitoso al servidor
                 btnGuardar.innerHTML = 'Registrando...';
                 btnGuardar.disabled = true;
                 
@@ -296,13 +338,14 @@
                 }, 1500);
             });
             
+            // Evento de limpieza del formulario
             btnLimpiar.addEventListener('click', function() {
                 if (confirm('¿Está seguro de que desea limpiar todos los campos del formulario?')) {
                     formulario.reset();
                 }
             });
             
-            // Validación en tiempo real
+            // Validación en tiempo real para campos numéricos
             formulario.querySelectorAll('input[type="number"]').forEach(input => {
                 input.addEventListener('blur', function() {
                     const min = parseFloat(this.min);
@@ -324,6 +367,8 @@
             });
         });
     </script>
+    
+    <!-- Scripts externos para funcionalidades adicionales -->
     <script src="../JS/subirArbol.js"></script>
     <script src="../JS/auth.js"></script>
     <script src="../JS/buscador-universal.js"></script>

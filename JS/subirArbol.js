@@ -1,16 +1,37 @@
+/**
+ * SISTEMA DE REGISTRO DE ÁRBOLES - IFN COLOMBIA
+ * 
+ * Este módulo maneja la lógica completa del formulario de registro de árboles,
+ * incluyendo validaciones, envío de datos y manejo de eventos.
+ * 
+ * @file subirArbol.js
+ * @version 1.0
+ * @author Inventario Forestal Nacional - Colombia
+ */
+
+// Esperar a que el DOM esté completamente cargado
 document.addEventListener('DOMContentLoaded', function() {
     // =============================================
     // VARIABLES GLOBALES Y REFERENCIAS A ELEMENTOS
     // =============================================
     
-    // Referencia al formulario principal
+    /**
+     * Referencia al formulario principal de registro de árboles
+     * @type {HTMLFormElement}
+     */
     const formulario = document.getElementById('formularioArbol');
     
-    // Referencias a los botones de acción
+    /**
+     * Referencias a los botones de acción principales
+     * @type {HTMLButtonElement}
+     */
     const btnLimpiar = document.getElementById('btnLimpiar');
     const btnGuardar = document.getElementById('btnGuardar');
     
-    // Referencias a campos específicos para validaciones
+    /**
+     * Referencias a campos específicos para validaciones especializadas
+     * @type {HTMLInputElement|HTMLSelectElement}
+     */
     const campoColector = document.getElementById('colector');
     const campoFecha = document.getElementById('fecha');
     const campoCondicion = document.getElementById('condicion');
@@ -23,6 +44,9 @@ document.addEventListener('DOMContentLoaded', function() {
     /**
      * Configura la fecha actual como valor por defecto en el campo fecha
      * Esto facilita el registro al usuario mostrando la fecha actual automáticamente
+     * y reduce errores de ingreso manual.
+     * 
+     * @returns {void}
      */
     function configurarFechaActual() {
         const hoy = new Date();
@@ -32,7 +56,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Inicializa todas las configuraciones del formulario
-     * Se ejecuta cuando el DOM está completamente cargado
+     * Se ejecuta cuando el DOM está completamente cargado y prepara
+     * el formulario para su uso.
+     * 
+     * @returns {void}
      */
     function inicializarFormulario() {
         configurarFechaActual();
@@ -40,12 +67,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // =============================================
-    // VALIDACIONES DEL FORMULARIO
+    // SISTEMA DE VALIDACIONES DEL FORMULARIO
     // =============================================
     
     /**
      * Valida los campos obligatorios del formulario
-     * @returns {boolean} True si todos los campos obligatorios están completos, False si falta alguno
+     * Verifica que los campos marcados como requeridos tengan valores válidos
+     * antes de permitir el envío del formulario.
+     * 
+     * @returns {boolean} True si todos los campos obligatorios están completos, 
+     *                    False si falta alguno
      */
     function validarCamposObligatorios() {
         const colectorValor = campoColector.value.trim();
@@ -71,6 +102,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Valida que un valor numérico esté dentro de un rango específico
+     * Utilizado para validar campos como azimut, ángulos y distancias
+     * que tienen restricciones numéricas definidas.
+     * 
      * @param {number} valor - Valor a validar
      * @param {number} min - Valor mínimo permitido
      * @param {number} max - Valor máximo permitido
@@ -78,7 +112,8 @@ document.addEventListener('DOMContentLoaded', function() {
      * @returns {boolean} True si el valor está en el rango válido
      */
     function validarRango(valor, min, max, nombreCampo) {
-        if (valor === '' || isNaN(valor)) return true; // Campos vacíos son válidos (no obligatorios)
+        // Campos vacíos son válidos (no son obligatorios)
+        if (valor === '' || isNaN(valor)) return true;
         
         const numValor = parseFloat(valor);
         if (numValor < min || numValor > max) {
@@ -90,6 +125,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Valida todos los campos numéricos con restricciones de rango
+     * Aplica validaciones específicas para cada tipo de medición:
+     * - Azimut: 0-360 grados
+     * - Ángulos V: 0-90 grados
+     * - Alturas y distancias: valores positivos
+     * 
      * @returns {boolean} True si todos los campos numéricos son válidos
      */
     function validarCamposNumericos() {
@@ -142,7 +182,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Validación completa del formulario antes del envío
-     * @returns {boolean} True si el formulario es válido
+     * Ejecuta todas las validaciones en el orden correcto y
+     * proporciona retroalimentación al usuario.
+     * 
+     * @returns {boolean} True si el formulario es válido y puede enviarse
      */
     function validarFormularioCompleto() {
         return validarCamposObligatorios() && validarCamposNumericos();
@@ -155,6 +198,8 @@ document.addEventListener('DOMContentLoaded', function() {
     /**
      * Simula el envío de datos al servidor
      * En una implementación real, aquí iría una petición fetch o XMLHttpRequest
+     * hacia el backend del IFN.
+     * 
      * @param {FormData} datosFormulario - Datos del formulario a enviar
      * @returns {Promise<Object>} Promesa que resuelve con la respuesta del servidor
      */
@@ -180,12 +225,15 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Prepara los datos del formulario para el envío
+     * Recopila todos los campos y agrega metadatos adicionales
+     * para trazabilidad y auditoría.
+     * 
      * @returns {FormData} Objeto FormData con todos los campos del formulario
      */
     function prepararDatosFormulario() {
         const formData = new FormData(formulario);
         
-        // Agregar metadatos adicionales
+        // Agregar metadatos adicionales para auditoría
         formData.append('timestamp', new Date().toISOString());
         formData.append('userAgent', navigator.userAgent);
         formData.append('screenResolution', `${screen.width}x${screen.height}`);
@@ -195,7 +243,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Maneja el envío exitoso del formulario
-     * @param {Object} respuesta - Respuesta del servidor
+     * Realiza las acciones necesarias después de una respuesta exitosa
+     * del servidor, incluyendo feedback al usuario y limpieza del formulario.
+     * 
+     * @param {Object} respuesta - Respuesta del servidor con los datos del registro
+     * @returns {void}
      */
     function manejarEnvioExitoso(respuesta) {
         // Mostrar mensaje de éxito con el ID generado
@@ -217,7 +269,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Maneja errores en el envío del formulario
+     * Proporciona manejo de errores robusto y feedback al usuario
+     * cuando ocurren problemas en la comunicación con el servidor.
+     * 
      * @param {Error} error - Error ocurrido durante el envío
+     * @returns {void}
      */
     function manejarErrorEnvio(error) {
         // Mostrar mensaje de error al usuario
@@ -233,7 +289,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Maneja el evento de envío del formulario
+     * Coordina todo el proceso de envío: validación, preparación de datos,
+     * comunicación con el servidor y manejo de respuestas.
+     * 
      * @param {Event} event - Evento de envío del formulario
+     * @returns {Promise<void>}
      */
     async function manejarEnvioFormulario(event) {
         // Prevenir el envío tradicional del formulario
@@ -273,6 +333,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Maneja la limpieza del formulario con confirmación del usuario
+     * Implementa medidas de seguridad para prevenir pérdida accidental
+     * de datos mediante confirmación explícita del usuario.
+     * 
+     * @returns {void}
      */
     function manejarLimpiezaFormulario() {
         // Verificar si el formulario tiene datos para evitar confirmaciones innecesarias
@@ -306,11 +370,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // =============================================
-    // VALIDACIÓN EN TIEMPO REAL
+    // SISTEMA DE VALIDACIÓN EN TIEMPO REAL
     // =============================================
     
     /**
      * Limpia todos los estilos de validación aplicados a los campos
+     * Restaura la apariencia original de todos los campos del formulario
+     * después de una limpieza o corrección de errores.
+     * 
+     * @returns {void}
      */
     function limpiarEstilosValidacion() {
         formulario.querySelectorAll('input, select, textarea').forEach(elemento => {
@@ -321,7 +389,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Aplica estilo de error a un campo específico
+     * Proporciona feedback visual inmediato al usuario cuando
+     * se detecta un error en un campo específico.
+     * 
      * @param {HTMLElement} campo - Campo al que aplicar el estilo de error
+     * @returns {void}
      */
     function aplicarEstiloError(campo) {
         campo.style.borderColor = '#f44336';
@@ -330,7 +402,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Remueve el estilo de error de un campo específico
+     * Restaura la apariencia normal del campo cuando el error
+     * ha sido corregido por el usuario.
+     * 
      * @param {HTMLElement} campo - Campo al que remover el estilo de error
+     * @returns {void}
      */
     function removerEstiloError(campo) {
         campo.style.borderColor = '';
@@ -339,7 +415,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Valida un campo numérico en tiempo real y aplica estilos visuales
+     * Se ejecuta cuando el usuario abandona un campo (evento blur) y
+     * proporciona validación inmediata sin esperar al envío del formulario.
+     * 
      * @param {Event} event - Evento blur del campo
+     * @returns {void}
      */
     function validarCampoNumericoTiempoReal(event) {
         const campo = event.target;
@@ -377,6 +457,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Configura la validación en tiempo real para todos los campos numéricos
+     * Establece los event listeners necesarios para proporcionar
+     * validación inmediata durante la interacción del usuario.
+     * 
+     * @returns {void}
      */
     function configurarValidacionTiempoReal() {
         const camposNumericos = formulario.querySelectorAll('input[type="number"]');
@@ -398,11 +482,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // =============================================
-    // FUNCIONALIDADES ADICIONALES
+    // FUNCIONALIDADES ADICIONALES Y CÁLCULOS
     // =============================================
     
     /**
      * Calcula el diámetro promedio si ambos diámetros están completos
+     * Proporciona un cálculo automático que puede ser útil para
+     * verificaciones de calidad de datos durante el ingreso.
+     * 
+     * @returns {void}
      */
     function calcularDiametroPromedio() {
         const diametro1 = document.getElementById('diametro1');
@@ -422,6 +510,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Configura eventos para cálculos automáticos
+     * Establece los event listeners necesarios para ejecutar
+     * cálculos automáticos cuando el usuario ingresa datos.
+     * 
+     * @returns {void}
      */
     function configurarCalculosAutomaticos() {
         const diametro1 = document.getElementById('diametro1');
@@ -439,6 +531,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     /**
      * Configura todos los event listeners del formulario
+     * Establece las conexiones entre los elementos de la interfaz
+     * y las funciones de manejo correspondientes.
+     * 
+     * @returns {void}
      */
     function configurarEventListeners() {
         // Evento de envío del formulario
@@ -466,12 +562,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // =============================================
-    // INICIALIZACIÓN PRINCIPAL
+    // INICIALIZACIÓN PRINCIPAL DEL SISTEMA
     // =============================================
     
     /**
      * Función principal de inicialización
-     * Orquesta todas las configuraciones necesarias
+     * Orquesta todas las configuraciones necesarias para que
+     * el formulario esté completamente operativo.
+     * 
+     * @returns {void}
      */
     function inicializar() {
         try {

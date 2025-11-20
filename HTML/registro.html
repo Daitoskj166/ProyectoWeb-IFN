@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- CONFIGURACIÓN BÁSICA DEL DOCUMENTO -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registros - IFN</title>
+    <!-- HOJA DE ESTILOS ESPECÍFICA PARA EL MÓDULO DE REGISTROS -->
     <link rel="stylesheet" href="../CSS/styles-Registro.css">
 </head>
 <body>
-    <!-- ENCABEZADO PRINCIPAL -->
+    <!-- ===== ENCABEZADO PRINCIPAL ===== -->
     <header>
-        <!-- Logo de la institución -->
+        <!-- LOGO INSTITUCIONAL -->
         <img class="Logo" src="../IMG/ifn-baja-tcm30-525131.png" alt="Logo IFN" width="150">
         
-        <!-- Contenedor central con título y navegación -->
+        <!-- CONTENEDOR CENTRAL CON TÍTULO Y NAVEGACIÓN -->
         <div class="center-header">
+            <!-- TÍTULO PRINCIPAL DEL SISTEMA -->
             <h1>SISTEMA DE IDENTIFICACION DE ESPECIES</h1>
 
-            <!-- Barra de navegación principal -->
+            <!-- BARRA DE NAVEGACIÓN PRINCIPAL - DASHBOARD -->
             <div class="dashboard">
                 <a href="inicio-Pantalla.html" class="dashboard-btn">Inicio</a>
                 <a href="subirArbol.html" class="dashboard-btn">Subir Árbol</a>
@@ -27,7 +30,7 @@
             </div>
         </div>
 
-        <!-- Sección de usuario con información de login -->
+        <!-- SECCIÓN DE USUARIO CON INFORMACIÓN DE LOGIN -->
         <div class="login-imagen">
             <p class="texto-arriba">User</p>
             <img class="Login" src="../IMG/login.png" alt="Login User" width="150">
@@ -35,23 +38,23 @@
         </div>
     </header>
 
-    <!-- BARRA DE BÚSQUEDA GLOBAL -->
+    <!-- ===== BARRA DE BÚSQUEDA GLOBAL ===== -->
     <div class="search-container">
         <div class="search-box">
-            <!-- Campo de búsqueda para filtrar registros -->
+            <!-- CAMPO DE BÚSQUEDA PARA FILTRAR REGISTROS -->
             <input type="text" placeholder="Buscar por especie, ubicación o ID...">
             <span class="search-icon">🔍</span>
         </div>
     </div>
 
-    <!-- CONTENIDO PRINCIPAL DE LA PÁGINA -->
+    <!-- ===== CONTENIDO PRINCIPAL DE LA PÁGINA ===== -->
     <main>
-        <!-- Título principal de la sección -->
+        <!-- TÍTULO PRINCIPAL DE LA SECCIÓN -->
         <h2>REGISTROS DE MUESTRAS</h2>
 
-        <!-- SECCIÓN DE FILTROS AVANZADOS -->
+        <!-- ===== SECCIÓN DE FILTROS AVANZADOS ===== -->
         <div class="filtros-container">
-            <!-- Filtro por tipo de muestra (árbol o suelo) -->
+            <!-- FILTRO POR TIPO DE MUESTRA (ÁRBOL O SUELO) -->
             <div class="filtro-grupo">
                 <label for="filtro-tipo">Tipo:</label>
                 <select id="filtro-tipo">
@@ -61,22 +64,22 @@
                 </select>
             </div>
             
-            <!-- Filtro por fecha de registro -->
+            <!-- FILTRO POR FECHA DE REGISTRO -->
             <div class="filtro-grupo">
                 <label for="filtro-fecha">Fecha:</label>
                 <input type="date" id="filtro-fecha">
             </div>
             
-            <!-- Botón para aplicar los filtros seleccionados -->
+            <!-- BOTÓN PARA APLICAR LOS FILTROS SELECCIONADOS -->
             <button class="btn-filtrar">Aplicar Filtros</button>
         </div>
 
-        <!-- CONTENEDOR DE LA TABLA DE REGISTROS -->
+        <!-- ===== CONTENEDOR DE LA TABLA DE REGISTROS ===== -->
         <div class="tabla-contenedor">
             <table class="tabla-registros">
                 <thead>
                     <tr>
-                        <!-- Encabezados de las columnas -->
+                        <!-- ENCABEZADOS DE LAS COLUMNAS -->
                         <th>ID MUESTRA</th>        <!-- Identificador único de la muestra -->
                         <th>TIPO</th>              <!-- Tipo: Árbol o Suelo -->
                         <th>ESPECIE / DESCRIPCIÓN</th> <!-- Nombre científico o descripción -->
@@ -87,7 +90,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- REGISTRO 1: Ejemplo de árbol registrado -->
+                    <!-- REGISTRO 1: EJEMPLO DE ÁRBOL REGISTRADO -->
                     <tr class="registro-arbol">
                         <td>ARB-2024-001</td> <!-- ID con prefijo ARB para árboles -->
                         <td>
@@ -100,13 +103,13 @@
                             <span class="estado estado-completo">Completo</span> <!-- Estado en badge verde -->
                         </td>
                         <td>
-                            <!-- Botones de acción para este registro -->
+                            <!-- BOTONES DE ACCIÓN PARA ESTE REGISTRO -->
                             <button class="btn-editar">Editar</button> <!-- Editar datos del registro -->
                             <button class="btn-ver">Ver</button> <!-- Ver detalles completos -->
                         </td>
                     </tr>
 
-                    <!-- REGISTRO 2: Otro árbol con estado pendiente -->
+                    <!-- REGISTRO 2: OTRO ÁRBOL CON ESTADO PENDIENTE -->
                     <tr class="registro-arbol">
                         <td>ARB-2024-002</td>
                         <td><span class="badge-tipo tipo-arbol">Árbol</span></td>
@@ -120,7 +123,7 @@
                         </td>
                     </tr>
                     
-                    <!-- REGISTRO 3: Muestra de suelo -->
+                    <!-- REGISTRO 3: MUESTRA DE SUELO -->
                     <tr class="registro-suelo">
                         <td>SUE-2024-001</td> <!-- ID con prefijo SUE para suelos -->
                         <td>
@@ -136,7 +139,7 @@
                         </td>
                     </tr>
 
-                    <!-- REGISTRO 4: Suelo en proceso de análisis -->
+                    <!-- REGISTRO 4: SUELO EN PROCESO DE ANÁLISIS -->
                     <tr class="registro-suelo">
                         <td>SUE-2024-002</td>
                         <td><span class="badge-tipo tipo-suelo">Suelo</span></td>
@@ -150,7 +153,7 @@
                         </td>
                     </tr>
                     
-                    <!-- REGISTRO 5: Otro árbol completo -->
+                    <!-- REGISTRO 5: OTRO ÁRBOL COMPLETO -->
                     <tr class="registro-arbol">
                         <td>ARB-2024-003</td>
                         <td><span class="badge-tipo tipo-arbol">Árbol</span></td>
@@ -167,45 +170,45 @@
             </table>
         </div>
 
-        <!-- SECCIÓN DE ESTADÍSTICAS RÁPIDAS -->
+        <!-- ===== SECCIÓN DE ESTADÍSTICAS RÁPIDAS ===== -->
         <div class="estadisticas-rapidas">
-            <!-- Tarjeta de estadística: Árboles registrados -->
+            <!-- TARJETA DE ESTADÍSTICA: ÁRBOLES REGISTRADOS -->
             <div class="estadistica-item">
                 <span class="estadistica-numero">3</span> <!-- Número destacado -->
                 <span class="estadistica-texto">Árboles Registrados</span> <!-- Descripción -->
             </div>
             
-            <!-- Tarjeta de estadística: Muestras de suelo -->
+            <!-- TARJETA DE ESTADÍSTICA: MUESTRAS DE SUELO -->
             <div class="estadistica-item">
                 <span class="estadistica-numero">2</span>
                 <span class="estadistica-texto">Muestras de Suelo</span>
             </div>
             
-            <!-- Tarjeta de estadística: Registros completos -->
+            <!-- TARJETA DE ESTADÍSTICA: REGISTROS COMPLETOS -->
             <div class="estadistica-item">
                 <span class="estadistica-numero">4</span>
                 <span class="estadistica-texto">Registros Completos</span>
             </div>
             
-            <!-- Tarjeta de estadística: Registros en proceso -->
+            <!-- TARJETA DE ESTADÍSTICA: REGISTROS EN PROCESO -->
             <div class="estadistica-item">
                 <span class="estadistica-numero">1</span>
                 <span class="estadistica-texto">En Proceso</span>
             </div>
         </div>
 
-        <!-- PAGINACIÓN DE LA TABLA -->
+        <!-- ===== PAGINACIÓN DE LA TABLA ===== -->
         <div class="paginacion">
-            <!-- Información del rango de registros mostrados -->
+            <!-- INFORMACIÓN DEL RANGO DE REGISTROS MOSTRADOS -->
             <div class="info-paginacion">
                 <span>Mostrando 1-5 de 15 registros</span> <!-- Texto informativo -->
             </div>
             
-            <!-- Controles de navegación entre páginas -->
+            <!-- CONTROLES DE NAVEGACIÓN ENTRE PÁGINAS -->
             <div class="controles-paginacion">
                 <button class="btn-paginacion">〈 Anterior</button> <!-- Botón página anterior -->
                 
-                <!-- Números de página clickeables -->
+                <!-- NÚMEROS DE PÁGINA CLICKEABLES -->
                 <div class="numeros-paginacion">
                     <span class="pagina-activa">1</span> <!-- Página actual activa -->
                     <span>2</span> <!-- Otras páginas disponibles -->
@@ -217,24 +220,26 @@
         </div>
     </main>
 
-    <!-- PIE DE PÁGINA -->
+    <!-- ===== PIE DE PÁGINA ===== -->
     <footer>
         <div class="footer-container">
-            <!-- Información de contacto -->
+            <!-- INFORMACIÓN DE CONTACTO -->
             <p>📍 Dirección: Calle 25 D No. 110911, Colombia</p>
             <p>📧 Correo: contacto@ideam.gov.co | ☎ Tel: +57 (601) 4442060</p>
             
-            <!-- Enlaces a redes sociales -->
+            <!-- ENLACES A REDES SOCIALES -->
             <div class="redes-sociales">
                 <a href="https://www.facebook.com/ideam.instituto/?locale=es_LA"><img src="../IMG/facebook.png" alt="Facebook"></a>
                 <a href="https://x.com/IDEAMColombia?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><img src="../IMG/X.jpeg" alt="X"></a>
                 <a href="https://www.youtube.com/@InstitutoIDEAM"><img src="../IMG/youtube.png" alt="YouTube"></a>
             </div>
             
-            <!-- Derechos de autor -->
+            <!-- DERECHOS DE AUTOR -->
             <p>&copy; 2024 Proyecto Web IFN. Todos los derechos reservados.</p>
         </div>
     </footer>
+    
+    <!-- ===== SCRIPTS JAVASCRIPT ===== -->
     <script src="../JS/registro.js"></script>
     <script src="../JS/auth.js"></script>
     <script src="../JS/buscador-universal.js"></script>

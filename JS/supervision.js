@@ -1,88 +1,140 @@
-// ===== CÓDIGO DE AUTENTICACIÓN =====
-document.addEventListener("DOMContentLoaded", () => {
-  const loggedIn = sessionStorage.getItem("loggedIn");
-  const username = sessionStorage.getItem("username");
-  const userRole = sessionStorage.getItem("userRole");
-  const userLabel = document.querySelector(".texto-arriba");
-  const logoutBtn = document.querySelector(".texto-abajo");
-  const dashboard = document.querySelector(".dashboard");
-
-  // Si no hay sesión activa, redirige al login
-  if (!loggedIn || loggedIn !== "true") {
-    alert("Debes iniciar sesión primero.");
-    window.location.href = "login.html";
-    return;
-  }
-
-  // Muestra el nombre del usuario
-  if (userLabel && username) {
-    userLabel.textContent = username;
-  }
-
-  // Mostrar dashboard según el rol
-  if (dashboard) {
-    mostrarDashboardSegunRol(userRole, dashboard);
-  }
-
-  // Cerrar sesión
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", () => {
-      sessionStorage.clear();
-      window.location.href = "login.html";
-    });
-  }
-
-  // Inicializar la aplicación de supervisión después de la autenticación
-  inicializarAplicacionSupervision();
-});
-
-function mostrarDashboardSegunRol(rol, dashboardElement) {
-  if (rol === 'brigadista') {
-    dashboardElement.innerHTML = `
-      <a href="subirArbol.html" class="dashboard-btn">Subir Árbol</a> 
-      <a href="subirSuelo.html" class="dashboard-btn">Subir Suelo</a> 
-      <a href="registro.html" class="dashboard-btn">Registro</a>
-    `;
-  } else if (rol === 'encargado') {
-    dashboardElement.innerHTML = `
-      <a href="inicio-Pantalla.html" class="dashboard-btn">Inico</a>
-      <a href="gestionBrigadas.html" class="dashboard-btn">Gestión Brigadas</a>
-      <a href="estadisticas.html" class="dashboard-btn">Estadística</a>
-    `;
-  }
-}
+/**
+ * SISTEMA DE SUPERVISIÓN DE CALIDAD DE DATOS - IFN COLOMBIA
+ * 
+ * Este módulo maneja la supervisión, corrección y reporte de la calidad
+ * de los datos del Inventario Forestal Nacional.
+ * 
+ * @file supervision.js
+ * @version 1.0
+ * @author Inventario Forestal Nacional - Colombia
+ */
 
 // ===== APLICACIÓN DE SUPERVISIÓN =====
+
+/**
+ * Inicializa la aplicación de supervisión después de la autenticación
+ * @returns {void}
+ */
 function inicializarAplicacionSupervision() {
     // =============================================
     // VARIABLES GLOBALES Y CONFIGURACIÓN
     // =============================================
     
-    // Referencias a elementos principales del DOM
+    /**
+     * Campo de búsqueda global para filtrar registros
+     * @type {HTMLInputElement}
+     */
     const searchBox = document.querySelector('.search-box input');
+    
+    /**
+     * Botones de filtro rápido para categorías de problemas
+     * @type {NodeList}
+     */
     const filtroBtns = document.querySelectorAll('.filtro-btn');
+    
+    /**
+     * Contenedor principal de registros problemáticos
+     * @type {HTMLElement}
+     */
     const registrosContainer = document.querySelector('.registros-container');
+    
+    /**
+     * Botón para aplicar correcciones masivas
+     * @type {HTMLButtonElement}
+     */
     const btnAplicarCorreccion = document.querySelector('.btn-aplicar-correccion');
+    
+    /**
+     * Botón para previsualizar cambios antes de aplicar correcciones
+     * @type {HTMLButtonElement}
+     */
     const btnPrevisualizar = document.querySelector('.btn-previsualizar');
+    
+    /**
+     * Botón para generar reportes de incidencias
+     * @type {HTMLButtonElement}
+     */
     const btnGenerarReporte = document.querySelector('.btn-generar-reporte');
+    
+    /**
+     * Botón para exportar reportes generados
+     * @type {HTMLButtonElement}
+     */
     const btnExportar = document.querySelector('.btn-exportar');
+    
+    /**
+     * Botón para archivar registros corruptos
+     * @type {HTMLButtonElement}
+     */
     const btnArchivar = document.querySelector('.btn-archivar');
+    
+    /**
+     * Botón para eliminar permanentemente registros corruptos
+     * @type {HTMLButtonElement}
+     */
     const btnEliminar = document.querySelector('.btn-eliminar');
+    
+    /**
+     * Botón para generar reportes de auditoría
+     * @type {HTMLButtonElement}
+     */
     const btnReporteAuditoria = document.querySelector('.btn-reporte-auditoria');
     
     // Elementos del formulario de corrección masiva
+    /**
+     * Selector de patrones de error para corrección masiva
+     * @type {HTMLSelectElement}
+     */
     const patronErrorSelect = document.getElementById('patron-error');
+    
+    /**
+     * Textarea para describir la corrección a aplicar
+     * @type {HTMLTextAreaElement}
+     */
     const correccionTextarea = document.getElementById('correccion-aplicar');
+    
+    /**
+     * Input que muestra el número de registros afectados
+     * @type {HTMLInputElement}
+     */
     const registrosAfectadosInput = document.getElementById('registros-afectados');
+    
+    /**
+     * Selector de fecha para la aplicación de correcciones
+     * @type {HTMLInputElement}
+     */
     const fechaAplicacionInput = document.getElementById('fecha-aplicacion');
     
     // Elementos del formulario de reportes
+    /**
+     * Selector de tipo de reporte
+     * @type {HTMLSelectElement}
+     */
     const tipoReporteSelect = document.getElementById('tipo-reporte');
+    
+    /**
+     * Selector de fecha de inicio para reportes
+     * @type {HTMLInputElement}
+     */
     const fechaInicioInput = document.getElementById('fecha-inicio');
+    
+    /**
+     * Selector de fecha fin para reportes
+     * @type {HTMLInputElement}
+     */
     const fechaFinInput = document.getElementById('fecha-fin');
+    
+    /**
+     * Opciones de formato de exportación para reportes
+     * @type {NodeList}
+     */
     const formatosExportacion = document.querySelectorAll('input[name="formato"]');
     
-    // Datos de ejemplo para simular registros problemáticos
+    /**
+     * Datos de ejemplo para simular registros problemáticos
+     * En producción, estos datos vendrían de una API
+     * @type {Array<Object>}
+     */
     let registrosProblemas = [
         {
             id: 'REG-2024-001',
@@ -136,7 +188,10 @@ function inicializarAplicacionSupervision() {
         }
     ];
     
-    // Configuración de métricas del dashboard
+    /**
+     * Configuración de métricas del dashboard de calidad
+     * @type {Object}
+     */
     const metricasDashboard = {
         completitud: 87,
         consistencia: 92,
@@ -144,7 +199,10 @@ function inicializarAplicacionSupervision() {
         validados: 1248
     };
     
-    // Filtro activo actual
+    /**
+     * Filtro activo actual para los registros problemáticos
+     * @type {string}
+     */
     let filtroActivo = 'todos';
     
     // =============================================
@@ -152,8 +210,9 @@ function inicializarAplicacionSupervision() {
     // =============================================
     
     /**
-     * Inicializa todos los componentes de la página
+     * Inicializa todos los componentes de la página de supervisión
      * Se ejecuta cuando el DOM está completamente cargado
+     * @returns {void}
      */
     function inicializarPagina() {
         configurarFechas();
@@ -166,6 +225,8 @@ function inicializarAplicacionSupervision() {
     
     /**
      * Configura las fechas en los formularios con valores por defecto
+     * Establece fechas actuales y rangos predeterminados para reportes
+     * @returns {void}
      */
     function configurarFechas() {
         const hoy = new Date();
@@ -191,6 +252,8 @@ function inicializarAplicacionSupervision() {
     
     /**
      * Carga y actualiza las métricas del dashboard de calidad
+     * Actualiza los valores visuales de las tarjetas de métricas
+     * @returns {void}
      */
     function cargarDashboard() {
         // Actualizar valores en las tarjetas de métricas
@@ -198,7 +261,7 @@ function inicializarAplicacionSupervision() {
             const valores = Object.values(metricasDashboard);
             if (valores[index] !== undefined) {
                 elemento.textContent = index === 3 ? 
-                    valores[index].toLocaleString() : // Formato con separadores de miles
+                    valores[index].toLocaleString() : // Formato con separadores de miles para "validados"
                     `${valores[index]}%`; // Porcentaje para las primeras tres métricas
             }
         });
@@ -209,6 +272,7 @@ function inicializarAplicacionSupervision() {
     /**
      * Actualiza las métricas del dashboard en tiempo real
      * @param {Object} nuevasMetricas - Nuevos valores para las métricas
+     * @returns {void}
      */
     function actualizarMetricasDashboard(nuevasMetricas) {
         Object.assign(metricasDashboard, nuevasMetricas);
@@ -220,8 +284,9 @@ function inicializarAplicacionSupervision() {
     // =============================================
     
     /**
-     * Carga y renderiza los registros problemáticos
-     * @param {string} filtro - Tipo de filtro a aplicar
+     * Carga y renderiza los registros problemáticos aplicando filtros
+     * @param {string} filtro - Tipo de filtro a aplicar ('todos', 'formato', 'incompletos', etc.)
+     * @returns {void}
      */
     function cargarRegistrosProblemas(filtro = 'todos') {
         let registrosFiltrados = [...registrosProblemas];
@@ -251,7 +316,9 @@ function inicializarAplicacionSupervision() {
     
     /**
      * Renderiza los registros problemáticos en el contenedor
+     * Crea elementos DOM dinámicamente para cada registro problemático
      * @param {Array} registros - Array de registros a renderizar
+     * @returns {void}
      */
     function renderizarRegistrosProblemas(registros) {
         // Limpiar contenedor
@@ -307,8 +374,8 @@ function inicializarAplicacionSupervision() {
     
     /**
      * Formatea una fecha de YYYY-MM-DD a DD/MM/YYYY
-     * @param {string} fechaISO - Fecha en formato ISO
-     * @returns {string} Fecha formateada
+     * @param {string} fechaISO - Fecha en formato ISO (YYYY-MM-DD)
+     * @returns {string} Fecha formateada en formato DD/MM/YYYY
      */
     function formatearFecha(fechaISO) {
         const [anio, mes, dia] = fechaISO.split('-');
@@ -318,6 +385,7 @@ function inicializarAplicacionSupervision() {
     /**
      * Aplica un filtro a los registros problemáticos
      * @param {string} tipoFiltro - Tipo de filtro a aplicar
+     * @returns {void}
      */
     function aplicarFiltro(tipoFiltro) {
         filtroActivo = tipoFiltro;
@@ -330,6 +398,8 @@ function inicializarAplicacionSupervision() {
     
     /**
      * Actualiza las estadísticas de corrección masiva
+     * Calcula y muestra el número de registros afectados por el patrón seleccionado
+     * @returns {void}
      */
     function actualizarEstadisticasCorreccion() {
         // Simular cálculo de registros afectados basado en el patrón seleccionado
@@ -358,6 +428,8 @@ function inicializarAplicacionSupervision() {
     
     /**
      * Previsualiza los cambios que se aplicarán en la corrección masiva
+     * Muestra un modal con los detalles de la corrección antes de aplicarla
+     * @returns {void}
      */
     function previsualizarCorreccion() {
         const patron = patronErrorSelect.value;
@@ -391,6 +463,8 @@ function inicializarAplicacionSupervision() {
     
     /**
      * Aplica la corrección masiva a los registros afectados
+     * Realiza validaciones y confirma antes de aplicar cambios masivos
+     * @returns {void}
      */
     function aplicarCorreccionMasiva() {
         const patron = patronErrorSelect.value;
@@ -431,7 +505,9 @@ function inicializarAplicacionSupervision() {
     
     /**
      * Simula la aplicación de una corrección masiva
+     * En producción, esta función enviaría una petición al servidor
      * @param {Object} datosCorreccion - Datos de la corrección a aplicar
+     * @returns {void}
      */
     function simularAplicacionCorreccion(datosCorreccion) {
         // Mostrar estado de carga
@@ -482,6 +558,7 @@ function inicializarAplicacionSupervision() {
     
     /**
      * Genera un reporte de incidencias basado en los filtros seleccionados
+     * @returns {void}
      */
     function generarReporte() {
         const tipoReporte = tipoReporteSelect.value;
@@ -512,6 +589,7 @@ function inicializarAplicacionSupervision() {
     /**
      * Simula la generación de un reporte
      * @param {Object} configReporte - Configuración del reporte
+     * @returns {void}
      */
     function simularGeneracionReporte(configReporte) {
         // Mostrar estado de carga
@@ -558,6 +636,7 @@ function inicializarAplicacionSupervision() {
     
     /**
      * Exporta el reporte al formato seleccionado
+     * @returns {void}
      */
     function exportarReporte() {
         const formato = Array.from(formatosExportacion).find(radio => radio.checked)?.value;
@@ -577,6 +656,7 @@ function inicializarAplicacionSupervision() {
     
     /**
      * Maneja el archivado de registros corruptos
+     * @returns {void}
      */
     function archivarRegistrosCorruptos() {
         const confirmacion = confirm(
@@ -602,6 +682,7 @@ function inicializarAplicacionSupervision() {
     
     /**
      * Maneja la eliminación permanente de registros corruptos
+     * @returns {void}
      */
     function eliminarRegistrosCorruptos() {
         const confirmacion = confirm(
@@ -636,6 +717,7 @@ function inicializarAplicacionSupervision() {
     
     /**
      * Genera un reporte de auditoría para registros corruptos
+     * @returns {void}
      */
     function generarReporteAuditoria() {
         // Simular generación de reporte de auditoría
@@ -658,6 +740,7 @@ function inicializarAplicacionSupervision() {
     
     /**
      * Configura los event listeners para los botones de registros
+     * @returns {void}
      */
     function configurarBotonesRegistros() {
         const btnCorregirList = document.querySelectorAll('.btn-corregir');
@@ -689,6 +772,7 @@ function inicializarAplicacionSupervision() {
     /**
      * Maneja la corrección individual de un registro
      * @param {string} registroId - ID del registro a corregir
+     * @returns {void}
      */
     function manejarCorreccionIndividual(registroId) {
         const registro = registrosProblemas.find(r => r.id === registroId);
@@ -710,6 +794,7 @@ function inicializarAplicacionSupervision() {
     /**
      * Maneja el ignorado temporal de un registro
      * @param {string} registroId - ID del registro a ignorar
+     * @returns {void}
      */
     function manejarIgnorarRegistro(registroId) {
         const registro = registrosProblemas.find(r => r.id === registroId);
@@ -738,8 +823,9 @@ function inicializarAplicacionSupervision() {
     }
     
     /**
-     * Muestra los detalles completos de un registro
+     * Muestra los detalles completos de un registro en un modal
      * @param {string} registroId - ID del registro a visualizar
+     * @returns {void}
      */
     function mostrarDetallesRegistro(registroId) {
         const registro = registrosProblemas.find(r => r.id === registroId);
@@ -829,6 +915,7 @@ function inicializarAplicacionSupervision() {
     /**
      * Muestra un modal de previsualización para corrección masiva
      * @param {Object} datosPrevisualizacion - Datos para la previsualización
+     * @returns {void}
      */
     function mostrarModalPrevisualizacion(datosPrevisualizacion) {
         const modal = document.createElement('div');
@@ -898,6 +985,7 @@ function inicializarAplicacionSupervision() {
     
     /**
      * Configura todos los event listeners de la página
+     * @returns {void}
      */
     function configurarEventListeners() {
         // Filtros rápidos
@@ -962,9 +1050,10 @@ function inicializarAplicacionSupervision() {
     
     /**
      * Función debounce para optimizar búsquedas
-     * @param {Function} func - Función a ejecutar
-     * @param {number} wait - Tiempo de espera en milisegundos
-     * @returns {Function} Función debounceada
+     * Evita múltiples ejecuciones rápidas retrasando la ejecución hasta que pase un tiempo sin nuevas llamadas
+     * @param {Function} func - Función a la que aplicar debounce
+     * @param {number} wait - Tiempo de espera en milisegundos antes de ejecutar la función
+     * @returns {Function} Nueva función con comportamiento debounce
      */
     function debounce(func, wait) {
         let timeout;

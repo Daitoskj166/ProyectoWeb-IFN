@@ -1,47 +1,189 @@
 <!DOCTYPE html>
+<!-- 
+  CONFIGURACIÓN DE IDIOMA
+  Propósito: Especificar que el contenido está en español para navegadores y motores de búsqueda
+  Beneficios: Mejora la accesibilidad y el SEO para usuarios hispanohablantes
+-->
 <html lang="es">
 <head>
+  <!-- 
+    CONFIGURACIÓN DE CODIFICACIÓN DE CARACTERES
+    Propósito: Asegurar la correcta visualización de caracteres especiales del español (ñ, á, é, í, ó, ú)
+    Estándar: UTF-8 es el estándar universal que soporta todos los caracteres necesarios
+  -->
   <meta charset="UTF-8" />
+  
+  <!-- 
+    CONFIGURACIÓN DE VIEWPORT PARA DISPOSITIVOS MÓVILES
+    Propósito: Optimizar la visualización en diferentes tamaños de pantalla
+    Parámetros:
+      - width=device-width: Adapta el ancho al dispositivo
+      - initial-scale=1.0: Establece el zoom inicial al 100%
+    Beneficio: Mejora la experiencia de usuario en móviles y tablets
+  -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- 
+    TÍTULO DE LA PÁGINA DE LOGIN
+    Propósito: Texto que aparece en la pestaña del navegador
+    Importancia: Identifica claramente la página como portal de acceso al sistema
+  -->
   <title>Iniciar Sesión - Proyecto Web IFN</title>
+  
+  <!-- 
+    ENLACE A HOJA DE ESTILOS EXTERNA PARA LOGIN
+    Propósito: Estilos específicos para la página de autenticación
+    Ubicación: Archivo CSS en la carpeta ../CSS/
+    Característica: Diseño centrado y minimalista para enfoque en el login
+  -->
   <link rel="stylesheet" href="../CSS/styles-login.css">
 </head>
 
 <body>
+  <!-- 
+    ENCABEZADO DE LA PÁGINA DE LOGIN
+    Propósito: Proporcionar identificación institucional y contexto del sistema
+    Diseño: Minimalista para mantener el enfoque en el formulario de login
+  -->
   <header>
+    <!-- 
+      LOGO INSTITUCIONAL DEL IFN
+      Propósito: Identificación visual de la institución
+      Atributos:
+        - class: "Logo" para aplicar estilos específicos
+        - src: Ruta relativa a la imagen del logo
+        - alt: Texto alternativo para accesibilidad
+        - width: Ancho reducido para diseño compacto del login
+    -->
     <img class="Logo" src="../IMG/ifn-baja-tcm30-525131.png" alt="Logo IFN" width="100">
+    
+    <!-- 
+      TÍTULO DEL SISTEMA
+      Propósito: Identificar claramente la aplicación a la que se está accediendo
+      Importancia: Confirma al usuario que está en el sistema correcto
+    -->
     <h1>SISTEMA DE IDENTIFICACIÓN DE ESPECIES</h1>
   </header>
 
+  <!-- 
+    CONTENIDO PRINCIPAL - FORMULARIO DE LOGIN
+    Propósito: Contener el formulario de autenticación como elemento central
+    Diseño: Centrado vertical y horizontalmente en la pantalla
+  -->
   <main>
     <div class="login-container">
+      <!-- 
+        TARJETA DE LOGIN
+        Propósito: Contenedor visual para el formulario de autenticación
+        Características: Diseño de tarjeta con sombra para destacar del fondo
+      -->
       <div class="login-card">
+        <!-- 
+          IMAGEN DE USUARIO/AVATAR
+          Propósito: Representación visual del concepto de "usuario" o "login"
+          Atributos:
+            - src: Ruta a la imagen genérica de usuario
+            - alt: Texto descriptivo para accesibilidad
+            - class: "user-img" para estilos específicos
+        -->
         <img src="../IMG/login.png" alt="Usuario" class="user-img">
+        
+        <!-- 
+          TÍTULO DEL FORMULARIO
+          Propósito: Indicar claramente la acción a realizar (iniciar sesión)
+          Jerarquía: H2 como título secundario después del H1 del header
+        -->
         <h2>Iniciar Sesión</h2>
 
+        <!-- 
+          FORMULARIO DE AUTENTICACIÓN
+          Propósito: Capturar y validar credenciales de usuario
+          Atributos:
+            - id: "loginForm" para referencia en JavaScript
+            - novalidate: Desactiva validación HTML5 nativa para control personalizado
+        -->
         <form id="loginForm" novalidate>
+          <!-- 
+            ETIQUETA Y CAMPO PARA USUARIO
+            Propósito: Capturar el nombre de usuario o identificador
+            Atributos:
+              - for: Asociación semántica con el input
+              - type: "text" para entrada de texto libre
+              - id/name: "username" para identificación única
+              - placeholder: Texto guía descriptivo
+              - required: Campo obligatorio (validación HTML5)
+          -->
           <label for="username">Usuario</label>
           <input type="text" id="username" name="username" placeholder="Ingrese su usuario" required>
 
+          <!-- 
+            ETIQUETA Y CAMPO PARA CONTRASEÑA
+            Propósito: Capturar la contraseña de forma segura
+            Característica: Contenedor especial para input + botón de visibilidad
+          -->
           <label for="password">Contraseña</label>
           <div class="password-wrapper">
+            <!-- 
+              CAMPO DE CONTRASEÑA PRINCIPAL
+              Propósito: Entrada segura de contraseña (oculta por defecto)
+              Atributos:
+                - type: "password" para ocultar caracteres
+                - id/name: "password" para identificación única
+                - placeholder: Texto guía descriptivo
+                - required: Campo obligatorio
+            -->
             <input type="password" id="password" name="password" placeholder="Ingrese su contraseña" required>
+            
+            <!-- 
+              BOTÓN DE VISIBILIDAD DE CONTRASEÑA
+              Propósito: Permitir al usuario mostrar/ocultar la contraseña escrita
+              Atributos:
+                - type: "button" para evitar envío del formulario
+                - id: "togglePwd" para referencia en JavaScript
+                - title: Texto tooltip para accesibilidad
+              Icono inicial: 🔒 (candado) indicando contraseña oculta
+            -->
             <button id="togglePwd" type="button" title="Mostrar contraseña">🔒</button>
           </div>
 
+          <!-- 
+            BOTÓN DE ENVÍO DEL FORMULARIO
+            Propósito: Enviar las credenciales para autenticación
+            Atributos:
+              - type: "submit" para envío nativo del formulario
+              - id: "submitBtn" para referencia en JavaScript
+          -->
           <button type="submit" id="submitBtn">Ingresar</button>
         </form>
 
+        <!-- 
+          ELEMENTO PARA MENSAJES DE ESTADO
+          Propósito: Mostrar feedback al usuario (éxito, error, advertencias)
+          Atributos:
+            - id: "msg" para referencia en JavaScript
+            - class: "message" para estilos específicos
+          Comportamiento: Se actualiza dinámicamente mediante JavaScript
+        -->
         <p id="msg" class="message"></p>
       </div>
     </div>
   </main>
 
+  <!-- 
+    PIE DE PÁGINA SIMPLIFICADO
+    Propósito: Información legal básica sin distraer del proceso de login
+    Contenido: Solo derechos de autor para mantener minimalismo
+  -->
   <footer>
     <p>&copy; 2025 Proyecto Web IFN. Todos los derechos reservados.</p>
   </footer>
 
-  <!-- Enlace al script JS externo -->
+  <!-- 
+    INCLUSIÓN DEL SCRIPT DE AUTENTICACIÓN
+    Propósito: Añadir la lógica de autenticación y validación del login
+    Ubicación: Archivo JavaScript en la carpeta ../JS/
+    Nota: Se carga al final del body para optimizar rendimiento
+  -->
   <script src="../JS/login.js"></script>
 </body>
 </html>

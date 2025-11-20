@@ -10,11 +10,14 @@
 <body>
     <!-- ===== HEADER ===== -->
     <header>
+        <!-- Logo institucional del Inventario Forestal Nacional -->
         <img class="Logo" src="../IMG/ifn-baja-tcm30-525131.png" alt="Logo IFN" width="150">
 
+        <!-- Contenedor central con título y navegación -->
         <div class="center-header">
             <h1>INVENTARIO FORESTAL NACIONAL - COLOMBIA</h1>
 
+            <!-- Dashboard de navegación principal -->
             <div class="dashboard">
                 <a href="inicio-Pantalla.html" class="dashboard-btn">Inicio</a>
                 <a href="subirArbol.html" class="dashboard-btn">Subir Arbol</a>
@@ -25,6 +28,7 @@
             </div>
         </div>
 
+        <!-- Sección de usuario y control de sesión -->
         <div class="login-imagen">
             <p class="texto-arriba">User</p>
             <img class="Login" src="../IMG/login.png" alt="Login User" width="150">
@@ -32,7 +36,7 @@
         </div>
     </header>
 
-    <!-- Barra de búsqueda -->
+    <!-- Barra de búsqueda global -->
     <div class="search-container">
         <div class="search-box">
             <input type="text" placeholder="Buscar...">
@@ -42,15 +46,17 @@
 
     <!-- ===== CONTENIDO PRINCIPAL ===== -->
     <main>
+        <!-- Título principal del formulario -->
         <h2>SUBIR SUELO - F5.1 MUESTREO DE SUELOS</h2>
 
-        <!-- Formulario de subida de suelo -->
+        <!-- Formulario principal para registro de muestras de suelo -->
         <form class="formulario-suelo" id="formularioSuelo">
             
-            <!-- Sección de información general -->
+            <!-- SECCIÓN 1: INFORMACIÓN GENERAL -->
             <div class="seccion-formulario">
                 <h3>Información General</h3>
                 
+                <!-- Fila 1: Identificación del conglomerado y responsable -->
                 <div class="fila-campos">
                     <div class="campo-formulario">
                         <label for="conglomerado">ID Conglomerado *</label>
@@ -63,6 +69,7 @@
                     </div>
                 </div>
 
+                <!-- Fila 2: Fecha de muestreo y brigada responsable -->
                 <div class="fila-campos">
                     <div class="campo-formulario">
                         <label for="fechaMuestreo">Fecha de Muestreo *</label>
@@ -82,13 +89,14 @@
                 </div>
             </div>
 
-            <!-- Tabla de muestras de suelo -->
+            <!-- SECCIÓN 2: MUESTRAS DE SUELO - TABLA DE PUNTOS DE MUESTREO -->
             <div class="seccion-formulario">
                 <h3>Muestras de Suelo</h3>
                 <p class="subtitulo-seccion">Complete la información para cada punto de muestreo</p>
 
+                <!-- Contenedor de la tabla de muestras -->
                 <div class="tabla-muestras">
-                    <!-- Encabezado de la tabla -->
+                    <!-- Encabezado de la tabla con todas las columnas -->
                     <div class="fila-tabla encabezado-tabla">
                         <div class="columna-tabla">Punto</div>
                         <div class="columna-tabla">Azimut (°)</div>
@@ -104,7 +112,7 @@
                         <div class="columna-tabla">Fertilidad</div>
                     </div>
 
-                    <!-- Fila para Punto 1 -->
+                    <!-- Fila para Punto 1 de muestreo -->
                     <div class="fila-tabla">
                         <div class="columna-tabla">1</div>
                         <div class="columna-tabla">
@@ -171,7 +179,7 @@
                         </div>
                     </div>
 
-                    <!-- Fila para Punto 2 -->
+                    <!-- Fila para Punto 2 de muestreo -->
                     <div class="fila-tabla">
                         <div class="columna-tabla">2</div>
                         <div class="columna-tabla">
@@ -238,7 +246,7 @@
                         </div>
                     </div>
 
-                    <!-- Fila para Punto 3 -->
+                    <!-- Fila para Punto 3 de muestreo -->
                     <div class="fila-tabla">
                         <div class="columna-tabla">3</div>
                         <div class="columna-tabla">
@@ -305,7 +313,7 @@
                         </div>
                     </div>
 
-                    <!-- Fila para Punto 4 -->
+                    <!-- Fila para Punto 4 de muestreo -->
                     <div class="fila-tabla">
                         <div class="columna-tabla">4</div>
                         <div class="columna-tabla">
@@ -374,16 +382,18 @@
                 </div>
             </div>
 
-            <!-- Sección de observaciones y archivos -->
+            <!-- SECCIÓN 3: INFORMACIÓN ADICIONAL -->
             <div class="seccion-formulario">
                 <h3>Información Adicional</h3>
                 
+                <!-- Campo de observaciones -->
                 <div class="campo-formulario">
                     <label for="observaciones">Observaciones</label>
                     <textarea id="observaciones" name="observaciones" rows="4" 
                               placeholder="Ingrese observaciones relevantes sobre el muestreo..."></textarea>
                 </div>
 
+                <!-- Campo para subir archivos de laboratorio -->
                 <div class="campo-formulario">
                     <label for="archivos">Subir Resultados de Laboratorio</label>
                     <input type="file" id="archivos" name="archivos" multiple 
@@ -392,17 +402,18 @@
                 </div>
             </div>
 
-            <!-- Botones de acción -->
+            <!-- BOTONES DE ACCIÓN PRINCIPALES -->
             <div class="botones-accion">
                 <button type="button" class="btn-limpiar" id="btnLimpiar">Limpiar Formulario</button>
                 <button type="submit" class="btn-subir" id="btnSubir">Subir Muestras de Suelo</button>
             </div>
             
+            <!-- Nota informativa sobre el proceso de guardado -->
             <p class="nota-subir">Al hacer clic en subir, las muestras de suelo quedarán guardadas en la base de datos del IFN</p>
         </form>
     </main>
 
-    <!-- FOOTER -->
+    <!-- ===== FOOTER INSTITUCIONAL ===== -->
     <footer>
         <div class="footer-container">
             <p>📍 Dirección: Calle 25 D No. 110911, Colombia</p>
@@ -417,8 +428,12 @@
         </div>
     </footer>
 
-    <!-- Script para manejar el formulario -->
+    <!-- ===== SCRIPTS DE FUNCIONALIDAD ===== -->
     <script>
+        /**
+         * SCRIPT DE INICIALIZACIÓN BÁSICA DEL FORMULARIO DE SUELO
+         * Maneja la validación inicial y configuración básica del formulario
+         */
         document.addEventListener('DOMContentLoaded', function() {
             const formulario = document.getElementById('formularioSuelo');
             const btnLimpiar = document.getElementById('btnLimpiar');
@@ -428,7 +443,7 @@
             formulario.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
-                // Validación básica
+                // Validación básica de campos obligatorios
                 const conglomerado = document.getElementById('conglomerado').value;
                 const diligenciadoPor = document.getElementById('diligenciadoPor').value;
                 const fechaMuestreo = document.getElementById('fechaMuestreo').value;
@@ -438,7 +453,7 @@
                     return;
                 }
                 
-                // Validación de rangos de valores
+                // Validación de rangos de valores para azimut
                 const inputsAzimut = document.querySelectorAll('input[name^="azimut"]');
                 let azimutValido = true;
                 
@@ -456,7 +471,7 @@
                     return;
                 }
                 
-                // Simular subida exitosa
+                // Simular subida exitosa al servidor
                 btnSubir.innerHTML = 'Subiendo...';
                 btnSubir.disabled = true;
                 
@@ -490,6 +505,8 @@
             });
         });
     </script>
+    
+    <!-- Scripts externos para funcionalidades adicionales -->
     <script src="../JS/subirSuelo.js"></script>
     <script src="../JS/auth.js"></script>
     <script src="../JS/buscador-universal.js"></script>
